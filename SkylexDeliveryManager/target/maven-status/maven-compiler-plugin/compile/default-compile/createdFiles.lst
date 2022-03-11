@@ -1,0 +1,10 @@
+Main.class
+data\DbContext.class
+logic\Logic.class
+repository\ISampleRepository.class
+repository\RepositoryBase.class
+repository\IRepositoryBase.class
+controller\SampleController.class
+repository\SampleRepository.class
+data\Sample.class
+logic\ILogic.class
