@@ -1,10 +1,7 @@
 package data;
 
-import com.google.inject.Inject;
-import com.google.inject.Singleton;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
-
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -12,7 +9,7 @@ import java.util.logging.Logger;
  * Provides configuration for hibernate and a single SessionFactory instance
  */
 public class DbContext {
-    private static Logger _log = Logger.getLogger(DbContext.class.getName());
+    private static final Logger _log = Logger.getLogger(DbContext.class.getName());
     private static SessionFactory _sessionFactoryInstance;
 
     /**

@@ -15,7 +15,8 @@ public class Logic implements ILogic {
      * Creates Logic object for the project
      * @param log Logger log
      * @param sampleRepo ISampleRepository sampleRepo
-     * @exception NullPointerException
+     * @exception NullPointerException log cannot be null
+     * @exception NullPointerException sampleRepo cannot be null
      */
     @Inject
     public Logic(Logger log, ISampleRepository sampleRepo) {

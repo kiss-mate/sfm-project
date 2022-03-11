@@ -26,7 +26,7 @@ public class Sample {
     private int value2;
 
     /**
-     * Gets the Id of a Sample object
+     * Gets the id of a Sample object
      */
     public int getId() {
         return id;

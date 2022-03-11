@@ -14,7 +14,6 @@ import repository.IRepositoryBase;
 import repository.ISampleRepository;
 import repository.RepositoryBase;
 import repository.SampleRepository;
-import java.util.concurrent.*;
 
 import java.util.Scanner;
 import java.util.logging.Level;

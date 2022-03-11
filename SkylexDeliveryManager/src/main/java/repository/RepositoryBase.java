@@ -1,7 +1,6 @@
 package repository;
 
 import com.google.inject.Inject;
-import org.hibernate.HibernateError;
 import org.hibernate.HibernateException;
 import org.hibernate.SessionFactory;
 
@@ -26,7 +25,7 @@ public class RepositoryBase<T> implements IRepositoryBase<T> {
      * Creates the RepositoryBase object
      * @param log Logger object
      * @param sessionFactory SessionFactory instance
-     * @exception NullPointerException
+     * @exception NullPointerException log and sessionFactory cannot be null
      */
     @Inject
     public RepositoryBase(Logger log, SessionFactory sessionFactory) {
