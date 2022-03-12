@@ -4,6 +4,7 @@ import com.google.inject.Inject;
 import common.exceptions.ArgumentNullException;
 import logic.ILogic;
 
+import java.util.InputMismatchException;
 import java.util.Scanner;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -31,12 +32,20 @@ public class SampleController {
 
     public void handleFakeAction() {
         _log.log(Level.INFO, "Started event handling");
-        _log.log(Level.INFO,"Input value1 [string]: ");
-        var input1 = _scanner.nextLine();
-        _log.log(Level.INFO,"Input value2 [int]: ");
-        var input2 = _scanner.nextInt();
-        _scanner.nextLine();//paranoid scanning
-        _logic.addOneSample(input1, input2);
-        _log.log(Level.INFO, "Action handled");
+
+        try {
+            _log.log(Level.INFO,"Input value1 [string]: ");
+            var input1 = _scanner.nextLine();
+
+            _log.log(Level.INFO,"Input value2 [int]: ");
+            var input2 = _scanner.nextInt();
+
+            _scanner.nextLine();//paranoid scanning
+
+            _logic.addOneSample(input1, input2);
+            _log.log(Level.INFO, "Action handled");
+        } catch (InputMismatchException ex){
+            _log.log(Level.SEVERE, "Bad data input", ex);
+        }
     }
 }
