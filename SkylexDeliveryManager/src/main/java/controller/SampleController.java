@@ -1,6 +1,7 @@
 package controller;
 
 import com.google.inject.Inject;
+import common.exceptions.ArgumentNullException;
 import logic.ILogic;
 
 import java.util.Scanner;
@@ -23,9 +24,9 @@ public class SampleController {
      */
     @Inject
     public SampleController(Logger log, ILogic logic, Scanner scanner) {
-        if ((_log = log) == null)  throw new NullPointerException("log");
-        if ((_logic = logic) == null)  throw new NullPointerException("logic");
-        if ((_scanner = scanner) == null)  throw new NullPointerException("scanner");
+        if ((_log = log) == null)  throw new ArgumentNullException("log");
+        if ((_logic = logic) == null)  throw new ArgumentNullException("logic");
+        if ((_scanner = scanner) == null)  throw new ArgumentNullException("scanner");
     }
 
     public void handleFakeAction() {

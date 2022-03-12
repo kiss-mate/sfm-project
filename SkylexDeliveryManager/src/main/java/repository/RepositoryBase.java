@@ -1,6 +1,7 @@
 package repository;
 
 import com.google.inject.Inject;
+import common.exceptions.ArgumentNullException;
 import org.hibernate.HibernateException;
 import org.hibernate.SessionFactory;
 
@@ -29,8 +30,8 @@ public class RepositoryBase<T> implements IRepositoryBase<T> {
      */
     @Inject
     public RepositoryBase(Logger log, SessionFactory sessionFactory) {
-        if ((_log = log) == null) throw new NullPointerException("log");
-        if ((_sessionFactory = sessionFactory) == null) throw new NullPointerException("sessionFactory");
+        if ((_log = log) == null) throw new ArgumentNullException("log");
+        if ((_sessionFactory = sessionFactory) == null) throw new ArgumentNullException("sessionFactory");
         _classT = (Class<T>)((ParameterizedType) getClass().getGenericSuperclass()).getActualTypeArguments()[0];
     }
 

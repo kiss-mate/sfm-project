@@ -1,6 +1,7 @@
 package logic;
 
 import com.google.inject.Inject;
+import common.exceptions.ArgumentNullException;
 import data.Sample;
 import repository.ISampleRepository;
 
@@ -20,8 +21,8 @@ public class Logic implements ILogic {
      */
     @Inject
     public Logic(Logger log, ISampleRepository sampleRepo) {
-        if ((_log = log) == null) throw new NullPointerException("log");
-        if ((_sampleRepo = sampleRepo) == null) throw new NullPointerException("sampleRepo");
+        if ((_log = log) == null) throw new ArgumentNullException("log");
+        if ((_sampleRepo = sampleRepo) == null) throw new ArgumentNullException("sampleRepo");
     }
 
     @Override

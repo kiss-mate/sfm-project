@@ -1,4 +1,5 @@
 import com.google.inject.Guice;
+import common.DbContextSettings;
 import controller.SampleController;
 import data.DbContext;
 import javafx.application.Application;
@@ -24,8 +25,10 @@ public class Main extends Application {
     public void start(Stage stage) throws Exception {
         //set up dependencies
         var injector = Guice.createInjector(config -> {
-            // Add common services (Logger binding is automatic)
-            config.bind(SessionFactory.class).toProvider(DbContext::getSessionFactory);
+            // Add common services (java.util.logging.Logger binding is automatic)
+            config.bind(SessionFactory.class).toProvider(() -> DbContext
+                            .getDbContextInstance()
+                            .getSessionFactory(DbContextSettings.contextSettings()));
             config.bind(Scanner.class).toProvider(() -> new Scanner(System.in));
 
             // Add the logic
@@ -48,7 +51,7 @@ public class Main extends Application {
         var log = injector.getInstance(Logger.class);
         var controller = injector.getInstance(SampleController.class);
 
-        log.log(Level.INFO, "Application loaded");
+        log.log(Level.INFO,"Application loaded");
         var thread = new Thread(controller::handleFakeAction);
         thread.start();
     }
