@@ -8,7 +8,7 @@ import data.Sample;
 public interface ISampleRepository extends IRepositoryBase<Sample> {
     /**
      * Updates the fields of the object with the given id
-     * @param id Id of the object to update
+     * @param id id of the object to update
      * @param value1 Value1 of the object to update
      * @param value2 Value2 of the object to update
      */
