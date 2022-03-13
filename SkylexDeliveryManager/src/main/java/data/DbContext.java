@@ -40,6 +40,10 @@ public class DbContext {
                         .build();
 
                 var metadataSources = new MetadataSources(serviceRegistry);
+
+                // add annotated classes
+                metadataSources.addAnnotatedClass(Sample.class);
+
                 var metadata = metadataSources.buildMetadata();
 
                 _sessionFactoryInstance = metadata

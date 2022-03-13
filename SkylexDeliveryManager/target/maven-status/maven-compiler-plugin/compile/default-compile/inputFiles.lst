@@ -1,12 +1,14 @@
 C:\Git\sfm-project\SkylexDeliveryManager\src\main\java\logic\ILogic.java
 C:\Git\sfm-project\SkylexDeliveryManager\src\main\java\repository\IRepositoryBase.java
 C:\Git\sfm-project\SkylexDeliveryManager\src\main\java\common\exceptions\ArgumentNullException.java
-C:\Git\sfm-project\SkylexDeliveryManager\src\main\java\repository\ISampleRepository.java
 C:\Git\sfm-project\SkylexDeliveryManager\src\main\java\repository\RepositoryBase.java
 C:\Git\sfm-project\SkylexDeliveryManager\src\main\java\Main.java
 C:\Git\sfm-project\SkylexDeliveryManager\src\main\java\logic\Logic.java
-C:\Git\sfm-project\SkylexDeliveryManager\src\main\java\common\DbContextSettings.java
 C:\Git\sfm-project\SkylexDeliveryManager\src\main\java\controller\SampleController.java
-C:\Git\sfm-project\SkylexDeliveryManager\src\main\java\repository\SampleRepository.java
 C:\Git\sfm-project\SkylexDeliveryManager\src\main\java\data\DbContext.java
 C:\Git\sfm-project\SkylexDeliveryManager\src\main\java\data\Sample.java
+C:\Git\sfm-project\SkylexDeliveryManager\src\main\java\repository\ISampleRepository.java
+C:\Git\sfm-project\SkylexDeliveryManager\src\main\java\common\logging\LoggingContext.java
+C:\Git\sfm-project\SkylexDeliveryManager\src\main\java\common\DbContextSettings.java
+C:\Git\sfm-project\SkylexDeliveryManager\src\main\java\repository\SampleRepository.java
+C:\Git\sfm-project\SkylexDeliveryManager\src\main\java\common\logging\LogFormatter.java

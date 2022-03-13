@@ -1,5 +1,6 @@
 import com.google.inject.Guice;
 import common.DbContextSettings;
+import common.logging.LoggingContext;
 import controller.SampleController;
 import data.DbContext;
 import javafx.application.Application;
@@ -23,6 +24,8 @@ import java.util.logging.Logger;
 public class Main extends Application {
     @Override
     public void start(Stage stage) throws Exception {
+        LoggingContext.getProperties(getClass().getResource("log-dev.properties").getFile());
+
         //set up dependencies
         var injector = Guice.createInjector(config -> {
             // Add common services (java.util.logging.Logger binding is automatic)
