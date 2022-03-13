@@ -12,7 +12,7 @@
 ---
 
 ### Working on ticket
-- fetch all + pull-merge on main
+- **fetch all + pull-merge on main**
 - select last commit in main
 - Commands/Create branch...
 - name branch as develop/main/[short-description]
