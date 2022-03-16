@@ -18,12 +18,12 @@ public class DriverTest {
     public void setGet_HappyCase() {
         //arrange
         var expectedValue1 = "value1_to_expect";
-        var sample = new Sample();
+        var sample = new Driver();
 
         //act
-        sample.setValue1(expectedValue1);
+        sample.setName(expectedValue1);
         //assert
         assertEquals(0,sample.getId());
-        assertEquals(expectedValue1,sample.getValue1());
+        assertEquals(expectedValue1,sample.getName());
     }
 }
