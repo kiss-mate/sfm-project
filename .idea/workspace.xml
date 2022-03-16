@@ -5,52 +5,25 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="fafefc7f-9cc4-42ce-ba82-245a3cdd986f" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/SkylexDeliveryManager/.idea/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/SkylexDeliveryManager/.idea/.gitignore" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/SkylexDeliveryManager/.idea/compiler.xml" beforeDir="false" afterPath="$PROJECT_DIR$/SkylexDeliveryManager/.idea/compiler.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/SkylexDeliveryManager/.idea/encodings.xml" beforeDir="false" afterPath="$PROJECT_DIR$/SkylexDeliveryManager/.idea/encodings.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/SkylexDeliveryManager/.idea/jarRepositories.xml" beforeDir="false" afterPath="$PROJECT_DIR$/SkylexDeliveryManager/.idea/jarRepositories.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/SkylexDeliveryManager/.idea/jpa-buddy.xml" beforeDir="false" afterPath="$PROJECT_DIR$/SkylexDeliveryManager/.idea/jpa-buddy.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/SkylexDeliveryManager/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/SkylexDeliveryManager/.idea/misc.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/SkylexDeliveryManager/.idea/uiDesigner.xml" beforeDir="false" afterPath="$PROJECT_DIR$/SkylexDeliveryManager/.idea/uiDesigner.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/SkylexDeliveryManager/.idea/vcs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/SkylexDeliveryManager/.idea/vcs.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/SkylexDeliveryManager/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/SkylexDeliveryManager/pom.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/SkylexDeliveryManager/src/main/java/data/Driver.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/SkylexDeliveryManager/src/main/java/data/Login.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/SkylexDeliveryManager/src/test/java/data/DriverTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/SkylexDeliveryManager/src/main/java/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/SkylexDeliveryManager/src/main/java/Main.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/SkylexDeliveryManager/src/main/java/common/DbContextSettings.java" beforeDir="false" afterPath="$PROJECT_DIR$/SkylexDeliveryManager/src/main/java/common/DbContextSettings.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/SkylexDeliveryManager/src/main/java/common/exceptions/ArgumentNullException.java" beforeDir="false" afterPath="$PROJECT_DIR$/SkylexDeliveryManager/src/main/java/common/exceptions/ArgumentNullException.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/SkylexDeliveryManager/src/main/java/common/logging/LogFormatter.java" beforeDir="false" afterPath="$PROJECT_DIR$/SkylexDeliveryManager/src/main/java/common/logging/LogFormatter.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/SkylexDeliveryManager/src/main/java/common/logging/LoggingContext.java" beforeDir="false" afterPath="$PROJECT_DIR$/SkylexDeliveryManager/src/main/java/common/logging/LoggingContext.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/SkylexDeliveryManager/src/main/java/controller/SampleController.java" beforeDir="false" afterPath="$PROJECT_DIR$/SkylexDeliveryManager/src/main/java/controller/SampleController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/SkylexDeliveryManager/src/main/java/data/DbContext.java" beforeDir="false" afterPath="$PROJECT_DIR$/SkylexDeliveryManager/src/main/java/data/DbContext.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/SkylexDeliveryManager/src/main/java/data/Sample.java" beforeDir="false" afterPath="$PROJECT_DIR$/SkylexDeliveryManager/src/main/java/data/Sample.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/SkylexDeliveryManager/src/main/java/logic/ILogic.java" beforeDir="false" afterPath="$PROJECT_DIR$/SkylexDeliveryManager/src/main/java/logic/ILogic.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/SkylexDeliveryManager/src/main/java/logic/Logic.java" beforeDir="false" afterPath="$PROJECT_DIR$/SkylexDeliveryManager/src/main/java/logic/Logic.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/SkylexDeliveryManager/src/main/java/repository/IRepositoryBase.java" beforeDir="false" afterPath="$PROJECT_DIR$/SkylexDeliveryManager/src/main/java/repository/IRepositoryBase.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/SkylexDeliveryManager/src/main/java/repository/ISampleRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/SkylexDeliveryManager/src/main/java/repository/ISampleRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/SkylexDeliveryManager/src/main/java/repository/RepositoryBase.java" beforeDir="false" afterPath="$PROJECT_DIR$/SkylexDeliveryManager/src/main/java/repository/RepositoryBase.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/SkylexDeliveryManager/src/main/java/repository/SampleRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/SkylexDeliveryManager/src/main/java/repository/SampleRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/SkylexDeliveryManager/src/main/java/view/sample.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/SkylexDeliveryManager/src/main/java/view/sample.fxml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/SkylexDeliveryManager/src/main/resources/log-dev.properties" beforeDir="false" afterPath="$PROJECT_DIR$/SkylexDeliveryManager/src/main/resources/log-dev.properties" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/SkylexDeliveryManager/src/main/resources/log-test.properties" beforeDir="false" afterPath="$PROJECT_DIR$/SkylexDeliveryManager/src/main/resources/log-test.properties" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/SkylexDeliveryManager/src/test/java/controller/SampleControllerTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/SkylexDeliveryManager/src/test/java/controller/SampleControllerTest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/SkylexDeliveryManager/src/test/java/data/DbContextTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/SkylexDeliveryManager/src/test/java/data/DbContextTest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/SkylexDeliveryManager/src/test/java/data/SampleTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/SkylexDeliveryManager/src/test/java/data/SampleTest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/SkylexDeliveryManager/src/test/java/logic/LogicTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/SkylexDeliveryManager/src/test/java/logic/LogicTest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/SkylexDeliveryManager/target/classes/hibernate.cfg.xml" beforeDir="false" afterPath="$PROJECT_DIR$/SkylexDeliveryManager/target/classes/hibernate.cfg.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/SkylexDeliveryManager/target/classes/log-dev.properties" beforeDir="false" afterPath="$PROJECT_DIR$/SkylexDeliveryManager/target/classes/log-dev.properties" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/SkylexDeliveryManager/target/classes/log-test.properties" beforeDir="false" afterPath="$PROJECT_DIR$/SkylexDeliveryManager/target/classes/log-test.properties" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/SkylexDeliveryManager/target/classes/view/sample.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/SkylexDeliveryManager/target/classes/view/sample.fxml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/SkylexDeliveryManager/target/maven-archiver/pom.properties" beforeDir="false" afterPath="$PROJECT_DIR$/SkylexDeliveryManager/target/maven-archiver/pom.properties" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/SkylexDeliveryManager/target/maven-status/maven-compiler-plugin/compile/default-compile/createdFiles.lst" beforeDir="false" afterPath="$PROJECT_DIR$/SkylexDeliveryManager/target/maven-status/maven-compiler-plugin/compile/default-compile/createdFiles.lst" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/SkylexDeliveryManager/target/maven-status/maven-compiler-plugin/compile/default-compile/inputFiles.lst" beforeDir="false" afterPath="$PROJECT_DIR$/SkylexDeliveryManager/target/maven-status/maven-compiler-plugin/compile/default-compile/inputFiles.lst" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/SkylexDeliveryManager/target/maven-status/maven-compiler-plugin/testCompile/default-testCompile/createdFiles.lst" beforeDir="false" afterPath="$PROJECT_DIR$/SkylexDeliveryManager/target/maven-status/maven-compiler-plugin/testCompile/default-testCompile/createdFiles.lst" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/SkylexDeliveryManager/target/maven-status/maven-compiler-plugin/testCompile/default-testCompile/inputFiles.lst" beforeDir="false" afterPath="$PROJECT_DIR$/SkylexDeliveryManager/target/maven-status/maven-compiler-plugin/testCompile/default-testCompile/inputFiles.lst" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/SkylexDeliveryManager/target/classes/Main.class" beforeDir="false" afterPath="$PROJECT_DIR$/SkylexDeliveryManager/target/classes/Main.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/SkylexDeliveryManager/target/classes/hibernate.cfg.xml" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Class" />
+      </list>
+    </option>
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -100,5 +73,16 @@
       <updated>1647128111849</updated>
     </task>
     <servers />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
   </component>
 </project>

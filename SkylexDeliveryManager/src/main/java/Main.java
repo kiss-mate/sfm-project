@@ -71,8 +71,8 @@ class Package {
 
     @Override
     public String toString() {
-        return Selected ? Content + "(" + Weight + "kg), to " + Destination
-                : "NOT IN DELIVERY | " + Content + "(" + Weight + "kg), to " + Destination;
+        return Selected ? String.format("%s (%dkg), to %s", Content, Weight, Destination)
+                : String.format("NOT IN DELIVERY | %s (%dkg), to %s", Content, Weight, Destination);
     }
 
     public int getId() {
@@ -133,7 +133,7 @@ class Delivery {
 
     @Override
     public String toString() {
-        return "ID= " + Id + ", DRIVER= " + DriverName + ", VEHICLE= " + VehiclePlateNumber + ", PACKAGES= " + NumOfPackages;
+        return String.format("ID= %d\t DRIVER= %s\t VEHICLE= %s\t PACKAGES= %d", Id, DriverName, VehiclePlateNumber, NumOfPackages);
     }
 
     public int getId() {
