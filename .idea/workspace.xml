@@ -5,6 +5,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="fafefc7f-9cc4-42ce-ba82-245a3cdd986f" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/SkylexDeliveryManager/src/main/java/Delivery.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/SkylexDeliveryManager/src/main/java/Package.java" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/SkylexDeliveryManager/src/main/java/data/Driver.java" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/SkylexDeliveryManager/src/main/java/data/Login.java" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/SkylexDeliveryManager/src/test/java/data/DriverTest.java" afterDir="false" />
