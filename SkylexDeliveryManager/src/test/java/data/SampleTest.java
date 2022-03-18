@@ -30,4 +30,18 @@ public class SampleTest {
         assertEquals(expectedValue1,sample.getValue1());
         assertEquals(expectedValue2,sample.getValue2());
     }
+
+    @Test
+    public void ToString_HappyCase() {
+        //arrange
+        var sample = new Sample();
+        sample.setValue1("value1");
+        sample.setValue2(1234);
+
+        //act
+        var result = sample.toString();
+
+        //assert
+        assertEquals("Sample{id=0, value1='value1', value2=1234}", result);
+    }
 }

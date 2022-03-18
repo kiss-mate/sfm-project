@@ -43,6 +43,7 @@ public class DbContext {
 
                 // add annotated classes
                 metadataSources.addAnnotatedClass(Sample.class);
+                metadataSources.addAnnotatedClass(Driver.class);
 
                 var metadata = metadataSources.buildMetadata();
 

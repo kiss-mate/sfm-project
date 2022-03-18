@@ -11,7 +11,7 @@ public interface IRepositoryBase<T> {
      * Inserts an entity of type T into the corresponding table
      * @param entity The entity to insert into table
      */
-    void insert(T entity);
+    int insert(T entity);
 
     /**
      * Gets all T type entities from the given table
@@ -30,10 +30,10 @@ public interface IRepositoryBase<T> {
      * Deletes the entity with the given id from the table
      * @param id id of the entity to delete
      */
-    void delete(int id);
+    boolean delete(int id);
 
     /**
      * Deletes the entity with the given id from the table
      */
-    void delete(T entity);
+    boolean delete(T entity);
 }

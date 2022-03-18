@@ -4,7 +4,9 @@ import common.exceptions.ArgumentNullException;
 import logic.ILogic;
 import org.junit.jupiter.api.Test;
 
+import java.util.InputMismatchException;
 import java.util.Scanner;
+import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -62,17 +64,30 @@ public class SampleControllerTest {
         var mockLog = mock(Logger.class);
         var mockLogic = mock(ILogic.class);
         var mockScanner = mock(Scanner.class);
-        when(mockScanner.nextLine()).thenReturn("fake_input");
-        when(mockScanner.nextInt()).thenReturn(1234);
-
-        var controller = new SampleController(mockLog, mockLogic, mockScanner);
+        when(mockScanner.nextLine()).thenReturn("12345");
+        var sut = new SampleController(mockLog, mockLogic, mockScanner);
 
         //act
-        controller.handleFakeAction();
+        sut.handleFakeAction();
 
         //assert
-        verify(mockLogic, times(1)).addOneSample("fake_input", 1234);
-        verify(mockScanner, times(2)).nextLine();
-        verify(mockScanner, times(1)).nextInt();
+        verify(mockLogic, times(1)).addOneSample("12345", 12345);
+        verify(mockScanner, times(3)).nextLine();
+    }
+
+    @Test
+    public void handleFakeAction_InputMismatch() {
+        //arrange
+        var mockLog = mock(Logger.class);
+        var mockScanner = mock(Scanner.class);
+        when(mockScanner.nextLine()).thenReturn("fake_input");
+
+        var sut = new SampleController(mockLog, mock(ILogic.class),mockScanner);
+
+        //act
+        sut.handleFakeAction();
+
+        //assert
+        verify(mockLog, times(1)).log(eq(Level.SEVERE), eq("Bad data input"), isA(NumberFormatException.class));
     }
 }

@@ -2,10 +2,13 @@ package repository;
 
 import com.google.inject.Inject;
 import common.exceptions.ArgumentNullException;
+import common.sql.SqlConstants;
+import data.Sample;
 import org.hibernate.HibernateException;
 import org.hibernate.SessionFactory;
 
 import java.lang.reflect.ParameterizedType;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -36,51 +39,53 @@ public class RepositoryBase<T> implements IRepositoryBase<T> {
     }
 
     @Override
-    public void insert(T entity) {
-        try {
-            var session = _sessionFactory.openSession();
-            session.save(entity);
-            session.close();
-        } catch (HibernateException ex) {
-            _log.log(Level.SEVERE, ex.getMessage());
-        }
+    public int insert(T entity) {
+        var session = _sessionFactory.openSession();
+        session.beginTransaction();
+        var id = session.save(entity);
+        session.getTransaction().commit();
+        session.close();
+        return (int)id;
     }
 
     @Override
     public List<T> getAll() {
         var session = _sessionFactory.openSession();
-
-        // Todo: Implement method
-
+        var result = session.createQuery(SqlConstants.From + _classT.getName()).getResultList();
         session.close();
-        return null;
+        return result;
     }
 
     @Override
     public T getById(int id) {
         var session = _sessionFactory.openSession();
-
-        // Todo: Implement method
-
+        var result = session.get(_classT, id);
         session.close();
-        return null;
+        return result;
     }
 
     @Override
-    public void delete(int id) {
+    public boolean delete(int id) {
         var session = _sessionFactory.openSession();
 
-        // Todo: Implement method
+        var oneDriver = getById(id);
+        if (oneDriver == null)
+            return false;
 
+        delete(oneDriver);
         session.close();
+
+        return true;
     }
 
     @Override
-    public void delete(T entity) {
+    public boolean delete(T entity) {
         var session = _sessionFactory.openSession();
-
-        // Todo: Implement method
-
+        session.beginTransaction();
+        session.delete(entity);
+        session.getTransaction().commit();
         session.close();
+
+        return true;
     }
 }
