@@ -2,6 +2,7 @@ package logic;
 
 import com.google.inject.Inject;
 import common.exceptions.ArgumentNullException;
+import data.Driver;
 import data.Sample;
 import repository.ISampleRepository;
 
@@ -33,4 +34,44 @@ public class Logic implements ILogic {
         _sampleRepo.insert(newSample);
         _log.log(Level.INFO, "New sample object created");
     }
+
+
+    @Override
+    public void addOneDriver(String name){
+        var newSample = new Driver();
+        newSample.setName(name);
+        //
+    }
+
+
+    @Override
+    public void updateDriver(int id, String name){
+
+    }
+
+
+    @Override
+    public Driver getOneDriver(int id){
+        var newSample = new Driver();
+        //
+
+        return newSample;
+    }
+
+
+    //@Override
+    // getAllDrivers();
+
+
+    @Override
+    public void deleteDriver(int id){
+
+    }
+
+
+    @Override
+    public  void deleteDriver(Driver driver){
+
+    }
+
 }
