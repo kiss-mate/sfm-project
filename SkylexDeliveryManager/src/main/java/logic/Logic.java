@@ -35,10 +35,12 @@ public class Logic implements ILogic {
         _log.log(Level.INFO, "New sample object created");
     }
 
+
     @Override
     public void addOneDriver(String name){
         var newSample = new Driver();
         newSample.setName(name);
+        //
     }
 
 
@@ -71,7 +73,5 @@ public class Logic implements ILogic {
     public  void deleteDriver(Driver driver){
 
     }
-
-
 
 }

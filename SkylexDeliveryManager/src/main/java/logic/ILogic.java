@@ -24,5 +24,4 @@ public interface ILogic {
     void deleteDriver(int id);
 
     void deleteDriver(Driver driver);
-
 }
