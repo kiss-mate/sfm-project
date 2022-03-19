@@ -3,7 +3,7 @@ package data;
 import javax.persistence.*;
 
 @Entity
-@Table(name = "sample_table")
+@Table(name = "SampleData")
 public class Sample {
     /**
      * Key for a Sample entity
@@ -60,5 +60,14 @@ public class Sample {
      */
     public void setValue2(int value2) {
         this.value2 = value2;
+    }
+
+    @Override
+    public String toString() {
+        return "Sample{" +
+                "id=" + id +
+                ", value1='" + value1 + '\'' +
+                ", value2=" + value2 +
+                '}';
     }
 }

@@ -38,13 +38,13 @@ public class SampleController {
             var input1 = _scanner.nextLine();
 
             _log.log(Level.INFO,"Input value2 [int]: ");
-            var input2 = _scanner.nextInt();
+            var input2 = Integer.parseInt(_scanner.nextLine());
 
             _scanner.nextLine();//paranoid scanning
 
             _logic.addOneSample(input1, input2);
             _log.log(Level.INFO, "Action handled");
-        } catch (InputMismatchException ex){
+        } catch (NumberFormatException ex){
             _log.log(Level.SEVERE, "Bad data input", ex);
         }
     }
