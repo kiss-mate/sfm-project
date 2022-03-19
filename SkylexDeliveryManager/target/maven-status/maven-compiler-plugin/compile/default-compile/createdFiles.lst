@@ -4,11 +4,15 @@ repository\RepositoryBase.class
 repository\IRepositoryBase.class
 controller\SampleController.class
 repository\SampleRepository.class
+data\Login.class
 common\logging\LogFormatter.class
+Delivery.class
 logic\ILogic.class
 Main.class
 data\DbContext.class
 logic\Logic.class
 common\DbContextSettings.class
+Package.class
 common\logging\LoggingContext.class
+data\Driver.class
 data\Sample.class

@@ -9,8 +9,5 @@
         <module name="SkylexDeliveryManager" />
       </profile>
     </annotationProcessing>
-    <bytecodeTargetLevel>
-      <module name="SkylexDeliveryManager" target="17" />
-    </bytecodeTargetLevel>
   </component>
 </project>

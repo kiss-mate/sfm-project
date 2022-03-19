@@ -1,4 +1,5 @@
 controller\SampleControllerTest.class
 data\DbContextTest.class
+data\DriverTest.class
 logic\LogicTest.class
 data\SampleTest.class
