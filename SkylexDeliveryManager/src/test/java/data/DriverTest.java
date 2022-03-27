@@ -15,7 +15,7 @@ public class DriverTest {
     }
 
     @Test
-    public void setGet_HappyCase() {
+    public void setGet_Name() {
         //arrange
         var expectedValue1 = "value1_to_expect";
         var sample = new Driver();
