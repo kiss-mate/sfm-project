@@ -18,50 +18,50 @@ public class VehicleTest {
     public void setGet_plateNumber() {
         //arrange
         var expectedValue1 = "54";
-        var sample = new Vehicle();
+        var vehicle = new Vehicle();
 
         //act
-        sample.setPlateNumber(expectedValue1);
+        vehicle.setPlateNumber(expectedValue1);
         //assert
-        assertEquals(expectedValue1,sample.getPlateNumber());
+        assertEquals(expectedValue1,vehicle.getPlateNumber());
     }
 
     @Test
     public void setGet_inDelivery() {
         //arrange
         var expectedValue1 = true;
-        var sample = new Vehicle();
+        var vehicle = new Vehicle();
 
         //act
-        sample.setInDelivery(expectedValue1);
+        vehicle.setInDelivery(expectedValue1);
         //assert
-        assertEquals(0,sample.getId());
-        assertEquals(expectedValue1,sample.isInDelivery());
+        assertEquals(0,vehicle.getId());
+        assertEquals(expectedValue1,vehicle.isInDelivery());
     }
 
     @Test
     public void setGet_maxCapacity() {
         //arrange
         var expectedValue1 = 542;
-        var sample = new Vehicle();
+        var vehicle = new Vehicle();
 
         //act
-        sample.setMaxCapacity(expectedValue1);
+        vehicle.setMaxCapacity(expectedValue1);
         //assert
-        assertEquals(0,sample.getId());
-        assertEquals(expectedValue1,sample.getMaxCapacity());
+        assertEquals(0,vehicle.getId());
+        assertEquals(expectedValue1,vehicle.getMaxCapacity());
     }
 
     @Test
     public void setGet_currentLoad() {
         //arrange
         var expectedValue1 = 4356;
-        var sample = new Vehicle();
+        var vehicle = new Vehicle();
 
         //act
-        sample.setCurrentLoad(expectedValue1);
+        vehicle.setCurrentLoad(expectedValue1);
         //assert
-        assertEquals(0,sample.getId());
-        assertEquals(expectedValue1,sample.getCurrentLoad());
+        assertEquals(0,vehicle.getId());
+        assertEquals(expectedValue1,vehicle.getCurrentLoad());
     }
 }
