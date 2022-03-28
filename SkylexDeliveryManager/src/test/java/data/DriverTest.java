@@ -15,15 +15,15 @@ public class DriverTest {
     }
 
     @Test
-    public void setGet_HappyCase() {
+    public void setGet_Name() {
         //arrange
         var expectedValue1 = "value1_to_expect";
-        var sample = new Driver();
+        var driver = new Driver();
 
         //act
-        sample.setName(expectedValue1);
+        driver.setName(expectedValue1);
         //assert
-        assertEquals(0,sample.getId());
-        assertEquals(expectedValue1,sample.getName());
+        assertEquals(0,driver.getId());
+        assertEquals(expectedValue1,driver.getName());
     }
 }
