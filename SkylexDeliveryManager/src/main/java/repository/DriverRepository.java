@@ -1,5 +1,6 @@
 package repository;
 
+import com.google.inject.Inject;
 import data.Driver;
 import org.hibernate.SessionFactory;
 
@@ -12,6 +13,7 @@ public class DriverRepository extends RepositoryBase<Driver> implements IDriverR
      * @param sessionFactory SessionFactory instance
      * @throws NullPointerException log and sessionFactory cannot be null
      */
+    @Inject
     public DriverRepository(Logger log, SessionFactory sessionFactory) {
         super(log, sessionFactory);
     }

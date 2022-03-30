@@ -1,25 +1,18 @@
 import com.google.inject.Guice;
 import common.DbContextSettings;
 import common.logging.LoggingContext;
-import controller.SampleController;
 import data.DbContext;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.paint.Paint;
 import javafx.stage.Stage;
 import logic.ILogic;
 import logic.Logic;
 import org.hibernate.SessionFactory;
-import repository.IRepositoryBase;
-import repository.ISampleRepository;
-import repository.RepositoryBase;
-import repository.SampleRepository;
+import repository.*;
 
 import java.util.Scanner;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 public class Main extends Application {
     @Override
@@ -39,23 +32,25 @@ public class Main extends Application {
 
             // Add repos
             config.bind(IRepositoryBase.class).to(RepositoryBase.class);
+            config.bind(IDriverRepository.class).to(DriverRepository.class);
             config.bind(ISampleRepository.class).to(SampleRepository.class);
         });
 
+        // setup the main window
         var loader = new FXMLLoader();
-        loader.setLocation((getClass().getResource("view/sample.fxml")));
+        loader.setLocation((getClass().getResource("UI/login.fxml")));
         loader.setControllerFactory(injector::getInstance);
         Parent root = loader.load();
-        Scene scene = new Scene(root, 300, 300, Paint.valueOf("#5050FB"));
-        stage.setTitle("Sample");
+        Scene scene = new Scene(root);
+        stage.setTitle("Login to Skylex Delivery Manager");
         stage.setScene(scene);
         stage.show();
 
-        var log = injector.getInstance(Logger.class);
-        var controller = injector.getInstance(SampleController.class);
-
-        log.log(Level.INFO,"Application loaded");
-        var thread = new Thread(controller::handleFakeAction);
-        thread.start();
+//        var log = injector.getInstance(Logger.class);
+//        var controller = injector.getInstance(SampleController.class);
+//
+//        log.log(Level.INFO,"Application loaded");
+//        var thread = new Thread(controller::handleFakeAction);
+//        thread.start();
     }
 }
