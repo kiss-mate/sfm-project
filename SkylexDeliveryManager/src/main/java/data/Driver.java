@@ -37,4 +37,15 @@ public class Driver {
         this.name = name;
     }
 
+    /**
+     * Converts the Driver object to a readable string
+     * @return
+     */
+    @Override
+    public String toString() {
+        return "Driver{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                '}';
+    }
 }
