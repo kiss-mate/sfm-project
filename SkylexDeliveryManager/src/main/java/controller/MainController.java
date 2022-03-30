@@ -2,6 +2,9 @@ package controller;
 
 import com.google.inject.Inject;
 import common.exceptions.ArgumentNullException;
+import javafx.event.ActionEvent;
+import javafx.fxml.FXML;
+import javafx.scene.control.TextField;
 import logic.ILogic;
 
 import java.util.logging.Level;
@@ -23,4 +26,17 @@ public class MainController {
         if ((_logic = logic) == null) throw  new ArgumentNullException("logic");
         _log.log(Level.INFO, "Hello from the MainController!");
     }
+
+    public void handleSubmitAction(ActionEvent actionEvent) {
+        _log.log(Level.INFO, "Submit button clicked");
+        try {
+            _logic.addDriver(driverNameInput.getText());
+            _log.log(Level.INFO, "Submit action handled");
+        } catch (RuntimeException ex) {
+            _log.log(Level.SEVERE, "Error while handling submit action", ex);
+        }
+    }
+
+    @FXML
+    private TextField driverNameInput;
 }

@@ -36,21 +36,14 @@ public class Main extends Application {
             config.bind(ISampleRepository.class).to(SampleRepository.class);
         });
 
-        // setup the main window
+        // set up the main window
         var loader = new FXMLLoader();
-        loader.setLocation((getClass().getResource("UI/login.fxml")));
+        loader.setLocation((getClass().getResource("UI/main.fxml")));
         loader.setControllerFactory(injector::getInstance);
         Parent root = loader.load();
         Scene scene = new Scene(root);
-        stage.setTitle("Login to Skylex Delivery Manager");
+        stage.setTitle("Skylex Delivery Manager");
         stage.setScene(scene);
         stage.show();
-
-//        var log = injector.getInstance(Logger.class);
-//        var controller = injector.getInstance(SampleController.class);
-//
-//        log.log(Level.INFO,"Application loaded");
-//        var thread = new Thread(controller::handleFakeAction);
-//        thread.start();
     }
 }
