@@ -4,7 +4,7 @@ import javax.persistence.*;
 
 @Entity
 @Table(name = "LoginDatabase")
-public class Login {
+public class User {
     /**
      * Key for a Sample entity
      */

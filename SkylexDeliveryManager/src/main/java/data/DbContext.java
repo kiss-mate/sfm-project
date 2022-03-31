@@ -44,6 +44,8 @@ public class DbContext {
                 // add annotated classes
                 metadataSources.addAnnotatedClass(Sample.class);
                 metadataSources.addAnnotatedClass(Driver.class);
+                metadataSources.addAnnotatedClass(Vehicle.class);
+                metadataSources.addAnnotatedClass(User.class);
 
                 var metadata = metadataSources.buildMetadata();
 
