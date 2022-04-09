@@ -22,6 +22,7 @@ public class LoginController {
     public void LoginAction(ActionEvent e){
 
     }
+
     public void CancelAction(ActionEvent e){
         System.out.println("you logged out");
 

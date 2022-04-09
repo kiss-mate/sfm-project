@@ -37,7 +37,7 @@ public class Main extends Application {
 
         // set up the main window
         var loader = new FXMLLoader();
-        loader.setLocation((getClass().getResource("UI/main.fxml")));
+        loader.setLocation((getClass().getResource("UI/login.fxml")));
         loader.setControllerFactory(injector::getInstance);
         Parent root = loader.load();
         Scene scene = new Scene(root);
