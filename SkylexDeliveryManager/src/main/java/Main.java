@@ -33,7 +33,6 @@ public class Main extends Application {
             // Add repos
             config.bind(IRepositoryBase.class).to(RepositoryBase.class);
             config.bind(IDriverRepository.class).to(DriverRepository.class);
-            config.bind(ISampleRepository.class).to(SampleRepository.class);
         });
 
         // set up the main window

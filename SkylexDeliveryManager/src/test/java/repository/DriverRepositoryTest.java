@@ -4,7 +4,6 @@ import common.DbContextSettings;
 import common.exceptions.ArgumentNullException;
 import data.DbContext;
 import data.Driver;
-import data.Sample;
 import org.hibernate.SessionFactory;
 import org.junit.jupiter.api.Test;
 

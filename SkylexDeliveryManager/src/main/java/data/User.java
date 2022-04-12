@@ -6,7 +6,7 @@ import javax.persistence.*;
 @Table(name = "LoginDatabase")
 public class User {
     /**
-     * Key for a Sample entity
+     * Key for a User entity
      */
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -14,59 +14,49 @@ public class User {
     private int id;
 
     /**
-     * String value for a Sample entity
+     * Username
      */
     @Column(name = "userName")
     private String userName;
 
     /**
-     * String value for a Sample entity
+     * User password
      */
     @Column(name = "password")
     private String password;
 
+    /**
+     * Gets the id of a User
+     */
     public int getId() {
         return id;
     }
 
     /**
-     * Gets the value1 of a Sample object
+     * Gets the username
      */
     public String getUserName() {
         return userName;
     }
 
     /**
-     * Gets the value2 of a Sample object
+     * Sets the username
      */
     public void setUserName(String userName) {
         this.userName = userName;
     }
 
     /**
-     * Gets the value1 of a Sample object
+     * Gets the password
      */
     public String getPassword() {
         return password;
     }
 
     /**
-     * Gets the value2 of a Sample object
+     * Sets the password
      */
     public void setPassword(String password) {
         this.password = password;
     }
-
-
-    // returns true if USERNAME and PW is set to "admin"
-    public boolean isValidLogin_BETA(){
-        return this.userName.equals("admin") && this.password.equals("admin");
-    }
-
-
-    // implementation to be done
-    public boolean isValidLogin(){
-        return false;
-    }
-
 }

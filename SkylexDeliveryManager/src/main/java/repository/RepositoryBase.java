@@ -3,14 +3,9 @@ package repository;
 import com.google.inject.Inject;
 import common.exceptions.ArgumentNullException;
 import common.sql.SqlConstants;
-import data.Sample;
-import org.hibernate.HibernateException;
 import org.hibernate.SessionFactory;
-
 import java.lang.reflect.ParameterizedType;
-import java.util.ArrayList;
 import java.util.List;
-import java.util.logging.Level;
 import java.util.logging.Logger;
 
 /**

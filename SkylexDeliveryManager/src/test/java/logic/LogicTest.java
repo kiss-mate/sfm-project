@@ -3,7 +3,6 @@ package logic;
 import common.exceptions.ArgumentNullException;
 import common.exceptions.BusinessException;
 import data.Driver;
-import data.Sample;
 import enums.ErrorCodes;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -12,7 +11,6 @@ import org.junit.jupiter.params.provider.MethodSource;
 import org.mockito.ArgumentCaptor;
 import org.mockito.junit.jupiter.MockitoExtension;
 import repository.IDriverRepository;
-import repository.ISampleRepository;
 
 import java.util.Arrays;
 import java.util.logging.Level;
@@ -29,8 +27,7 @@ public class LogicTest {
         //arrange, act, assert
         assertNotNull(new Logic(
                 mock(Logger.class),
-                mock(IDriverRepository.class),
-                mock(ISampleRepository.class)));
+                mock(IDriverRepository.class)));
     }
 
     @Test
@@ -40,8 +37,7 @@ public class LogicTest {
                 ArgumentNullException.class,
                 () -> new Logic(
                         null,
-                        mock(IDriverRepository.class),
-                        mock(ISampleRepository.class)));
+                        mock(IDriverRepository.class)));
 
         //assert
         assertEquals("log", exception.getMessage());
@@ -54,42 +50,10 @@ public class LogicTest {
                 ArgumentNullException.class,
                 () -> new Logic(
                         mock(Logger.class),
-                        null,
-                        mock(ISampleRepository.class)));
-
-        //assert
-        assertEquals("driverRepo", exception.getMessage());
-    }
-
-    @Test
-    public void new_SampleRepoNull() {
-        //arrange, act
-        var exception = assertThrows(
-                ArgumentNullException.class,
-                () -> new Logic(
-                        mock(Logger.class),
-                        mock(IDriverRepository.class),
                         null));
 
         //assert
-        assertEquals("sampleRepo", exception.getMessage());
-    }
-
-    @Test
-    public void addOneSample_HappyCase() {
-        //assert
-        var mockRepo = mock(ISampleRepository.class);
-        var mockLog = mock(Logger.class);
-        var sampleObject = new Sample();
-        sampleObject.setValue1("value1");
-        sampleObject.setValue2(1234);
-        var logic = new Logic(mockLog, mock(IDriverRepository.class),mockRepo);
-
-        //act
-        logic.addOneSample(sampleObject.getValue1(),sampleObject.getValue2());
-
-        verify(mockRepo, times(1)).insert(any(Sample.class));
-        verify(mockLog, times(1)).log(isA(Level.INFO.getClass()), anyString());
+        assertEquals("driverRepo", exception.getMessage());
     }
 
     @Test
@@ -99,7 +63,7 @@ public class LogicTest {
         var driverName = "driver_name";
         var mockLog = mock(Logger.class);
         var mockDriverRepo = mock(IDriverRepository.class);
-        var logic = new Logic(mockLog, mockDriverRepo, mock(ISampleRepository.class));
+        var logic = new Logic(mockLog, mockDriverRepo);
         //act
         logic.addDriver(driverName);
 
@@ -113,7 +77,7 @@ public class LogicTest {
     @MethodSource("nameTestData")
     public void addDriver_NameNullOrWhiteSpace(String name) {
         //arrange
-        var logic = new Logic(mock(Logger.class), mock(IDriverRepository.class), mock(ISampleRepository.class));
+        var logic = new Logic(mock(Logger.class), mock(IDriverRepository.class));
 
         //act
         var exception = assertThrows(BusinessException.class, () -> logic.addDriver(name));
@@ -137,7 +101,7 @@ public class LogicTest {
         var mockDriverRepo = mock(IDriverRepository.class);
         when(mockDriverRepo.getById(driverId)).thenReturn(driver);
 
-        var logic = new Logic(mockLog, mockDriverRepo, mock(ISampleRepository.class));
+        var logic = new Logic(mockLog, mockDriverRepo);
         //act
         logic.changeOneDriver(driverId, "new_driver_name");
 
@@ -151,7 +115,7 @@ public class LogicTest {
     @MethodSource("nameTestData")
     public void changeOneDriver_NameNullOrWhitespace(String name) {
         //arrange
-        var logic = new Logic(mock(Logger.class), mock(IDriverRepository.class), mock(ISampleRepository.class));
+        var logic = new Logic(mock(Logger.class), mock(IDriverRepository.class));
 
         //act
         var exception = assertThrows(BusinessException.class, () -> logic.changeOneDriver(123, name));
@@ -167,7 +131,7 @@ public class LogicTest {
         var mockDriverRepo = mock(IDriverRepository.class);
         when(mockDriverRepo.getById(anyInt())).thenReturn(null);
 
-        var logic = new Logic(mock(Logger.class), mockDriverRepo, mock(ISampleRepository.class));
+        var logic = new Logic(mock(Logger.class), mockDriverRepo);
         //act
         var exception = assertThrows(BusinessException.class, () -> logic.changeOneDriver(123, "new_driver_name"));
 
@@ -184,7 +148,7 @@ public class LogicTest {
         driver.setName("driver_name");
         var mockDriverRepo = mock(IDriverRepository.class);
         when(mockDriverRepo.getById(anyInt())).thenReturn(driver);
-        var logic = new Logic(mock(Logger.class), mockDriverRepo, mock(ISampleRepository.class));
+        var logic = new Logic(mock(Logger.class), mockDriverRepo);
 
         //act
         var result = logic.getOneDriver(1);
@@ -198,7 +162,7 @@ public class LogicTest {
     public void getOneDriver_NotFound() {
         var mockDriverRepo = mock(IDriverRepository.class);
         when(mockDriverRepo.getById(anyInt())).thenReturn(null);
-        var logic = new Logic(mock(Logger.class), mockDriverRepo, mock(ISampleRepository.class));
+        var logic = new Logic(mock(Logger.class), mockDriverRepo);
 
         //act
         var result = logic.getOneDriver(1);
@@ -212,7 +176,7 @@ public class LogicTest {
     public void getAllDrivers_HappyCase() {
         //arrange
         var mockDriverRepo = mock(IDriverRepository.class);
-        var logic = new Logic(mock(Logger.class), mockDriverRepo, mock(ISampleRepository.class));
+        var logic = new Logic(mock(Logger.class), mockDriverRepo);
 
         //act
         var result = logic.getAllDrivers();
@@ -229,7 +193,7 @@ public class LogicTest {
         var mockDriverRepo = mock(IDriverRepository.class);
         when(mockDriverRepo.getById(anyInt())).thenReturn(driver);
         var mockLog = mock(Logger.class);
-        var logic = new Logic(mockLog, mockDriverRepo, mock(ISampleRepository.class));
+        var logic = new Logic(mockLog, mockDriverRepo);
 
         //act
         logic.deleteDriver(123);
@@ -244,7 +208,7 @@ public class LogicTest {
         //arrange
         var mockDriverRepo = mock(IDriverRepository.class);
         when(mockDriverRepo.getById(anyInt())).thenReturn(null);
-        var logic = new Logic(mock(Logger.class), mockDriverRepo, mock(ISampleRepository.class));
+        var logic = new Logic(mock(Logger.class), mockDriverRepo);
 
         //act
         var exception =  assertThrows(BusinessException.class, () -> logic.deleteDriver(123));

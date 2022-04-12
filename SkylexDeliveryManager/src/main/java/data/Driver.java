@@ -1,12 +1,13 @@
 package data;
 
+
 import javax.persistence.*;
 
 @Entity
 @Table(name = "DriverData")
 public class Driver {
     /**
-     * Key for a Sample entity
+     * Key for a Driver entity
      */
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -14,7 +15,7 @@ public class Driver {
     private int id;
 
     /**
-     * String value for a Sample entity
+     * Name for a Driver entity
      */
     @Column(name = "name")
     private String name;
@@ -24,14 +25,14 @@ public class Driver {
     }
 
     /**
-     * Gets the value1 of a Sample object
+     * Gets the name of a driver
      */
     public String getName() {
         return name;
     }
 
     /**
-     * Gets the value2 of a Sample object
+     * Sets the name of a driver
      */
     public void setName(String name) {
         this.name = name;
@@ -39,7 +40,7 @@ public class Driver {
 
     /**
      * Converts the Driver object to a readable string
-     * @return
+     * @return string representation of a Driver object
      */
     @Override
     public String toString() {
