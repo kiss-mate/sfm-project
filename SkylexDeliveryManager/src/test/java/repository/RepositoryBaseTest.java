@@ -2,29 +2,15 @@ package repository;
 
 import common.DbContextSettings;
 import data.DbContext;
-import data.Sample;
-import org.hibernate.Criteria;
-import org.hibernate.Session;
+import data.Driver;
 import org.hibernate.SessionFactory;
-import org.hibernate.query.Query;
-import org.hibernate.query.QueryProducer;
-import org.hibernate.query.criteria.internal.CriteriaQueryImpl;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
-import org.mockito.stubbing.Answer;
-
-import javax.persistence.TypedQuery;
-import javax.persistence.criteria.CriteriaBuilder;
-import javax.persistence.criteria.CriteriaQuery;
-import java.util.ArrayList;
 import java.util.logging.Logger;
 
 import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
-import static org.mockito.Mockito.times;
 
 @ExtendWith(MockitoExtension.class)
 public class RepositoryBaseTest {
@@ -69,11 +55,10 @@ public class RepositoryBaseTest {
 
         var mockSf = DbContext.getDbContextInstance().getSessionFactory(interceptedSettings);
 
-        var sut = new SampleRepository(mock(Logger.class), mockSf);
+        var sut = new DriverRepository(mock(Logger.class), mockSf);
 
-        var oneEntity = new Sample();
-        oneEntity.setValue1("abc");
-        oneEntity.setValue2(123);
+        var oneEntity = new Driver();
+        oneEntity.setName("name");
 
         //act
         var id = sut.insert(oneEntity);
@@ -91,7 +76,7 @@ public class RepositoryBaseTest {
 
         var mockSf = DbContext.getDbContextInstance().getSessionFactory(interceptedSettings);
 
-        var sut = new SampleRepository(mock(Logger.class), mockSf);
+        var sut = new DriverRepository(mock(Logger.class), mockSf);
 
         //act
         var result = sut.getAll();
@@ -108,13 +93,12 @@ public class RepositoryBaseTest {
         interceptedSettings.put("hibernate.show_sql", "false");
         interceptedSettings.put("hibernate.connection.url", "jdbc:h2:file:./testDb");
 
-        var oneEntity = new Sample();
-        oneEntity.setValue1("abc");
-        oneEntity.setValue2(123);
+        var oneEntity = new Driver();
+        oneEntity.setName("abc");
 
         var mockSf = DbContext.getDbContextInstance().getSessionFactory(interceptedSettings);
 
-        var sut = new SampleRepository(mock(Logger.class), mockSf);
+        var sut = new DriverRepository(mock(Logger.class), mockSf);
         sut.insert(oneEntity);
 
         //act
@@ -122,8 +106,7 @@ public class RepositoryBaseTest {
 
         //assert
         assertNotNull(result);
-        assertEquals("abc", result.getValue1());
-        assertEquals(123, result.getValue2());
+        assertEquals("abc", result.getName());
     }
 
     @Test
@@ -135,7 +118,7 @@ public class RepositoryBaseTest {
 
         var mockSf = DbContext.getDbContextInstance().getSessionFactory(interceptedSettings);
 
-        var sut = new SampleRepository(mock(Logger.class), mockSf);
+        var sut = new DriverRepository(mock(Logger.class), mockSf);
 
         //act
         var result = sut.getById(0);
@@ -151,13 +134,12 @@ public class RepositoryBaseTest {
         interceptedSettings.put("hibernate.show_sql", "false");
         interceptedSettings.put("hibernate.connection.url", "jdbc:h2:file:./testDb");
 
-        var oneEntity = new Sample();
-        oneEntity.setValue1("abc");
-        oneEntity.setValue2(123);
+        var oneEntity = new Driver();
+        oneEntity.setName("abc");
 
         var mockSf = DbContext.getDbContextInstance().getSessionFactory(interceptedSettings);
 
-        var sut = new SampleRepository(mock(Logger.class), mockSf);
+        var sut = new DriverRepository(mock(Logger.class), mockSf);
         int id = sut.insert(oneEntity);
 
         //act
@@ -165,7 +147,7 @@ public class RepositoryBaseTest {
 
         //assert
         assertTrue(isSuccess);
-        assertNull(sut.getById(1));
+        assertNull(sut.getById(id));
     }
 
     @Test
@@ -177,7 +159,7 @@ public class RepositoryBaseTest {
 
         var mockSf = DbContext.getDbContextInstance().getSessionFactory(interceptedSettings);
 
-        var sut = new SampleRepository(mock(Logger.class), mockSf);
+        var sut = new DriverRepository(mock(Logger.class), mockSf);
 
         //act
         var isSuccess = sut.delete(1000);

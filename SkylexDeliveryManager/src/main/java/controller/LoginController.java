@@ -27,13 +27,7 @@ public class LoginController {
 
         Stage stage = (Stage) CancelButton.getScene().getWindow();
         stage.close();
-
-
     }
-
-
-
-
 }
 
 

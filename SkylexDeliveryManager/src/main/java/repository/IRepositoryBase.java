@@ -3,7 +3,7 @@ package repository;
 import java.util.List;
 
 /**
- * Provides the generic CR(U)D data access for T type entities. Update is entity dependent.
+ * Provides the generic CR(U)D data access for T type entities. Update is entity dependent because of different fields.
  * @param <T> type of entity
  */
 public interface IRepositoryBase<T> {

@@ -4,10 +4,8 @@ import com.google.inject.Inject;
 import common.exceptions.ArgumentNullException;
 import common.exceptions.BusinessException;
 import data.Driver;
-import data.Sample;
 import enums.ErrorCodes;
 import repository.IDriverRepository;
-import repository.ISampleRepository;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -15,32 +13,18 @@ import java.util.logging.Logger;
 public class Logic implements ILogic {
     private final Logger _log;
     private final IDriverRepository _driverRepo;
-    private final ISampleRepository _sampleRepo;
 
     /**
      * Creates Logic object for the project
      * @param log Logger log
-     * @param sampleRepo ISampleRepository sampleRepo
      * @exception NullPointerException log cannot be null
      * @exception NullPointerException sampleRepo cannot be null
      */
     @Inject
-    public Logic(Logger log, IDriverRepository driverRepo, ISampleRepository sampleRepo) {
+    public Logic(Logger log, IDriverRepository driverRepo) {
         if ((_log = log) == null) throw new ArgumentNullException("log");
         if ((_driverRepo = driverRepo) == null) throw new ArgumentNullException("driverRepo");
-        if ((_sampleRepo = sampleRepo) == null) throw new ArgumentNullException("sampleRepo");
     }
-
-    //region SAMPLE RELATED LOGIC
-    @Override
-    public void addOneSample(String value1, int value2) {
-        var newSample = new Sample();
-        newSample.setValue1(value1);
-        newSample.setValue2(value2);
-        _sampleRepo.insert(newSample);
-        _log.log(Level.INFO, "New sample object created");
-    }
-    //endregion
 
     //region DRIVER RELATED LOGIC
     @Override

@@ -3,10 +3,10 @@ package common.exceptions;
 import enums.ErrorCodes;
 
 public class BusinessException extends RuntimeException{
-    private String message;
-    private Object param;
-    private ErrorCodes errorCode;
-    private Throwable exception;
+    private final String message;
+    private final Object param;
+    private final ErrorCodes errorCode;
+    private final Throwable exception;
 
     public BusinessException(String message) {
         this(message, null);

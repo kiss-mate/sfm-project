@@ -14,6 +14,9 @@ public class MainController {
     private final Logger _log;
     private final ILogic _logic;
 
+    @FXML
+    private TextField driverNameInput;
+
     /**
      * Creates new MainController instance
      * @param log logger
@@ -36,7 +39,4 @@ public class MainController {
             _log.log(Level.SEVERE, "Error while handling submit action", ex);
         }
     }
-
-    @FXML
-    private TextField driverNameInput;
 }

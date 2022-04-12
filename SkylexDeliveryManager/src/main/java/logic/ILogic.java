@@ -8,14 +8,7 @@ import java.util.List;
  * Provides business and transaction logic for the project
  */
 public interface ILogic {
-    /**
-     * Creates and adds one Sample object to the "sample" table
-     * @param value1 value1
-     * @param value2 value2
-     */
-    void addOneSample(String value1, int value2);
-
-    /**
+     /**
      * Creates and saves one Driver object
      * @param name name of the driver
      */
@@ -31,7 +24,7 @@ public interface ILogic {
     /**
      * Fetches one Driver object
      * @param id id of the driver
-     * @return
+     * @return driver object with given id
      */
     Driver getOneDriver(int id);
 

@@ -3,7 +3,6 @@ package data;
 import org.hibernate.SessionFactory;
 import org.hibernate.boot.MetadataSources;
 import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
-
 import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -42,7 +41,6 @@ public class DbContext {
                 var metadataSources = new MetadataSources(serviceRegistry);
 
                 // add annotated classes
-                metadataSources.addAnnotatedClass(Sample.class);
                 metadataSources.addAnnotatedClass(Driver.class);
                 metadataSources.addAnnotatedClass(Vehicle.class);
                 metadataSources.addAnnotatedClass(User.class);
