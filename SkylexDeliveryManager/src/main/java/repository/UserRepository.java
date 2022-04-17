@@ -1,5 +1,6 @@
 package repository;
 
+import com.google.inject.Inject;
 import data.User;
 import org.hibernate.SessionFactory;
 
@@ -13,6 +14,7 @@ public class UserRepository extends RepositoryBase<User> implements IUserReposit
      * @param sessionFactory SessionFactory instance
      * @throws NullPointerException log and sessionFactory cannot be null
      */
+    @Inject
     public UserRepository(Logger log, SessionFactory sessionFactory) {
         super(log, sessionFactory);
     }
