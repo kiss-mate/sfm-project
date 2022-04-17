@@ -1,32 +1,36 @@
 package controller;
 import javafx.event.ActionEvent;
-import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
+import javafx.scene.layout.Border;
 import javafx.stage.Stage;
 
 public class LoginController {
-
-    @FXML
-    private Button LoginButton;
-    @FXML
-    private Button CancelButton;
-    @FXML
-    private TextField username;
-    @FXML
-    private TextField password;
-    @FXML
-    private Label label;
+    public Label usernameLabel;
+    public Label passwordLabel;
+    public Button loginButton;
+    public TextField usernameField;
+    public PasswordField passwordField;
+    public Button cancelButton;
 
     public void LoginAction(ActionEvent e){
+        if (usernameField.getText().equals("admin") && passwordField.getText().equals("pwd")) {
+            ((Stage)loginButton
+                    .getScene()
+                    .getWindow())
+                    .close();
+        }
+
+        usernameField.setBorder(Border.EMPTY);
 
     }
     public void CancelAction(ActionEvent e){
-        System.out.println("you logged out");
-
-        Stage stage = (Stage) CancelButton.getScene().getWindow();
-        stage.close();
+        ((Stage)cancelButton
+                .getScene()
+                .getWindow())
+        .close();
     }
 }
 
