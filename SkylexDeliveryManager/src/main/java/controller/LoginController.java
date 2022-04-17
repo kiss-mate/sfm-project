@@ -26,6 +26,7 @@ public class LoginController {
         usernameField.setBorder(Border.EMPTY);
 
     }
+  
     public void CancelAction(ActionEvent e){
         ((Stage)cancelButton
                 .getScene()
@@ -33,5 +34,3 @@ public class LoginController {
         .close();
     }
 }
-
-
