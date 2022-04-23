@@ -18,7 +18,7 @@ public class Logic implements ILogic {
      * Creates Logic object for the project
      * @param log Logger log
      * @exception NullPointerException log cannot be null
-     * @exception NullPointerException sampleRepo cannot be null
+     * @exception NullPointerException driverRepo cannot be null
      */
     @Inject
     public Logic(Logger log, IDriverRepository driverRepo) {

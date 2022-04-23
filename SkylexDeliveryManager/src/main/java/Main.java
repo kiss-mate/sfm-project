@@ -9,7 +9,9 @@ import javafx.scene.Scene;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import logic.ILogic;
+import logic.ILoginLogic;
 import logic.Logic;
+import logic.LoginLogic;
 import org.hibernate.SessionFactory;
 import repository.*;
 
@@ -26,10 +28,10 @@ public class Main extends Application {
             config.bind(SessionFactory.class).toProvider(() -> DbContext
                             .getDbContextInstance()
                             .getSessionFactory(DbContextSettings.contextSettings()));
-            config.bind(Scanner.class).toProvider(() -> new Scanner(System.in));
 
             // Add the logic
             config.bind(ILogic.class).to(Logic.class);
+            config.bind(ILoginLogic.class).to(LoginLogic.class);
 
             // Add repos
             config.bind(IRepositoryBase.class).to(RepositoryBase.class);
