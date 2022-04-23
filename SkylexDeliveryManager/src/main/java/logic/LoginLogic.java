@@ -5,7 +5,6 @@ import common.exceptions.ArgumentNullException;
 import common.exceptions.BusinessException;
 import data.User;
 import enums.ErrorCodes;
-import repository.IDriverRepository;
 import repository.IUserRepository;
 
 import java.util.List;
@@ -69,9 +68,9 @@ public class LoginLogic implements ILoginLogic {
 
         if (_userRepo.delete(user)) {
             _log.log(Level.INFO, "Removed User object from database: " + user);
+        } else {
+            _log.log(Level.WARNING, "Could not remove User object from database: " + user);
         }
-
-        _log.log(Level.WARNING, "Could not remove User object from database: " + user);
     }
 
     private void validateLoginParams(String username, String password) {
