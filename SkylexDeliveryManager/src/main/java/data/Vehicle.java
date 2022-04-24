@@ -17,10 +17,10 @@ public class Vehicle {
     private boolean inDelivery;
 
     @Column(name = "maxCapacity")
-    private int maxCapacity;
+    private double maxCapacity;
 
     @Column(name = "currentLoad")
-    private int currentLoad;
+    private double currentLoad;
 
 
     public int getId() {
@@ -43,19 +43,19 @@ public class Vehicle {
         this.inDelivery = inDelivery;
     }
 
-    public int getMaxCapacity() {
+    public double getMaxCapacity() {
         return maxCapacity;
     }
 
-    public void setMaxCapacity(int maxCapacity) {
+    public void setMaxCapacity(double maxCapacity) {
         this.maxCapacity = maxCapacity;
     }
 
-    public int getCurrentLoad() {
+    public double getCurrentLoad() {
         return currentLoad;
     }
 
-    public void setCurrentLoad(int currentLoad) {
+    public void setCurrentLoad(double currentLoad) {
         this.currentLoad = currentLoad;
     }
 }
