@@ -11,6 +11,7 @@ import java.util.logging.Logger;
  * Provides configuration for hibernate and a single SessionFactory instance
  */
 public class DbContext {
+    private DbContext() {}
     private static final Logger _log = Logger.getLogger(DbContext.class.getName());
     private static DbContext dbContextInstance;
     private SessionFactory _sessionFactoryInstance;
