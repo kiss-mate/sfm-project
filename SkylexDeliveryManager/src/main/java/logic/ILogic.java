@@ -12,7 +12,7 @@ public interface ILogic {
      * Creates and saves one Driver object
      * @param name name of the driver
      */
-    void addDriver(String name);
+     Driver addDriver(String name);
 
     /**
      * Updates one Driver object

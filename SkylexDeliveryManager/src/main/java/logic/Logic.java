@@ -28,7 +28,7 @@ public class Logic implements ILogic {
 
     //region DRIVER RELATED LOGIC
     @Override
-    public void addDriver(String name) {
+    public Driver addDriver(String name) {
         if (name == null || name.isBlank() || name.isEmpty())
             throw new BusinessException("Driver name was null or whitespace");
 
@@ -36,6 +36,7 @@ public class Logic implements ILogic {
         newDriver.setName(name);
         _driverRepo.insert(newDriver);
         _log.log(Level.INFO, "New Driver object added to the database: " + newDriver);
+        return newDriver;
     }
 
     @Override

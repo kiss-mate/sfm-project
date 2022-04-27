@@ -7,6 +7,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 
 
+<?import javafx.scene.control.ListView?>
 <AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.MainController">
    <children>
       <TabPane layoutX="14.0" layoutY="15.0" prefHeight="378.0" prefWidth="578.0" tabClosingPolicy="UNAVAILABLE">
@@ -18,7 +19,9 @@
                         <TextField fx:id="driverNameInput" layoutX="21.0" layoutY="34.0" />
                         <Button layoutX="21.0" layoutY="72.0" mnemonicParsing="false" text="Submit" onAction="#handleSubmitAction" />
                      </children>
-                  </AnchorPane>
+                  <ListView fx:id="driverListView" layoutX="200" layoutY="30.0"/>
+                  <Button fx:id="removeButtin" layoutX="500" layoutY="30.0" onAction="#handleRemoveAction" text="Delete"/>
+              </AnchorPane>
             </content>
           </Tab>
           <Tab text="Vehicle">
