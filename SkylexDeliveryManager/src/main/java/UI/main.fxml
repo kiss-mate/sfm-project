@@ -8,6 +8,7 @@
 
 
 <?import javafx.scene.control.ListView?>
+
 <AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.MainController">
    <children>
       <TabPane layoutX="14.0" layoutY="15.0" prefHeight="378.0" prefWidth="578.0" tabClosingPolicy="UNAVAILABLE">
@@ -17,10 +18,10 @@
               <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                      <children>
                         <TextField fx:id="driverNameInput" layoutX="21.0" layoutY="34.0" />
-                        <Button layoutX="21.0" layoutY="72.0" mnemonicParsing="false" text="Submit" onAction="#handleSubmitAction" />
+                        <Button fx:id="ADD" layoutX="21.0" layoutY="72.0" mnemonicParsing="false" text="Submit" onAction="#handleDriverTabAction" />
                      </children>
                   <ListView fx:id="driverListView" layoutX="200" layoutY="30.0"/>
-                  <Button fx:id="removeButtin" layoutX="500" layoutY="30.0" onAction="#handleRemoveAction" text="Delete"/>
+                  <Button fx:id="REMOVE" layoutX="500" layoutY="30.0" onAction="#handleDriverTabAction" text="Delete"/>
               </AnchorPane>
             </content>
           </Tab>

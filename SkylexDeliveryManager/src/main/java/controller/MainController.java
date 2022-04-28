@@ -3,30 +3,31 @@ package controller;
 import com.google.inject.Inject;
 import common.exceptions.ArgumentNullException;
 import data.Driver;
+import handlers.DriverActionHandler;
+import handlers.IDriverActionHandler;
 import javafx.collections.FXCollections;
-import javafx.collections.ObservableArray;
-import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
 import logic.ILogic;
-import viewmodel.DriverViewModel;
+import models.DriverTabDto;
+import models.viewmodel.DriverViewModel;
 
-import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public class MainController {
     private final Logger _log;
     private final ILogic _logic;
+    private final IDriverActionHandler _driverActionHandler;
     @FXML
     public ListView<Driver> driverListView;
 
     private final DriverViewModel _model;
-    @FXML
-    public Button removeButtin;
 
     @FXML
     private TextField driverNameInput;
@@ -38,29 +39,26 @@ public class MainController {
      * @throws ArgumentNullException params cannot be null
      */
     @Inject
-    public MainController(Logger log, ILogic logic) {
+    public MainController(Logger log, ILogic logic, IDriverActionHandler driverActionHandler) {
         if ((_log = log) == null) throw new ArgumentNullException("log");
         if ((_logic = logic) == null) throw  new ArgumentNullException("logic");
+        if ((_driverActionHandler = driverActionHandler) == null) throw  new ArgumentNullException("driverActionHandler");
         _log.log(Level.INFO, "Hello from the MainController!");
         _model = new DriverViewModel();
+        _model.setInputFieldValues(new HashMap<>());
         _model.setDriverList(_logic.getAllDrivers());
     }
 
-    public void handleSubmitAction(ActionEvent actionEvent) {
-        _log.log(Level.INFO, "Submit button clicked");
-        try {
-            var driver = _logic.addDriver(driverNameInput.getText());
+    public void handleDriverTabAction(ActionEvent action) {
 
-            driverListView.setItems(_model.getDriversObsList(_logic.getAllDrivers()));
+        _model.setSelectedDriver(driverListView.getSelectionModel().getSelectedItem());
+        _model.setDriverList(_logic.getAllDrivers());
+        _model.getInputFieldValues().put("DRIVER_NAME_KEY", driverNameInput.getText());
 
-            _log.log(Level.INFO, "Submit action handled");
-        } catch (RuntimeException ex) {
-            _log.log(Level.SEVERE, "Error while handling submit action", ex);
-        }
-    }
+        var dto = new DriverTabDto(_model, ((Node)action.getSource()).getId());
 
-    public void handleRemoveAction(ActionEvent actionEvent) {
-        _logic.deleteDriver(driverListView.getSelectionModel().getSelectedItem().getId());
-        driverListView.setItems(_model.getDriversObsList(_logic.getAllDrivers()));
+        _driverActionHandler.handleAction(dto);
+
+        driverListView.setItems(FXCollections.observableArrayList(_logic.getAllDrivers()));
     }
 }

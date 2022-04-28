@@ -2,6 +2,8 @@ import com.google.inject.Guice;
 import common.DbContextSettings;
 import common.logging.LoggingContext;
 import data.DbContext;
+import handlers.DriverActionHandler;
+import handlers.IDriverActionHandler;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -32,6 +34,9 @@ public class Main extends Application {
             // Add the logic
             config.bind(ILogic.class).to(Logic.class);
             config.bind(ILoginLogic.class).to(LoginLogic.class);
+
+            // Add handlers
+            config.bind(IDriverActionHandler.class).to(DriverActionHandler.class);
 
             // Add repos
             config.bind(IRepositoryBase.class).to(RepositoryBase.class);
