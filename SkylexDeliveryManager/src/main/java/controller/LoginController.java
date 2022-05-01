@@ -2,6 +2,7 @@ package controller;
 import com.google.inject.Inject;
 import common.exceptions.ArgumentNullException;
 import javafx.event.ActionEvent;
+import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
@@ -13,11 +14,17 @@ import logic.ILoginLogic;
 import java.util.logging.Logger;
 
 public class LoginController {
+    @FXML
     public Label usernameLabel;
+    @FXML
     public Label passwordLabel;
+    @FXML
     public Button loginButton;
+    @FXML
     public TextField usernameField;
+    @FXML
     public PasswordField passwordField;
+    @FXML
     public Button cancelButton;
 
     private final Logger _log;
@@ -27,6 +34,10 @@ public class LoginController {
     public LoginController(Logger log, ILoginLogic loginLogic) {
         if ((_log = log) == null) throw new ArgumentNullException("log");
         if ((_loginLogic = loginLogic) == null) throw new ArgumentNullException("loginLogic");
+    }
+
+    @FXML
+    public void initialize() {
     }
 
     public void LoginAction(ActionEvent e){

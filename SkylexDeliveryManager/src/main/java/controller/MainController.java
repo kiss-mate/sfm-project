@@ -44,8 +44,13 @@ public class MainController {
         _model.setDriverList(_logic.getAllDrivers());
     }
 
+    @FXML
+    public void initialize() {
+        updateView();
+    }
+
     public void handleDriverTabAction(ActionEvent actionEvent) {
- 
+
         // preparing the view model to forward in dto
         _model.setSelectedDriver(driverTableView.getSelectionModel().getSelectedItem());
         _model.setDriverList(_logic.getAllDrivers());
@@ -61,6 +66,10 @@ public class MainController {
 
         // fetching changes from database to display
         responseLabel.setText(response);
+        updateView();
+    }
+
+    private void updateView() {
         driverIdCol.setCellValueFactory(new PropertyValueFactory<>("id"));
         driverNameCol.setCellValueFactory(new PropertyValueFactory<>("name"));
         driverTableView.setItems(FXCollections.observableArrayList(_logic.getAllDrivers()));
