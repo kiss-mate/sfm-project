@@ -2,7 +2,7 @@ package repository;
 
 import com.google.inject.Inject;
 import common.exceptions.ArgumentNullException;
-import common.sql.SqlConstants;
+import common.constants.SqlConstants;
 import org.hibernate.SessionFactory;
 import java.lang.reflect.ParameterizedType;
 import java.util.List;

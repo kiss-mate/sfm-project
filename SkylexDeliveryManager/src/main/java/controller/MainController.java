@@ -1,17 +1,17 @@
 package controller;
 
 import com.google.inject.Inject;
+import common.constants.InputFieldKeys;
 import common.exceptions.ArgumentNullException;
 import data.Driver;
-import handlers.DriverActionHandler;
 import handlers.IDriverActionHandler;
 import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
-import javafx.scene.control.Button;
-import javafx.scene.control.ListView;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
+import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.layout.AnchorPane;
 import logic.ILogic;
 import models.DriverTabDto;
 import models.viewmodel.DriverViewModel;
@@ -23,14 +23,9 @@ import java.util.logging.Logger;
 public class MainController {
     private final Logger _log;
     private final ILogic _logic;
-    private final IDriverActionHandler _driverActionHandler;
-    @FXML
-    public ListView<Driver> driverListView;
-
     private final DriverViewModel _model;
+    private final IDriverActionHandler _driverActionHandler;
 
-    @FXML
-    private TextField driverNameInput;
 
     /**
      * Creates new MainController instance
@@ -49,16 +44,40 @@ public class MainController {
         _model.setDriverList(_logic.getAllDrivers());
     }
 
-    public void handleDriverTabAction(ActionEvent action) {
-
-        _model.setSelectedDriver(driverListView.getSelectionModel().getSelectedItem());
+    public void handleDriverTabAction(ActionEvent actionEvent) {
+ 
+        // preparing the view model to forward in dto
+        _model.setSelectedDriver(driverTableView.getSelectionModel().getSelectedItem());
         _model.setDriverList(_logic.getAllDrivers());
-        _model.getInputFieldValues().put("DRIVER_NAME_KEY", driverNameInput.getText());
+        _model.getInputFieldValues().put(InputFieldKeys.DRIVER_NAME_INPUT_FIELD_KEY, driverNameInput.getText());
 
-        var dto = new DriverTabDto(_model, ((Node)action.getSource()).getId());
+        // get database action
+        var action = ((Node)actionEvent.getSource()).getId();
 
-        _driverActionHandler.handleAction(dto);
+        // sending data to handler
+        var dto = new DriverTabDto(_model, action);
+        _log.log(Level.INFO, "DriverTabDto created: ", dto);
+        var response = _driverActionHandler.handleAction(dto);
 
-        driverListView.setItems(FXCollections.observableArrayList(_logic.getAllDrivers()));
+        // fetching changes from database to display
+        responseLabel.setText(response);
+        driverIdCol.setCellValueFactory(new PropertyValueFactory<>("id"));
+        driverNameCol.setCellValueFactory(new PropertyValueFactory<>("name"));
+        driverTableView.setItems(FXCollections.observableArrayList(_logic.getAllDrivers()));
     }
+
+    // FXML fields
+    @FXML
+    private TableView<Driver> driverTableView;
+    @FXML
+    private TableColumn<Driver,Integer> driverIdCol;
+    @FXML
+    private TableColumn<Driver, String> driverNameCol;
+    @FXML
+    private TextField driverNameInput;
+    @FXML
+    private AnchorPane driverTabArea;
+    @FXML
+    private Label responseLabel;
+
 }

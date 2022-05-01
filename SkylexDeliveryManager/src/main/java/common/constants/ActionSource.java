@@ -1,4 +1,4 @@
-package enums;
+package common.constants;
 
 public final class ActionSource {
     public static final String ADD = "ADD";

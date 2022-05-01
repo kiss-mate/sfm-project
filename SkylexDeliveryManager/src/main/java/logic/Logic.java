@@ -30,7 +30,7 @@ public class Logic implements ILogic {
     @Override
     public Driver addDriver(String name) {
         if (name == null || name.isBlank() || name.isEmpty())
-            throw new BusinessException("Driver name was null or whitespace");
+            throw new BusinessException("Driver name was null or whitespace", ErrorCodes.DRIVER_NAME_EMPTY_OR_NULL);
 
         var newDriver = new Driver();
         newDriver.setName(name);
@@ -42,10 +42,10 @@ public class Logic implements ILogic {
     @Override
     public void changeOneDriver(int id, String name) {
         if (name == null || name.isBlank() || name.isEmpty())
-            throw new BusinessException("Driver name was null or whitespace");
+            throw new BusinessException("Driver name was null or whitespace", ErrorCodes.DRIVER_NAME_EMPTY_OR_NULL);
         var driver = _driverRepo.getById(id);
         if (driver == null)
-            throw new BusinessException("Driver object not found", ErrorCodes.NOT_FOUND_IN_DB);
+            throw new BusinessException("Driver object not found", ErrorCodes.DRIVER_NOT_FOUND);
         _driverRepo.update(id, name);
         _log.log(Level.INFO, "Updated Driver object: " + driver);
     }
@@ -64,7 +64,7 @@ public class Logic implements ILogic {
     public void deleteDriver(int id) {
         var driver = _driverRepo.getById(id);
         if (driver == null)
-            throw new BusinessException("Driver object not found", ErrorCodes.NOT_FOUND_IN_DB);
+            throw new BusinessException("Driver object not found", ErrorCodes.DRIVER_NOT_FOUND);
         _driverRepo.delete(driver);
         _log.log(Level.INFO, "Removed Driver object from the database: " + driver);
     }

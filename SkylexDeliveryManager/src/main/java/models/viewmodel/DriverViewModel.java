@@ -11,9 +11,6 @@ public class DriverViewModel {
     private Driver selectedDriver;
     private Map<String,String> inputFieldValues;
 
-
-
-
     public List<Driver> getDriverList() {
         return driverList;
     }
