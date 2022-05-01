@@ -12,7 +12,7 @@ public interface ILoginLogic {
      * @param username username for User
      * @param password password for User
      */
-    void addUser(String username, String password);
+    void addUser(String username, String password, boolean isDefault);
 
     /**
      * Changes properties of one user get by the id
@@ -20,7 +20,7 @@ public interface ILoginLogic {
      * @param username possible new username
      * @param password possible new pasword
      */
-    void changeOneUser(int id, String username, String password);
+    void changeOneUser(int id, String username, String password, boolean isDefault);
 
     /**
      * Loads one User object from the database, by the id

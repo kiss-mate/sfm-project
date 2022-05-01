@@ -3,7 +3,6 @@ package repository;
 import common.DbContextSettings;
 import common.exceptions.ArgumentNullException;
 import data.DbContext;
-import data.Driver;
 import data.User;
 import org.hibernate.SessionFactory;
 import org.junit.jupiter.api.Test;
@@ -61,7 +60,7 @@ public class UserRepositoryTest {
         interceptedSettings.put("hibernate.connection.url", "jdbc:h2:file:./testDb");
 
         var oneUser = new User();
-        oneUser.setUserName("username");
+        oneUser.setUsername("username");
         oneUser.setPassword("password");
 
         var mockSf = DbContext.getDbContextInstance().getSessionFactory(interceptedSettings);
@@ -73,7 +72,7 @@ public class UserRepositoryTest {
         sut.update(id,"new_username", "new_password");
 
         //assert
-        assertEquals("new_username", sut.getById(id).getUserName());
+        assertEquals("new_username", sut.getById(id).getUsername());
         assertEquals("new_password", sut.getById(id).getPassword());
     }
 }

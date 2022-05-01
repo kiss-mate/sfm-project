@@ -16,11 +16,11 @@ public class UserTest {
         var sut = new User();
 
         //act
-        sut.setUserName(expectedUserName);
+        sut.setUsername(expectedUserName);
         sut.setPassword(expectedPwd);
 
         //arrange
-        assertEquals(expectedUserName, sut.getUserName());
+        assertEquals(expectedUserName, sut.getUsername());
         assertEquals(expectedPwd, sut.getPassword());
         assertEquals(0, sut.getId());
     }

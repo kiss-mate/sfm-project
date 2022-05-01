@@ -9,7 +9,6 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.MethodSource;
 import org.mockito.ArgumentCaptor;
-import org.mockito.internal.verification.Times;
 import org.mockito.junit.jupiter.MockitoExtension;
 import repository.IUserRepository;
 
@@ -62,7 +61,7 @@ public class LoginLogicTest {
 
         //assert
         verify(mockUserRepo, times(1)).insert(ac.capture());
-        assertEquals(username, ac.getValue().getUserName());
+        assertEquals(username, ac.getValue().getUsername());
         assertEquals(password, ac.getValue().getPassword());
         verify(mockLog, times(1)).log(eq(Level.INFO),contains(username));
     }
@@ -88,7 +87,7 @@ public class LoginLogicTest {
         String password = "password";
         int userId = 10;
         var user = new User();
-        user.setUserName(username);
+        user.setUsername(username);
         user.setPassword(password);
 
         var mockLog = mock(Logger.class);

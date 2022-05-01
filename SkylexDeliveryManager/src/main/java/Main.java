@@ -10,6 +10,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 import logic.ILogic;
 import logic.ILoginLogic;
 import logic.Logic;
@@ -66,6 +67,7 @@ public class Main extends Application {
 
         // block main with login
         Stage loginStage = new Stage();
+        loginStage.initStyle(StageStyle.UNDECORATED);
         loginStage.initModality(Modality.WINDOW_MODAL);
         loginStage.initOwner(primaryStage);
         loginStage.setScene(loginScene);

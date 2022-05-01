@@ -13,7 +13,7 @@ public class DbContextSettings {
         contextSettings.put("hibernate.connection.username", "sa");
         contextSettings.put("hibernate.connection.password", "");
         contextSettings.put("hibernate.show_sql", "true");
-        contextSettings.put("hibernate.hbm2ddl.auto", "create");
+        contextSettings.put("hibernate.hbm2ddl.auto", "update");
         contextSettings.put("hibernate.connection.autocommit", "false");
         return contextSettings;
     }

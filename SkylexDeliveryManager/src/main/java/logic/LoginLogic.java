@@ -28,25 +28,26 @@ public class LoginLogic implements ILoginLogic {
     }
 
     @Override
-    public void addUser(String username, String password) {
+    public void addUser(String username, String password, boolean isDefault) {
         validateLoginParams(username, password);
 
         User newUser = new User();
-        newUser.setUserName(username);
+        newUser.setUsername(username);
         newUser.setPassword(password);
+        newUser.setDefault(isDefault);
 
         _userRepo.insert(newUser);
         _log.log(Level.INFO, "New User added to database " + newUser);
     }
 
     @Override
-    public void changeOneUser(int id, String username, String password) {
+    public void changeOneUser(int id, String username, String password, boolean isDefault) {
         validateLoginParams(username, password);
         var user = _userRepo.getById(id);
         if (user == null)
             throw new BusinessException("User not found in database", ErrorCodes.NOT_FOUND_IN_DB);
 
-        _userRepo.update(id, username, password);
+        _userRepo.update(id, username, password, isDefault);
         _log.log(Level.INFO, "User updated: " + user);
     }
 
