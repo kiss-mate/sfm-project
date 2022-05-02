@@ -1,6 +1,6 @@
 package common.exceptions;
 
-import enums.ErrorCodes;
+import models.enums.ErrorCodes;
 
 public class BusinessException extends RuntimeException{
     private final String message;

@@ -3,7 +3,7 @@ package logic;
 import common.exceptions.ArgumentNullException;
 import common.exceptions.BusinessException;
 import data.Driver;
-import enums.ErrorCodes;
+import models.enums.ErrorCodes;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.junit.jupiter.params.ParameterizedTest;

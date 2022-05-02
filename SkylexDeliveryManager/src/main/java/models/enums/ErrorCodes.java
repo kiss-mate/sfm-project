@@ -1,4 +1,4 @@
-package enums;
+package models.enums;
 
 public enum ErrorCodes {
     // region Generic error codes (Reserved from 1 to 99)

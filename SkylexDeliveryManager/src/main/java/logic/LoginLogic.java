@@ -4,7 +4,7 @@ import com.google.inject.Inject;
 import common.exceptions.ArgumentNullException;
 import common.exceptions.BusinessException;
 import data.User;
-import enums.ErrorCodes;
+import models.enums.ErrorCodes;
 import repository.IUserRepository;
 
 import java.util.List;
