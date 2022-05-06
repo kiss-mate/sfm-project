@@ -58,4 +58,15 @@ public class Vehicle {
     public void setCurrentLoad(double currentLoad) {
         this.currentLoad = currentLoad;
     }
+
+    @Override
+    public String toString() {
+        return "Vehicle{" +
+                "id=" + id +
+                ", plateNumber='" + plateNumber + '\'' +
+                ", inDelivery=" + inDelivery +
+                ", maxCapacity=" + maxCapacity +
+                ", currentLoad=" + currentLoad +
+                '}';
+    }
 }
