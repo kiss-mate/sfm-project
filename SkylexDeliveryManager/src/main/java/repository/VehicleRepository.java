@@ -19,6 +19,7 @@ public class VehicleRepository extends RepositoryBase<Vehicle> implements IVehic
 
     @Override
     public boolean update(int id, String plateNumber, boolean inDelivery, double maxCapacity, double currentLoad) {
+        var session = _sessionFactory.openSession();
         var oneVehicle = getById(id);
         if (oneVehicle == null)
             return false;
@@ -28,7 +29,6 @@ public class VehicleRepository extends RepositoryBase<Vehicle> implements IVehic
         oneVehicle.setMaxCapacity(maxCapacity);
         oneVehicle.setCurrentLoad(currentLoad);
 
-        var session = _sessionFactory.openSession();
         session.beginTransaction();
         session.update(oneVehicle);
         session.getTransaction().commit();
