@@ -3,6 +3,8 @@ package data;
 import org.hibernate.SessionFactory;
 import org.hibernate.boot.MetadataSources;
 import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
+
+import javax.transaction.Synchronization;
 import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -14,13 +16,14 @@ public class DbContext {
     private DbContext() {}
     private static final Logger _log = Logger.getLogger(DbContext.class.getName());
     private static DbContext dbContextInstance;
-    private SessionFactory _sessionFactoryInstance;
+    private SessionFactory sessionFactoryInstance;
 
     /**
      * Provides the single DbContext instance which gives a configured SessionFactory
+     * Lazy loading
      * @return the DbContext for the project
      */
-    public static DbContext getDbContextInstance() {
+    public static synchronized DbContext getDbContextInstance() {
         if (dbContextInstance == null) {
             dbContextInstance = new DbContext();
         }
@@ -30,10 +33,11 @@ public class DbContext {
 
     /**
      * Gets the SessionFactory from DbContext instance and, if null, configures a new SessionFactory
+     * Lazy loading
      * @return the SessionFactory instance
      */
-    public SessionFactory getSessionFactory(Map<String, String> settings) {
-        if (_sessionFactoryInstance == null) {
+    public synchronized SessionFactory getSessionFactory(Map<String, String> settings) {
+        if (sessionFactoryInstance == null) {
             try {
                 var serviceRegistry = new StandardServiceRegistryBuilder()
                         .applySettings(settings)
@@ -48,7 +52,7 @@ public class DbContext {
 
                 var metadata = metadataSources.buildMetadata();
 
-                _sessionFactoryInstance = metadata
+                sessionFactoryInstance = metadata
                         .getSessionFactoryBuilder()
                         .build();
 
@@ -57,10 +61,10 @@ public class DbContext {
                 throw new RuntimeException("Error while getting SessionFactory instance");
             }
         }
-        return _sessionFactoryInstance;
+        return sessionFactoryInstance;
     }
 
     public void setSessionFactory(SessionFactory sf) {
-        _sessionFactoryInstance = sf;
+        sessionFactoryInstance = sf;
     }
 }

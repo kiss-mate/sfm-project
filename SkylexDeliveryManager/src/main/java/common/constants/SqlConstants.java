@@ -1,4 +1,4 @@
-package common.sql;
+package common.constants;
 
 public class SqlConstants {
     /**

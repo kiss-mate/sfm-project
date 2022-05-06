@@ -9,5 +9,5 @@ public interface IUserRepository extends IRepositoryBase<User> {
      * @param username new username for User
      * @param password new password for User
      */
-    void update(int id, String username, String password);
+    void update(int id, String username, String password, boolean isDefault);
 }

@@ -20,12 +20,13 @@ public class UserRepository extends RepositoryBase<User> implements IUserReposit
     }
 
     @Override
-    public void update(int id, String username, String password) {
+    public void update(int id, String username, String password, boolean isDefault) {
         var session = _sessionFactory.openSession();
 
         var oneUser = getById(id);
-        oneUser.setUserName(username);
+        oneUser.setUsername(username);
         oneUser.setPassword(password);
+        oneUser.setDefault(isDefault);
 
         session.beginTransaction();
         session.update(oneUser);

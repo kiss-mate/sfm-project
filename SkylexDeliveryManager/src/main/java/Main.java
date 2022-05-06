@@ -2,20 +2,21 @@ import com.google.inject.Guice;
 import common.DbContextSettings;
 import common.logging.LoggingContext;
 import data.DbContext;
+import handlers.DriverActionHandler;
+import handlers.IDriverActionHandler;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 import logic.ILogic;
 import logic.ILoginLogic;
 import logic.Logic;
 import logic.LoginLogic;
 import org.hibernate.SessionFactory;
 import repository.*;
-
-import java.util.Scanner;
 
 public class Main extends Application {
     @Override
@@ -32,6 +33,9 @@ public class Main extends Application {
             // Add the logic
             config.bind(ILogic.class).to(Logic.class);
             config.bind(ILoginLogic.class).to(LoginLogic.class);
+
+            // Add handlers
+            config.bind(IDriverActionHandler.class).to(DriverActionHandler.class);
 
             // Add repos
             config.bind(IRepositoryBase.class).to(RepositoryBase.class);
@@ -61,6 +65,7 @@ public class Main extends Application {
 
         // block main with login
         Stage loginStage = new Stage();
+        loginStage.initStyle(StageStyle.UNDECORATED);
         loginStage.initModality(Modality.WINDOW_MODAL);
         loginStage.initOwner(primaryStage);
         loginStage.setScene(loginScene);
