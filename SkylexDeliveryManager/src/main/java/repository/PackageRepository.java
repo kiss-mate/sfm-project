@@ -4,6 +4,7 @@ import com.google.inject.Inject;
 import data.Package;
 import org.hibernate.SessionFactory;
 
+import java.util.Date;
 import java.util.logging.Logger;
 
 public class PackageRepository extends RepositoryBase<Package> implements IPackageRepository {
@@ -18,18 +19,18 @@ public class PackageRepository extends RepositoryBase<Package> implements IPacka
     }
 
     @Override
-    public boolean Update(int id, String content, int weight, String destination, Delivery delivery, boolean selected)
+    public boolean update(int id, String Content, String Destination, Date RegistrationTime, double weight, boolean inDelivery)
     {
         var session = _sessionFactory.openSession();
         var onePackage = getById(id);
         if (onePackage == null)
             return false;
 
-        onePackage.setPlateNumber(content);
-        onePackage.setInDelivery(weight);
-        onePackage.setMaxCapacity(destination);
-        onePackage.setCurrentLoad(delivery);
-        onePackage.setCurrentLoad(selected);
+        onePackage.setContent(Content);
+        onePackage.setDestination(Destination);
+        onePackage.setRegistrationTime(RegistrationTime);
+        onePackage.setWeight(weight);
+        onePackage.setInDelivery(inDelivery);
 
         session.beginTransaction();
         session.update(onePackage);
