@@ -110,6 +110,15 @@ public interface ILogic {
      */
     void addPackage(String Content, String Destination, double weight);
 
+    /**
+     * Updates a Vehicle object from the database according to the id
+     * @param id Id of the package to update
+     * @param Content Contents of the package
+     * @param Destination Destination of the package
+     * @param weight Weight of the package
+     * @param inDelivery If package is being delivered or not
+     */
+    void changeOnePackage(int id, String Content, String Destination, double weight, boolean inDelivery);
 
     /**
      * Deletes one Package object by id

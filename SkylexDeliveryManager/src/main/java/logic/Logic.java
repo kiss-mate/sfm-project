@@ -189,6 +189,27 @@ public class Logic implements ILogic {
         _log.log(Level.INFO, "New Package object added to the database: " + newPackage);
     }
 
+    @Override
+    public void changeOnePackage(int id, String Content, String Destination, double weight, boolean inDelivery){
+        Package packages = _packageRepo.getById(id);
+        if (packages == null) throw new BusinessException("No such package");
+        if (packages.isInDelivery())
+        {
+            // Package in delivery, can't change content or weight
+            if (!Content.equals(packages.getContent()) || weight != packages.getWeight())
+            {
+                throw new BusinessException("Cannot change content or weight of package in delivery");
+            }
+
+            // Vehicle in delivery but we either take it out or changing packages
+            _packageRepo.update(id, packages.getContent(), Destination, packages.getRegistrationTime(), packages.getWeight(), packages.isInDelivery());
+        }
+        else
+        {
+            // Vehicle not in delivery, everything can change but its current load has to stay 0
+            _packageRepo.update(id, Content, Destination, packages.getRegistrationTime(), weight, inDelivery);
+        }
+    }
 
     @Override
     public boolean deletePackage(int id)

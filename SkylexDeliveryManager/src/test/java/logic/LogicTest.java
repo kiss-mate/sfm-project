@@ -3,8 +3,9 @@ package logic;
 import common.exceptions.ArgumentNullException;
 import common.exceptions.BusinessException;
 import data.Driver;
-import models.enums.ErrorCodes;
+import data.Package;
 import data.Vehicle;
+import models.enums.ErrorCodes;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -477,4 +478,180 @@ public class LogicTest {
     }
 
     //endregion
+
+    //region VEHICLE RELATED LOGIC TESTS
+//void addPackage(String Content, String Destination, double weight)
+    @Test
+    public void addPackage_HappyCase() {
+        //arrange
+        ArgumentCaptor<Package> argument = ArgumentCaptor.forClass(Package.class);
+        var packageContent = "Poison";
+        var packageDestination = "Debrecen, Ótemető 2";
+        var mockLog = mock(Logger.class);
+        var mockDriverRepo = mock(IDriverRepository.class);
+        var mockVehicleRepo = mock(IVehicleRepository.class);
+        var mockPackageRepo = mock(IPackageRepository.class);
+        var logic = new Logic(mockLog, mockDriverRepo, mockVehicleRepo, mock(IPackageRepository.class));
+        //act
+        logic.addPackage(packageContent, packageDestination, 10);
+
+        //assert
+        verify(mockPackageRepo, times(1)).insert(argument.capture());
+        assertEquals(packageContent, argument.getValue().getContent());
+        assertEquals(10, argument.getValue().getWeight());
+        assertFalse(argument.getValue().isInDelivery());
+        verify(mockLog, times(1)).log(eq(Level.INFO), contains(packageContent));
+    }
+
+    @Test
+    public void changeOnePackage_InDelivery_HappyCase_1() {
+        //arrange
+        ArgumentCaptor<Double> argument = ArgumentCaptor.forClass(Double.class);
+        var packageContent = "Alma";
+        var packageId = 123;
+        var packages = new Package();
+        packages.setContent(packageContent);
+        packages.setDestination("Debrecen 12");
+        packages.setWeight(100);
+        packages.setInDelivery(true);
+
+        var mockLog = mock(Logger.class);
+
+        var mockPackageRepo = mock(IPackageRepository.class);
+        when(mockPackageRepo.getById(packageId)).thenReturn(packages);
+
+        var logic = new Logic(mockLog, mock(IDriverRepository.class), mock(IVehicleRepository.class), mockPackageRepo);
+        //act
+        logic.changeOnePackage(packageId, packages.getContent(), packages.getDestination(), 500, packages.isInDelivery());
+
+        //assert
+        verify(mockPackageRepo, times(1)).update(eq(packageId), eq(packages.getContent()), eq(packages.getDestination()), eq(packages.getRegistrationTime()),eq(packages.getWeight()), eq(packages.isInDelivery()));
+        assertEquals(500, argument.getValue());
+    }
+
+    @Test
+    public void changeOnePackage_InDelivery_FailureCase() {
+        //arrange
+        var packageContent = "Almák";
+        var packageId = 123;
+        var packages = new Package();
+        packages.setContent(packageContent);
+        packages.setDestination("Debrecen 9");
+        packages.setWeight(100);
+        packages.setInDelivery(true);
+
+        var mockLog = mock(Logger.class);
+
+        var mockPackageRepo = mock(IPackageRepository.class);
+        when(mockPackageRepo.getById(packageId)).thenReturn(packages);
+
+        var logic = new Logic(mockLog, mock(IDriverRepository.class), mock(IVehicleRepository.class), mockPackageRepo);
+        //act
+        var exception = assertThrows(BusinessException.class,
+                () ->  logic.changeOnePackage(packageId, "a new plate number", packages.getDestination(),100, packages.isInDelivery()));     ;
+
+        //assert
+        assertNotNull(exception);
+        assertTrue(exception.getMessage().contains("Cannot change content or weight of package in delivery"));
+    }
+
+    @Test
+    public void changeOnePackage_VehicleNotFound() {
+        //arrange
+        var mockPackageRepo = mock(IPackageRepository.class);
+
+        when(mockPackageRepo.getById(anyInt())).thenReturn(null);
+
+        var logic = new Logic(mock(Logger.class), mock(IDriverRepository.class), mock(IVehicleRepository.class), mockPackageRepo);
+
+        //act
+        var exception = assertThrows(BusinessException.class, () ->
+                logic.changeOnePackage(123, "94 Pizzas and a diet coke", "Pesti tanya", 0,false));
+
+        //assert
+        assertNotNull(exception);
+        assertEquals("No such package", exception.getMessage());
+    }
+
+    @Test
+    public void getOnePackage_HappyCase() {
+        //arrange
+        var packages = new Package();
+        packages.setContent("Barack");
+
+        var mockPackageRepo = mock(IPackageRepository.class);
+
+        when(mockPackageRepo.getById(anyInt())).thenReturn(packages);
+        var logic = new Logic(mock(Logger.class), mock(IDriverRepository.class), mock(IVehicleRepository.class), mockPackageRepo);
+
+        //act
+        var result = logic.getOnePackage(1);
+
+        //assert
+        assertNotNull(result);
+        verify(mockPackageRepo, times(1)).getById(1);
+    }
+
+    @Test
+    public void getOnePackage_NotFound() {
+        var mockPackageRepo = mock(IPackageRepository.class);
+        when(mockPackageRepo.getById(anyInt())).thenReturn(null);
+        var logic = new Logic(mock(Logger.class), mock(IDriverRepository.class), mock(IVehicleRepository.class), mockPackageRepo);
+
+        //act
+        var result = logic.getOnePackage(1);
+
+        //assert
+        assertNull(result);
+        verify(mockPackageRepo, times(1)).getById(1);
+    }
+
+    @Test
+    public void getAllPackages_HappyCase() {
+        //arrange
+        var mockPackageRepo = mock(IPackageRepository.class);
+        var logic = new Logic(mock(Logger.class), mock(IDriverRepository.class), mock(IVehicleRepository.class), mockPackageRepo);
+
+        //act
+        var result = logic.getAllPackages();
+
+        //assert
+        assertNotNull(result);
+        verify(mockPackageRepo, times(1)).getAll();
+    }
+
+    @Test
+    public void deletePackage_HappyCase() {
+        //arrange
+        var packages = new Package();
+        var mockPackageRepo = mock(IPackageRepository.class);
+        when(mockPackageRepo.getById(anyInt())).thenReturn(packages);
+        when(mockPackageRepo.delete(any(Package.class))).thenReturn(true);
+        var mockLog = mock(Logger.class);
+        var logic = new Logic(mock(Logger.class), mock(IDriverRepository.class), mock(IVehicleRepository.class), mockPackageRepo);
+
+        //act
+        logic.deletePackage(123);
+
+        //assert
+        verify(mockPackageRepo, times(1)).delete(packages);
+        verify(mockLog, times(1)).log(eq(Level.INFO), contains("Remove successful"));
+    }
+
+    @Test
+    public void deletePackage_NotFound() {
+        //arrange
+        var mockPackageRepo = mock(IPackageRepository.class);
+        var logic = new Logic(mock(Logger.class), mock(IDriverRepository.class), mock(IVehicleRepository.class), mockPackageRepo);
+
+        //act
+        var exception =  assertThrows(BusinessException.class, () -> logic.deletePackage(123));
+
+        //assert
+        assertNotNull(exception);
+        assertEquals("Cannot find package, unable to remove it", exception.getMessage());
+    }
+
+    //endregion
+
 }
