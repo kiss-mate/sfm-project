@@ -162,7 +162,7 @@ public class LogicTest {
         //assert
         assertNotNull(exception);
         assertEquals("Driver object not found", exception.getMessage());
-        assertEquals(ErrorCodes.NOT_FOUND_IN_DB, exception.getErrorCode());
+        assertEquals(ErrorCodes.DRIVER_NOT_FOUND, exception.getErrorCode());
     }
 
     @Test
@@ -245,7 +245,7 @@ public class LogicTest {
         //assert
         assertNotNull(exception);
         assertEquals("Driver object not found", exception.getMessage());
-        assertEquals(ErrorCodes.NOT_FOUND_IN_DB, exception.getErrorCode());
+        assertEquals(ErrorCodes.DRIVER_NOT_FOUND, exception.getErrorCode());
     }
 
     private static Stream<String> nameTestData() {

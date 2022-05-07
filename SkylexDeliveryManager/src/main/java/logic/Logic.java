@@ -70,9 +70,7 @@ public class Logic implements ILogic {
         var driver = _driverRepo.getById(id);
         if (driver == null)
             throw new BusinessException("Driver object not found", ErrorCodes.DRIVER_NOT_FOUND);
-        _driverRepo.delete(driver);
-        _log.log(Level.INFO, "Removed Driver object from the database: " + driver);
-            throw new BusinessException("Driver object not found", ErrorCodes.NOT_FOUND_IN_DB);
+
         if (_driverRepo.delete(driver)) {
             _log.log(Level.INFO, "Removed Driver object from the database: " + driver);
             return true;
