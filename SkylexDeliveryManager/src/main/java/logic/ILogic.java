@@ -2,7 +2,9 @@ package logic;
 
 import data.Driver;
 import data.Vehicle;
+import data.Package;
 
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -82,6 +84,49 @@ public interface ILogic {
      * @param id id of the vehicle
      */
     boolean deleteVehicle(int id);
+
+    //endregion
+
+
+    //region PACKAGE RELATED LOGIC
+    /**
+     * Gets all the Package objects in a list
+     * @return list of Package objects
+     */
+    List<Package> getAllPackages();
+
+    /**
+     * Fetches one Package object
+     * @param id id of the Package
+     * @return Package object with given id
+     */
+    Package getOnePackage(int id);
+
+    /**
+     * Creates and saves one Package object
+     * @param Content Content of the Package
+     * @param Destination Destination of the Package
+     * @param weight weight of the Package
+     */
+    void addPackage(String Content, String Destination, double weight);
+
+    /**
+     * Updates a Vehicle object from the database according to the id
+     * @param id Id of the package to update
+     * @param Content Contents of the package
+     * @param Destination Destination of the package
+     * @param weight Weight of the package
+     * @param inDelivery If package is being delivered or not
+     */
+    void changeOnePackage(int id, String Content, String Destination, double weight, boolean inDelivery);
+
+    /**
+     * Deletes one Package object by id
+     * @param id id of the Package
+     */
+    boolean deletePackage(int id);
+
+
 
     //endregion
 }
