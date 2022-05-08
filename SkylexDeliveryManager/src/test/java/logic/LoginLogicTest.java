@@ -57,7 +57,7 @@ public class LoginLogicTest {
         var loginLogic = new LoginLogic(mockLog, mockUserRepo);
 
         //act
-        loginLogic.addUser(username,password);
+        loginLogic.addUser(username,password, true);
 
         //assert
         verify(mockUserRepo, times(1)).insert(ac.capture());
@@ -73,7 +73,7 @@ public class LoginLogicTest {
         var loginLogic = new LoginLogic(mock(Logger.class), mock(IUserRepository.class));
 
         //act
-        var exception = assertThrows(BusinessException.class, () -> loginLogic.addUser(username,pwd));
+        var exception = assertThrows(BusinessException.class, () -> loginLogic.addUser(username,pwd, true));
 
         //assert
         assertNotNull(exception);
@@ -97,10 +97,10 @@ public class LoginLogicTest {
         var loginLogic = new LoginLogic(mockLog, mockUserRepo);
 
         //act
-        loginLogic.changeOneUser(userId, username, password);
+        loginLogic.changeOneUser(userId, username, password, true);
 
         //assert
-        verify(mockUserRepo, times(1)).update(eq(userId),eq(username),eq(password));
+        verify(mockUserRepo, times(1)).update(eq(userId),eq(username),eq(password), eq(true));
         verify(mockLog, times(1)).log(eq(Level.INFO),contains("User updated: "));
     }
 
@@ -111,7 +111,7 @@ public class LoginLogicTest {
         var loginLogic = new LoginLogic(mock(Logger.class), mock(IUserRepository.class));
 
         //act
-        var exception = assertThrows(BusinessException.class, () -> loginLogic.changeOneUser(1,username,pwd));
+        var exception = assertThrows(BusinessException.class, () -> loginLogic.changeOneUser(1,username,pwd, true));
 
         //assert
         assertNotNull(exception);
@@ -132,7 +132,7 @@ public class LoginLogicTest {
         var loginLogic = new LoginLogic(mockLog, mockUserRepo);
 
         //act
-        var exception = assertThrows(BusinessException.class, () -> loginLogic.changeOneUser(userId, username, password));
+        var exception = assertThrows(BusinessException.class, () -> loginLogic.changeOneUser(userId, username, password, true));
 
         //assert
         assertNotNull(exception);

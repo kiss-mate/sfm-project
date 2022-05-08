@@ -6,7 +6,7 @@ import common.exceptions.BusinessException;
 import common.constants.ActionSource;
 import models.enums.ErrorCodes;
 import logic.ILogic;
-import models.DriverTabDto;
+import models.MainViewDto;
 
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -21,40 +21,43 @@ public class DriverActionHandler implements IDriverActionHandler {
         _logic = logic;
     }
 
-    public String handleAction(DriverTabDto dto) {
+    public String handleAction(MainViewDto dto) {
         try {
             switch (dto.getActionSource()) {
                 case ActionSource.ADD -> handleAddAction(dto);
                 case ActionSource.REMOVE -> handleRemoveAction(dto);
                 case ActionSource.UPDATE -> handleUpdateAction(dto);
-                default -> _log.log(Level.WARNING, "Cannot recognize action to handle");
+                default -> {
+                    _log.log(Level.WARNING, "Cannot recognize action to handle");
+                    return "Cannot perform this action";
+                }
             }
 
             return dto.getActionSource() + " action was successful.";
         } catch (BusinessException bex) {
-            _log.log(Level.WARNING, "Business exception occurred: " + bex.getMessage());
+            _log.log(Level.WARNING, "Business exception occurred!", bex);
             return toResponseString(bex.getErrorCode(), dto.getActionSource());
         }
     }
 
-    private void handleAddAction(DriverTabDto dto) {
-        _logic.addDriver(dto.getDriverViewModel().getInputFieldValues().get(InputFieldKeys.DRIVER_NAME_INPUT_FIELD_KEY));
+    private void handleAddAction(MainViewDto dto) {
+        _logic.addDriver(dto.getMainViewModel().getInputFieldValues().get(InputFieldKeys.DRIVER_NAME_INPUT_FIELD_KEY));
     }
 
-    private void handleRemoveAction(DriverTabDto dto) {
-        if (dto.getDriverViewModel().getSelectedDriver() == null)
+    private void handleRemoveAction(MainViewDto dto) {
+        if (dto.getMainViewModel().getSelectedDriver() == null)
             throw new BusinessException("No driver was selected to remove", ErrorCodes.NO_DIVER_SELECTED);
 
-        _logic.deleteDriver(dto.getDriverViewModel().getSelectedDriver().getId());
+        _logic.deleteDriver(dto.getMainViewModel().getSelectedDriver().getId());
     }
 
-    private void handleUpdateAction(DriverTabDto dto) {
-        if (dto.getDriverViewModel().getSelectedDriver() == null)
+    private void handleUpdateAction(MainViewDto dto) {
+        if (dto.getMainViewModel().getSelectedDriver() == null)
             throw new BusinessException("No driver was selected to update", ErrorCodes.NO_DIVER_SELECTED);
 
         _logic.changeOneDriver(
-                dto.getDriverViewModel().getSelectedDriver().getId(),
-                dto.getDriverViewModel().getInputFieldValues().get(InputFieldKeys.DRIVER_NAME_INPUT_FIELD_KEY));
+                dto.getMainViewModel().getSelectedDriver().getId(),
+                dto.getMainViewModel().getInputFieldValues().get(InputFieldKeys.DRIVER_NAME_INPUT_FIELD_KEY));
     }
 
     private String toResponseString(ErrorCodes errorCode, String action) {

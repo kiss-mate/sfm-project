@@ -69,7 +69,7 @@ public class UserRepositoryTest {
         int id = sut.insert(oneUser);
 
         //act
-        sut.update(id,"new_username", "new_password");
+        sut.update(id,"new_username", "new_password", true);
 
         //assert
         assertEquals("new_username", sut.getById(id).getUsername());

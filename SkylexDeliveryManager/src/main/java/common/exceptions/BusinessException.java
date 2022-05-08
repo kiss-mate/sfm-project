@@ -29,11 +29,12 @@ public class BusinessException extends RuntimeException{
 
     @Override
     public String toString() {
-        return "Business exception occurred: "
-            + message
-            + (param != null ? param : "")
-            + (errorCode != null ? errorCode : "")
-            + (exception != null ? exception.getMessage() : "");
+        return "{"
+            + "Message=" + message
+            + ", param=" + (param != null ? param : "")
+            + ", errorCode=" + (errorCode != null ? errorCode : "")
+            + ", throwable=" + (exception != null ? exception.getMessage() : "")
+            + "}";
     }
 
     @Override
