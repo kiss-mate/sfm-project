@@ -9,7 +9,7 @@
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.MainController">
+<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.MainController">
    <children>
       <TabPane layoutX="14.0" layoutY="15.0" prefHeight="378.0" prefWidth="578.0" tabClosingPolicy="UNAVAILABLE">
         <tabs>
@@ -17,11 +17,11 @@
             <content>
               <AnchorPane fx:id="driverTabArea" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
 
-                  <Button fx:id="ADD" layoutX="21.0" layoutY="72.0" onAction="#handleDriverTabAction" text="Save" />
+                  <Button fx:id="ADD" layoutX="56.0" layoutY="78.0" onAction="#handleDriverTabAction" prefHeight="26.0" prefWidth="80.0" style="-fx-background-color: dodgerblue;" text="Save" textFill="WHITE" />
 
-                  <Button fx:id="REMOVE" layoutX="21.0" layoutY="109.0" onAction="#handleDriverTabAction" text="Delete" />
+                  <Button fx:id="REMOVE" layoutX="56.0" layoutY="158.0" onAction="#handleDriverTabAction" prefHeight="26.0" prefWidth="80.0" style="-fx-background-color: black;" text="Delete" textFill="WHITE" />
                      <TextField fx:id="driverNameInput" layoutX="21.0" layoutY="38.0" />
-                     <Button fx:id="UPDATE" layoutX="86.0" layoutY="71.0" mnemonicParsing="false" onAction="#handleDriverTabAction" text="Update" />
+                     <Button fx:id="UPDATE" layoutX="56.0" layoutY="118.0" mnemonicParsing="false" onAction="#handleDriverTabAction" prefHeight="26.0" prefWidth="80.0" text="Update" />
                      <TableView fx:id="driverTableView" layoutX="189.0" layoutY="34.0" prefHeight="288.0" prefWidth="376.0">
                        <columns>
                          <TableColumn fx:id="driverIdCol" prefWidth="128.0" text="ID" />
@@ -37,12 +37,27 @@
           </Tab>
           <Tab text="Vehicle">
             <content>
-              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                     <children>
+                        <TextField layoutX="21.0" layoutY="38.0" />
+                        <TextField layoutX="21.0" layoutY="78.0" />
+                        <Button layoutX="56.0" layoutY="158.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="80.0" text="Update" />
+                        <Button layoutX="56.0" layoutY="198.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="80.0" style="-fx-background-color: black;" text="Delete" textFill="WHITE" />
+                        <Button layoutX="56.0" layoutY="118.0" mnemonicParsing="false" prefWidth="80.0" style="-fx-background-color: dodgerblue;" text="Save" textFill="WHITE" />
+                     </children></AnchorPane>
             </content>
           </Tab>
             <Tab text="Package">
                <content>
-                  <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+                  <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                     <children>
+                        <TextField layoutX="21.0" layoutY="38.0" />
+                        <TextField layoutX="21.0" layoutY="78.0" />
+                        <TextField layoutX="21.0" layoutY="118.0" />
+                        <Button layoutX="56.0" layoutY="158.0" mnemonicParsing="false" prefWidth="80.0" style="-fx-background-color: dodgerblue;" text="Save" textFill="WHITE" />
+                        <Button layoutX="56.0" layoutY="198.0" mnemonicParsing="false" prefWidth="80.0" text="Update" />
+                        <Button layoutX="56.0" layoutY="238.0" mnemonicParsing="false" prefWidth="80.0" style="-fx-background-color: black;" text="Delete" textFill="WHITE" />
+                     </children></AnchorPane>
                </content>
             </Tab>
             <Tab text="Delivery">
