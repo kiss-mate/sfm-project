@@ -13,11 +13,11 @@ public class Package {
     @Column(name = "id")
     private int id;
     @Column(name = "Content")
-    private String Content;
+    private String content;
     @Column(name = "Destination")
-    private String Destination;
+    private String destination;
     @Column(name = "RegistrationTime")
-    private Date RegistrationTime;
+    private Date registrationTime;
     @Column(name = "weight")
     private double weight;
     @Column(name = "inDelivery")
@@ -28,15 +28,15 @@ public class Package {
     }
 
     public String getContent() {
-        return Content;
+        return content;
     }
 
     public String getDestination() {
-        return Destination;
+        return destination;
     }
 
     public Date getRegistrationTime() {
-        return RegistrationTime;
+        return registrationTime;
     }
 
     public double getWeight() {
@@ -47,22 +47,16 @@ public class Package {
         return inDelivery;
     }
 
-
-
-    public void setid(int id) {
-        this.id = id;
-    }
-
     public void setContent(String content) {
-        Content = content;
+        this.content = content;
     }
 
     public void setDestination(String destination) {
-        Destination = destination;
+        this.destination = destination;
     }
 
     public void setRegistrationTime(Date registrationTime) {
-        RegistrationTime = registrationTime;
+        this.registrationTime = registrationTime;
     }
 
     public void setWeight(double weight) {
@@ -74,10 +68,14 @@ public class Package {
     }
 
     @Override
-    public String toString(){
-        return "Package{" + Integer.toString(id) + ", "
-                + Content + ", " + Destination + ", "
-                +RegistrationTime + ", " + Double.toString(weight)
-                + ", " + inDelivery + '}';
+    public String toString() {
+        return "Package{" +
+                "id=" + id +
+                ", content='" + content + '\'' +
+                ", destination='" + destination + '\'' +
+                ", registrationTime=" + registrationTime +
+                ", weight=" + weight +
+                ", inDelivery=" + inDelivery +
+                '}';
     }
 }
