@@ -27,7 +27,10 @@ public class DriverActionHandler implements IDriverActionHandler {
                 case ActionSource.ADD -> handleAddAction(dto);
                 case ActionSource.REMOVE -> handleRemoveAction(dto);
                 case ActionSource.UPDATE -> handleUpdateAction(dto);
-                default -> _log.log(Level.WARNING, "Cannot recognize action to handle");
+                default -> {
+                    _log.log(Level.WARNING, "Cannot recognize action to handle");
+                    return "Cannot perform this action";
+                }
             }
 
             return dto.getActionSource() + " action was successful.";
