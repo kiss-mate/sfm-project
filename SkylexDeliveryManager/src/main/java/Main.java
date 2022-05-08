@@ -37,6 +37,7 @@ public class Main extends Application {
             config.bind(IMainActionHandler.class).to(MainActionHandler.class);
             config.bind(IDriverActionHandler.class).to(DriverActionHandler.class);
             config.bind(IVehicleActionHandler.class).to(VehicleActionHandler.class);
+            config.bind(IPackageActionHandler.class).to(PackageActionHandler.class);
 
             // Add repos
             config.bind(IRepositoryBase.class).to(RepositoryBase.class);

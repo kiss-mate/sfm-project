@@ -30,14 +30,55 @@ public enum ErrorCodes {
     //endregion
 
     // region Vehicle error codes
-
+    /**
+     * The vehicle plate number was null or whitespace
+     */
     VEHICLE_PLATE_NUMBER_INVALID,
 
+    /**
+     * Vehicle max capacity was null or invalid
+     */
     VEHICLE_MAX_CAPACITY_INVALID,
 
+    /**
+     * Vehicle not found in the database
+     */
     VEHICLE_NOT_FOUND,
 
+    /**
+     * No vehicle was selected from the list
+     */
     NO_VEHICLE_SELECTED,
+
+    //endregion
+
+
+    // region Package error codes
+
+    /**
+     * The package content was null or whitespace
+     */
+    PACKAGE_CONTENT_EMPTY_OR_NULL,
+
+    /**
+     * The package destination is null or whitespace
+     */
+    PACKAGE_DESTINATION_EMPTY_OR_NULL,
+
+    /**
+     * Zero or negative package weight
+     */
+    PACKAGE_INVALID_WEIGHT,
+
+    /**
+     * Package not found in the database
+     */
+    PACKAGE_NOT_FOUND,
+
+    /**
+     * No package was selected from the list
+     */
+    NO_PACKAGE_SELECTED,
 
     //endregion
 }

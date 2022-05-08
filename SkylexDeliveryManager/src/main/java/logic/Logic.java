@@ -10,11 +10,6 @@ import models.enums.ErrorCodes;
 import repository.IDriverRepository;
 import repository.IPackageRepository;
 import repository.IVehicleRepository;
-
-import java.lang.reflect.Field;
-import java.lang.reflect.Method;
-import java.lang.reflect.Parameter;
-import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 import java.util.logging.Level;
@@ -167,8 +162,6 @@ public class Logic implements ILogic {
     
     //endregion
 
-
-
     //region PACKAGE RELATED LOGIC
     @Override
     public List<Package> getAllPackages()
@@ -183,17 +176,19 @@ public class Logic implements ILogic {
     }
 
     @Override
-    public void addPackage(String Content, String Destination, double weight)
+    public void addPackage(String content, String destination, double weight)
     {
-        if (Content == null || Content.isBlank() || Content.isEmpty())
-            throw new BusinessException("Package content was null or whitespace");
+        if (content == null || content.isBlank() || content.isEmpty())
+            throw new BusinessException("Package content was null or whitespace", ErrorCodes.PACKAGE_CONTENT_EMPTY_OR_NULL);
+        if (destination == null || destination.isBlank() || destination.isEmpty())
+            throw new BusinessException("Package content was null or whitespace", ErrorCodes.PACKAGE_DESTINATION_EMPTY_OR_NULL);
         if (weight <= 0)
-            throw new BusinessException("Weight is zero or negative");
+            throw new BusinessException("Weight is zero or negative", ErrorCodes.PACKAGE_INVALID_WEIGHT);
 
         var newPackage = new Package();
-        newPackage.setContent(Content);
+        newPackage.setContent(content);
         newPackage.setWeight(weight);
-        newPackage.setDestination(Destination);
+        newPackage.setDestination(destination);
         newPackage.setInDelivery(false);
         newPackage.setRegistrationTime(new Date());
         _packageRepo.insert(newPackage);
@@ -201,24 +196,23 @@ public class Logic implements ILogic {
     }
 
     @Override
-    public void changeOnePackage(int id, String Content, String Destination, double weight, boolean inDelivery){
-        Package packages = _packageRepo.getById(id);
-        if (packages == null) throw new BusinessException("No such package");
-        if (packages.isInDelivery())
-        {
-            // Package in delivery, can't change content or weight
-            if (!Content.equals(packages.getContent()) || weight != packages.getWeight())
+    public void changeOnePackage(int id, String content, String destination, double weight, boolean inDelivery){
+        Package pack = _packageRepo.getById(id);
+        if (pack == null) throw new BusinessException("No such package", ErrorCodes.VEHICLE_NOT_FOUND);
+        if (pack.isInDelivery()) {
+            // Package in delivery, can't change content, weight or destination
+            if (!content.equals(pack.getContent()) ||
+                weight != pack.getWeight() ||
+                !destination.equals(pack.getDestination()))
             {
-                throw new BusinessException("Cannot change content or weight of package in delivery");
+                throw new BusinessException("Cannot change content, weight or destination of package in delivery");
             }
 
-            // Vehicle in delivery but we either take it out or changing packages
-            _packageRepo.update(id, packages.getContent(), Destination, packages.getRegistrationTime(), packages.getWeight(), packages.isInDelivery());
-        }
-        else
-        {
-            // Vehicle not in delivery, everything can change but its current load has to stay 0
-            _packageRepo.update(id, Content, Destination, packages.getRegistrationTime(), weight, inDelivery);
+            // Package in delivery but we take it out
+            _packageRepo.update(id, pack.getContent(), pack.getDestination(), pack.getRegistrationTime(), pack.getWeight(), inDelivery);
+        } else {
+            // Package not in delivery, everything can change
+            _packageRepo.update(id, content, destination, pack.getRegistrationTime(), weight, false);
         }
     }
 
@@ -227,7 +221,7 @@ public class Logic implements ILogic {
     {
         Package packages = _packageRepo.getById(id);
         if (packages == null)
-            throw new BusinessException("Cannot find packages, unable to remove it");
+            throw new BusinessException("Cannot find packages, unable to remove it", ErrorCodes.PACKAGE_NOT_FOUND);
         if(packages.isInDelivery())
             throw new BusinessException("Cannot delete packages in delivery!");
 

@@ -2,6 +2,7 @@ package models;
 
 import data.Driver;
 import data.Vehicle;
+import data.Package;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -13,6 +14,8 @@ public class MainViewModel {
     private Driver selectedDriver;
     private List<Vehicle> vehicleList;
     private Vehicle selectedVehicle;
+    private List<Package> packageList;
+    private Package selectedPackage;
     private Map<String, String> inputFieldValues;
 
     public MainViewModel() {
@@ -23,6 +26,7 @@ public class MainViewModel {
 
     // region Awesome Setters, Getters
 
+    // DRIVERS
     public List<Driver> getDriverList() {
         return driverList;
     }
@@ -39,6 +43,8 @@ public class MainViewModel {
         this.selectedDriver = selectedDriver;
     }
 
+
+    // VEHICLES
     public List<Vehicle> getVehicleList() {
         return vehicleList;
     }
@@ -54,6 +60,26 @@ public class MainViewModel {
     public void setSelectedVehicle(Vehicle selectedVehicle) {
         this.selectedVehicle = selectedVehicle;
     }
+
+
+    // PACKAGES
+    public List<Package> getPackageList() {
+        return packageList;
+    }
+
+    public void setPackageList(List<Package> packageList) {
+        this.packageList = packageList;
+    }
+
+    public Package getSelectedPackage() {
+        return selectedPackage;
+    }
+
+    public void setSelectedPackage(Package selectedPackage) {
+        this.selectedPackage = selectedPackage;
+    }
+
+
 
     public Map<String, String> getInputFieldValues() {
         return inputFieldValues;
@@ -73,6 +99,8 @@ public class MainViewModel {
                 ", selectedDriver=" + selectedDriver +
                 ", vehicleList=" + vehicleList +
                 ", selectedVehicle=" + selectedVehicle +
+                ", packageList=" + packageList +
+                ", selectedPackage=" + selectedPackage +
                 ", inputFieldValues=" + inputFieldValues +
                 '}';
     }
