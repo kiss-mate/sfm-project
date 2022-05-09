@@ -4,10 +4,13 @@ import com.google.inject.Inject;
 import common.exceptions.ArgumentNullException;
 import common.exceptions.BusinessException;
 import data.Driver;
-import models.enums.ErrorCodes;
 import data.Vehicle;
+import data.Package;
+import models.enums.ErrorCodes;
 import repository.IDriverRepository;
+import repository.IPackageRepository;
 import repository.IVehicleRepository;
+import java.util.Date;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -16,6 +19,7 @@ public class Logic implements ILogic {
     private final Logger _log;
     private final IDriverRepository _driverRepo;
     private final IVehicleRepository _vehicleRepo;
+    private final IPackageRepository _packageRepo;
 
     /**
      * Creates Logic object for the project
@@ -25,17 +29,18 @@ public class Logic implements ILogic {
      * @exception NullPointerException vehicleRepo cannot be null
      */
     @Inject
-    public Logic(Logger log, IDriverRepository driverRepo, IVehicleRepository vehicleRepo) {
+    public Logic(Logger log, IDriverRepository driverRepo, IVehicleRepository vehicleRepo, IPackageRepository packageRepo) {
         if ((_log = log) == null) throw new ArgumentNullException("log");
         if ((_driverRepo = driverRepo) == null) throw new ArgumentNullException("driverRepo");
         if ((_vehicleRepo = vehicleRepo) == null) throw new ArgumentNullException("vehicleRepo");
+        if ((_packageRepo = packageRepo) == null) throw new ArgumentNullException("packageRepo");
     }
 
     //region DRIVER RELATED LOGIC
     @Override
     public Driver addDriver(String name) {
         if (name == null || name.isBlank() || name.isEmpty())
-            throw new BusinessException("Driver name was null or whitespace", ErrorCodes.DRIVER_NAME_EMPTY_OR_NULL);
+            throw new BusinessException("Driver name was null or whitespace", ErrorCodes.DRIVER_NAME_EMPTY_OR_NULL, "{name="+name+"}");
 
         var newDriver = new Driver();
         newDriver.setName(name);
@@ -70,9 +75,7 @@ public class Logic implements ILogic {
         var driver = _driverRepo.getById(id);
         if (driver == null)
             throw new BusinessException("Driver object not found", ErrorCodes.DRIVER_NOT_FOUND);
-        _driverRepo.delete(driver);
-        _log.log(Level.INFO, "Removed Driver object from the database: " + driver);
-            throw new BusinessException("Driver object not found", ErrorCodes.NOT_FOUND_IN_DB);
+      
         if (_driverRepo.delete(driver)) {
             _log.log(Level.INFO, "Removed Driver object from the database: " + driver);
             return true;
@@ -81,10 +84,11 @@ public class Logic implements ILogic {
             return false;
         }
     }
+  
     //endregion
 
     //region VEHICLE RELATED LOGIC
-
+  
     @Override
     public List<Vehicle> getAllVehicles()
     {
@@ -156,5 +160,81 @@ public class Logic implements ILogic {
         }
     }
     
+    //endregion
+
+    //region PACKAGE RELATED LOGIC
+  
+    @Override
+    public List<Package> getAllPackages()
+    {
+        return _packageRepo.getAll();
+    }
+
+    @Override
+    public Package getOnePackage(int id)
+    {
+        return _packageRepo.getById(id);
+    }
+
+    @Override
+    public void addPackage(String content, String destination, double weight)
+    {
+        if (content == null || content.isBlank() || content.isEmpty())
+            throw new BusinessException("Package content was null or whitespace", ErrorCodes.PACKAGE_CONTENT_EMPTY_OR_NULL);
+        if (destination == null || destination.isBlank() || destination.isEmpty())
+            throw new BusinessException("Package content was null or whitespace", ErrorCodes.PACKAGE_DESTINATION_EMPTY_OR_NULL);
+        if (weight <= 0)
+            throw new BusinessException("Weight is zero or negative", ErrorCodes.PACKAGE_INVALID_WEIGHT);
+
+        var newPackage = new Package();
+        newPackage.setContent(content);
+        newPackage.setWeight(weight);
+        newPackage.setDestination(destination);
+        newPackage.setInDelivery(false);
+        newPackage.setRegistrationTime(new Date());
+        _packageRepo.insert(newPackage);
+        _log.log(Level.INFO, "New Package object added to the database: " + newPackage);
+    }
+
+    @Override
+    public void changeOnePackage(int id, String content, String destination, double weight, boolean inDelivery){
+        Package pack = _packageRepo.getById(id);
+        if (pack == null) throw new BusinessException("No such package", ErrorCodes.VEHICLE_NOT_FOUND);
+        if (pack.isInDelivery()) {
+            // Package in delivery, can't change content, weight or destination
+            if (!content.equals(pack.getContent()) ||
+                weight != pack.getWeight() ||
+                !destination.equals(pack.getDestination()))
+            {
+                throw new BusinessException("Cannot change content, weight or destination of package in delivery");
+            }
+
+            // Package in delivery but we take it out
+            _packageRepo.update(id, pack.getContent(), pack.getDestination(), pack.getRegistrationTime(), pack.getWeight(), inDelivery);
+        } else {
+            // Package not in delivery, everything can change
+            _packageRepo.update(id, content, destination, pack.getRegistrationTime(), weight, false);
+        }
+    }
+
+    @Override
+    public boolean deletePackage(int id)
+    {
+        Package packages = _packageRepo.getById(id);
+        if (packages == null)
+            throw new BusinessException("Cannot find packages, unable to remove it", ErrorCodes.PACKAGE_NOT_FOUND);
+        if(packages.isInDelivery())
+            throw new BusinessException("Cannot delete packages in delivery!");
+
+        if (_packageRepo.delete(packages))
+        {
+            _log.log(Level.INFO, "Remove successful");
+            return true;
+        } else {
+            _log.log(Level.WARNING, "Remove failed");
+            return false;
+        }
+    }
+
     //endregion
 }

@@ -2,8 +2,7 @@ import com.google.inject.Guice;
 import common.DbContextSettings;
 import common.logging.LoggingContext;
 import data.DbContext;
-import handlers.DriverActionHandler;
-import handlers.IDriverActionHandler;
+import handlers.*;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -35,13 +34,17 @@ public class Main extends Application {
             config.bind(ILoginLogic.class).to(LoginLogic.class);
 
             // Add handlers
+            config.bind(IMainActionHandler.class).to(MainActionHandler.class);
             config.bind(IDriverActionHandler.class).to(DriverActionHandler.class);
+            config.bind(IVehicleActionHandler.class).to(VehicleActionHandler.class);
+            config.bind(IPackageActionHandler.class).to(PackageActionHandler.class);
 
             // Add repos
             config.bind(IRepositoryBase.class).to(RepositoryBase.class);
             config.bind(IDriverRepository.class).to(DriverRepository.class);
             config.bind(IUserRepository.class).to(UserRepository.class);
             config.bind(IVehicleRepository.class).to(VehicleRepository.class);
+            config.bind(IPackageRepository.class).to(PackageRepository.class);
         });
 
         // set up the main window

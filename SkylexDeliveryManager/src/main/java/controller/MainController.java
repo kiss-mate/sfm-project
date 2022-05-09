@@ -4,7 +4,7 @@ import com.google.inject.Inject;
 import common.constants.InputFieldKeys;
 import common.exceptions.ArgumentNullException;
 import data.Driver;
-import handlers.IDriverActionHandler;
+import handlers.IMainActionHandler;
 import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -13,18 +13,17 @@ import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.AnchorPane;
 import logic.ILogic;
-import models.DriverTabDto;
-import models.viewmodel.DriverViewModel;
+import models.MainViewDto;
+import models.MainViewModel;
 
-import java.util.HashMap;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public class MainController {
     private final Logger _log;
     private final ILogic _logic;
-    private final DriverViewModel _model;
-    private final IDriverActionHandler _driverActionHandler;
+    private final IMainActionHandler _mainActionHandler;
+    private final MainViewModel viewModel;
 
 
     /**
@@ -34,14 +33,11 @@ public class MainController {
      * @throws ArgumentNullException params cannot be null
      */
     @Inject
-    public MainController(Logger log, ILogic logic, IDriverActionHandler driverActionHandler) {
+    public MainController(Logger log, ILogic logic, IMainActionHandler mainActionHandler) {
         if ((_log = log) == null) throw new ArgumentNullException("log");
         if ((_logic = logic) == null) throw  new ArgumentNullException("logic");
-        if ((_driverActionHandler = driverActionHandler) == null) throw  new ArgumentNullException("driverActionHandler");
-        _log.log(Level.INFO, "Hello from the MainController!");
-        _model = new DriverViewModel();
-        _model.setInputFieldValues(new HashMap<>());
-        _model.setDriverList(_logic.getAllDrivers());
+        if ((_mainActionHandler = mainActionHandler) == null) throw  new ArgumentNullException("mainActionHandler");
+        viewModel = new MainViewModel();
     }
 
     @FXML
@@ -52,17 +48,17 @@ public class MainController {
     public void handleDriverTabAction(ActionEvent actionEvent) {
 
         // preparing the view model to forward in dto
-        _model.setSelectedDriver(driverTableView.getSelectionModel().getSelectedItem());
-        _model.setDriverList(_logic.getAllDrivers());
-        _model.getInputFieldValues().put(InputFieldKeys.DRIVER_NAME_INPUT_FIELD_KEY, driverNameInput.getText());
+        viewModel.setSelectedDriver(driverTableView.getSelectionModel().getSelectedItem());
+        viewModel.setDriverList(_logic.getAllDrivers());
+        viewModel.getInputFieldValues().put(InputFieldKeys.DRIVER_NAME_INPUT_FIELD_KEY, driverNameInput.getText());
 
         // get database action
         var action = ((Node)actionEvent.getSource()).getId();
 
         // sending data to handler
-        var dto = new DriverTabDto(_model, action);
-        _log.log(Level.INFO, "DriverTabDto created: ", dto);
-        var response = _driverActionHandler.handleAction(dto);
+        var dto = new MainViewDto(viewModel, action);
+        _log.log(Level.INFO, "MainViewDto created: " + dto);
+        var response = _mainActionHandler.getDriverActionHandler().handleAction(dto);
 
         // fetching changes from database to display
         responseLabel.setText(response);
