@@ -59,13 +59,15 @@ public class PackageActionHandler implements IPackageActionHandler {
         if (dto.getMainViewModel().getSelectedPackage() == null)
             throw new BusinessException("No package was selected to update", ErrorCodes.NO_PACKAGE_SELECTED);
 
+        var delivery = dto.getMainViewModel().getSelectedPackage().getDelivery();
+
         _logic.changeOnePackage(
                 dto.getMainViewModel().getSelectedPackage().getid(),
                 dto.getMainViewModel().getInputFieldValues().get(InputFieldKeys.PACKAGE_CONTENT_INPUT_FIELD_KEY),
                 dto.getMainViewModel().getInputFieldValues().get(InputFieldKeys.PACKAGE_DESTINATION_INPUT_FIELD_KEY),
                 Double.parseDouble(dto.getMainViewModel().getInputFieldValues().get(InputFieldKeys.PACKAGE_WEIGHT_INPUT_FIELD_KEY)),
-                dto.getMainViewModel().getSelectedPackage().isInDelivery()
-                );
+                delivery,
+                dto.getMainViewModel().getSelectedPackage().isSelected());
     }
 
     private String toResponseString(ErrorCodes errorCode, String action) {

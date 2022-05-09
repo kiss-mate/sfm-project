@@ -57,7 +57,8 @@ public class DriverActionHandler implements IDriverActionHandler {
 
         _logic.changeOneDriver(
                 dto.getMainViewModel().getSelectedDriver().getId(),
-                dto.getMainViewModel().getInputFieldValues().get(InputFieldKeys.DRIVER_NAME_INPUT_FIELD_KEY));
+                dto.getMainViewModel().getInputFieldValues().get(InputFieldKeys.DRIVER_NAME_INPUT_FIELD_KEY),
+                dto.getMainViewModel().getSelectedDriver().isInDelivery());
     }
 
     private String toResponseString(ErrorCodes errorCode, String action) {

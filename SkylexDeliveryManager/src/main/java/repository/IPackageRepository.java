@@ -1,5 +1,6 @@
 package repository;
 
+import data.Delivery;
 import data.Package;
 
 import repository.IRepositoryBase;
@@ -14,7 +15,6 @@ public interface IPackageRepository extends IRepositoryBase<Package> {
      * @param Destination Destination of the package
      * @param RegistrationTime When the package was registered
      * @param weight Weight of the package
-     * @param inDelivery If package is being delivered or not
      */
-    boolean update(int id, String Content, String Destination, Date RegistrationTime, double weight, boolean inDelivery);
+    boolean update(int id, String Content, String Destination, Date RegistrationTime, double weight, Delivery delivery, boolean selected);
 }

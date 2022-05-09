@@ -10,19 +10,19 @@
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane prefHeight="479.0" prefWidth="704.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.MainController">
+<AnchorPane prefHeight="479.0" prefWidth="818.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.MainController">
    <children>
-      <TabPane layoutX="14.0" layoutY="15.0" prefHeight="454.0" prefWidth="678.0" tabClosingPolicy="UNAVAILABLE">
+      <TabPane prefHeight="479.0" prefWidth="819.0" tabClosingPolicy="UNAVAILABLE">
         <tabs>
           <Tab text="Driver">
             <content>
               <AnchorPane fx:id="driverTabArea" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
 
-                  <Button fx:id="ADD" layoutX="81.0" layoutY="90.0" onAction="#handleDriverTabAction" prefHeight="26.0" prefWidth="80.0" style="-fx-background-color: dodgerblue;" text="Save" textFill="WHITE" />
+                  <Button fx:id="ADD_driver" layoutX="81.0" layoutY="90.0" onAction="#handleDriverTabAction" prefHeight="26.0" prefWidth="80.0" style="-fx-background-color: dodgerblue;" text="Save" textFill="WHITE" />
 
-                  <Button fx:id="REMOVE" layoutX="81.0" layoutY="170.0" onAction="#handleDriverTabAction" prefHeight="26.0" prefWidth="80.0" style="-fx-background-color: black;" text="Delete" textFill="WHITE" />
+                  <Button fx:id="REMOVE_driver" layoutX="81.0" layoutY="170.0" onAction="#handleDriverTabAction" prefHeight="26.0" prefWidth="80.0" style="-fx-background-color: black;" text="Delete" textFill="WHITE" />
                      <TextField fx:id="driverNameInput" layoutX="46.0" layoutY="50.0" />
-                     <Button fx:id="UPDATE" layoutX="81.0" layoutY="130.0" mnemonicParsing="false" onAction="#handleDriverTabAction" prefHeight="26.0" prefWidth="80.0" text="Update" />
+                     <Button fx:id="UPDATE_driver" layoutX="81.0" layoutY="130.0" mnemonicParsing="false" onAction="#handleDriverTabAction" prefHeight="26.0" prefWidth="80.0" text="Update" />
                      <TableView fx:id="driverTableView" layoutX="261.0" layoutY="50.0" prefHeight="333.0" prefWidth="376.0">
                        <columns>
                          <TableColumn fx:id="driverIdCol" prefWidth="128.0" text="ID" />
@@ -82,27 +82,29 @@
             </Tab>
             <Tab text="Delivery">
                <content>
-                  <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                  <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="425.0" prefWidth="479.0">
                      <children>
-                        <ChoiceBox layoutX="46.0" layoutY="27.0" prefWidth="150.0" />
-                        <TableView layoutX="392.0" layoutY="27.0" prefHeight="371.0" prefWidth="271.0">
+                        <ChoiceBox fx:id="driverSelector" layoutX="46.0" layoutY="27.0" prefWidth="150.0" />
+                        <TableView fx:id="deliveryTable" layoutX="518.0" layoutY="27.0" prefHeight="391.0" prefWidth="271.0">
                           <columns>
-                            <TableColumn prefWidth="51.20001220703125" text="ID" />
-                            <TableColumn prefWidth="121.5999755859375" text="Driver Name" />
-                              <TableColumn prefWidth="99.20001220703125" text="Plate Number" />
+                            <TableColumn fx:id="deliveryIdCol" prefWidth="44.0" text="ID" />
+                              <TableColumn fx:id="deliveryDriverNameCol" prefWidth="114.0" text="Driver" />
+                              <TableColumn fx:id="deliveryVehicleNumberCol" prefWidth="112.0" text="Vehicle" />
                           </columns>
                         </TableView>
-                        <TableView layoutX="11.0" layoutY="154.0" prefHeight="243.0" prefWidth="370.0">
+                        <TableView fx:id="packageSelectionTable" layoutX="11.0" layoutY="154.0" prefHeight="265.0" prefWidth="477.0">
                           <columns>
-                            <TableColumn prefWidth="68.800048828125" text="Package ID" />
-                            <TableColumn prefWidth="100.79998779296875" text="Content" />
-                              <TableColumn prefWidth="77.60003662109375" text="Weight" />
-                              <TableColumn prefWidth="123.199951171875" text="Destination" />
+                            <TableColumn fx:id="packageSelectorCol" prefWidth="48.0" text="  " />
+                            <TableColumn fx:id="packageIdCol" prefWidth="67.0" text="ID" />
+                              <TableColumn fx:id="packageContentCol" prefWidth="116.0" text="Content" />
+                              <TableColumn fx:id="packageWeightCol" prefWidth="83.0" text="Weight" />
+                              <TableColumn fx:id="packageDestCol" prefWidth="162.0" text="Destination" />
                           </columns>
                         </TableView>
-                        <Button layoutX="46.0" layoutY="85.0" mnemonicParsing="false" prefWidth="80.0" style="-fx-background-color: dodgerblue;" text="Save" textFill="WHITE" />
-                        <Button layoutX="156.0" layoutY="85.0" mnemonicParsing="false" prefWidth="80.0" text="Update" />
-                        <Button layoutX="266.0" layoutY="85.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="80.0" style="-fx-background-color: black;" text="Delete" textFill="WHITE" />
+                        <Button fx:id="ADD_delivery" layoutX="46.0" layoutY="85.0" mnemonicParsing="false" prefWidth="80.0" style="-fx-background-color: dodgerblue;" text="Save" textFill="WHITE" onAction="#handleDeliveryTabAction"/>
+                        <Button fx:id="UPDATE_delivery" layoutX="178.0" layoutY="86.0" mnemonicParsing="false" prefWidth="80.0" text="Update" onAction="#handleDeliveryTabAction"/>
+                        <Button fx:id="REMOVE_delivery" layoutX="306.0" layoutY="85.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="80.0" style="-fx-background-color: black;" text="Delete" textFill="WHITE" onAction="#handleDeliveryTabAction"/>
+                        <ChoiceBox fx:id="vehicleSelector" layoutX="236.0" layoutY="27.0" prefWidth="150.0" />
                      </children></AnchorPane>
                </content>
             </Tab>

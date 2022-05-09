@@ -19,10 +19,11 @@ public class DriverRepository extends RepositoryBase<Driver> implements IDriverR
     }
 
     @Override
-    public void update(int id, String name) {
+    public void update(int id, String name, boolean inDelivery) {
         var session = _sessionFactory.openSession();
         var oneDriver = getById(id);
         oneDriver.setName(name);
+        oneDriver.setInDelivery(inDelivery);
 
         session.beginTransaction();
         session.update(oneDriver);

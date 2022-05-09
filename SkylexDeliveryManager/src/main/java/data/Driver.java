@@ -20,6 +20,9 @@ public class Driver  {
     @Column(name = "name")
     private String name;
 
+    @Column(name = "inDelivery")
+    private boolean inDelivery;
+
     public int getId() {
         return id;
     }
@@ -31,11 +34,19 @@ public class Driver  {
         return name;
     }
 
+    public boolean isInDelivery() {
+        return inDelivery;
+    }
+
     /**
      * Sets the name of a driver
      */
     public void setName(String name) {
         this.name = name;
+    }
+
+    public void setInDelivery(boolean inDelivery) {
+        this.inDelivery = inDelivery;
     }
 
     /**

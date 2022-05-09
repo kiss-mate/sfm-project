@@ -499,7 +499,7 @@ public class LogicTest {
         verify(mockPackageRepo, times(1)).insert(argument.capture());
         assertEquals(packageContent, argument.getValue().getContent());
         assertEquals(10, argument.getValue().getWeight());
-        assertFalse(argument.getValue().isInDelivery());
+        assertFalse(argument.getValue().isSelected());
         verify(mockLog, times(1)).log(eq(Level.INFO), contains(packageContent));
     }
 
@@ -513,7 +513,7 @@ public class LogicTest {
         packages.setContent(packageContent);
         packages.setDestination("Debrecen 12");
         packages.setWeight(100);
-        packages.setInDelivery(true);
+        packages.setSelected(true);
 
         var mockLog = mock(Logger.class);
 
@@ -522,10 +522,10 @@ public class LogicTest {
 
         var logic = new Logic(mockLog, mock(IDriverRepository.class), mock(IVehicleRepository.class), mockPackageRepo);
         //act
-        logic.changeOnePackage(packageId, packages.getContent(), packages.getDestination(), 500, packages.isInDelivery());
+        logic.changeOnePackage(packageId, packages.getContent(), packages.getDestination(), 500, packages.isSelected());
 
         //assert
-        verify(mockPackageRepo, times(1)).update(eq(packageId), eq(packages.getContent()), eq(packages.getDestination()), eq(packages.getRegistrationTime()),eq(packages.getWeight()), eq(packages.isInDelivery()));
+        verify(mockPackageRepo, times(1)).update(eq(packageId), eq(packages.getContent()), eq(packages.getDestination()), eq(packages.getRegistrationTime()),eq(packages.getWeight()), eq(packages.isSelected()));
         assertEquals(500, argument.getValue());
     }
 
@@ -538,7 +538,7 @@ public class LogicTest {
         packages.setContent(packageContent);
         packages.setDestination("Debrecen 9");
         packages.setWeight(100);
-        packages.setInDelivery(true);
+        packages.setSelected(true);
 
         var mockLog = mock(Logger.class);
 
@@ -548,7 +548,7 @@ public class LogicTest {
         var logic = new Logic(mockLog, mock(IDriverRepository.class), mock(IVehicleRepository.class), mockPackageRepo);
         //act
         var exception = assertThrows(BusinessException.class,
-                () ->  logic.changeOnePackage(packageId, "a new plate number", packages.getDestination(),100, packages.isInDelivery()));     ;
+                () ->  logic.changeOnePackage(packageId, "a new plate number", packages.getDestination(),100, packages.isSelected()));     ;
 
         //assert
         assertNotNull(exception);

@@ -20,8 +20,10 @@ public class Package {
     private Date registrationTime;
     @Column(name = "weight")
     private double weight;
-    @Column(name = "inDelivery")
-    private boolean inDelivery;
+    @Column(name = "isSelected")
+    private boolean selected;
+    @Column(name = "delivery")
+    private Delivery delivery;
 
     public int getid() {
         return id;
@@ -43,8 +45,12 @@ public class Package {
         return weight;
     }
 
-    public boolean isInDelivery() {
-        return inDelivery;
+    public Delivery getDelivery() {
+        return this.delivery;
+    }
+
+    public boolean isSelected() {
+        return selected;
     }
 
     public void setContent(String content) {
@@ -63,8 +69,12 @@ public class Package {
         this.weight = weight;
     }
 
-    public void setInDelivery(boolean inDelivery) {
-        this.inDelivery = inDelivery;
+    public void setSelected(boolean selected) {
+        this.selected = selected;
+    }
+
+    public void setDelivery(Delivery delivery) {
+        this.delivery = delivery;
     }
 
     @Override
@@ -75,7 +85,7 @@ public class Package {
                 ", destination='" + destination + '\'' +
                 ", registrationTime=" + registrationTime +
                 ", weight=" + weight +
-                ", inDelivery=" + inDelivery +
+                ", inDelivery=" + selected +
                 '}';
     }
 }

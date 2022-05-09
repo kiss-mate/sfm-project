@@ -1,5 +1,6 @@
 package models;
 
+import data.Delivery;
 import data.Driver;
 import data.Vehicle;
 import data.Package;
@@ -16,6 +17,8 @@ public class MainViewModel {
     private Vehicle selectedVehicle;
     private List<Package> packageList;
     private Package selectedPackage;
+    private Delivery selectedDelivery;
+    private List<Delivery> deliveryList;
     private Map<String, String> inputFieldValues;
 
     public MainViewModel() {
@@ -79,7 +82,24 @@ public class MainViewModel {
         this.selectedPackage = selectedPackage;
     }
 
+    // DELIVERY
+    public Delivery getSelectedDelivery() {
+        return selectedDelivery;
+    }
 
+    public void setSelectedDelivery(Delivery selectedDelivery) {
+        this.selectedDelivery = selectedDelivery;
+    }
+
+    public List<Delivery> getDeliveryList() {
+        return deliveryList;
+    }
+
+    public void setDeliveryList(List<Delivery> deliveryList) {
+        this.deliveryList = deliveryList;
+    }
+
+    //INPUT FIELDs
 
     public Map<String, String> getInputFieldValues() {
         return inputFieldValues;

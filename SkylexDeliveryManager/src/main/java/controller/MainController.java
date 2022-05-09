@@ -3,7 +3,10 @@ package controller;
 import com.google.inject.Inject;
 import common.constants.InputFieldKeys;
 import common.exceptions.ArgumentNullException;
+import data.Delivery;
 import data.Driver;
+import data.Package;
+import data.Vehicle;
 import handlers.IMainActionHandler;
 import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
@@ -16,6 +19,7 @@ import logic.ILogic;
 import models.MainViewDto;
 import models.MainViewModel;
 
+import java.util.Arrays;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -24,7 +28,6 @@ public class MainController {
     private final ILogic _logic;
     private final IMainActionHandler _mainActionHandler;
     private final MainViewModel viewModel;
-
 
     /**
      * Creates new MainController instance
@@ -42,6 +45,24 @@ public class MainController {
 
     @FXML
     public void initialize() {
+        //delivery table view
+        deliveryIdCol.setCellValueFactory(new PropertyValueFactory<>("id"));
+        deliveryDriverNameCol.setCellValueFactory(new PropertyValueFactory<>("driver"));
+        deliveryVehicleNumberCol.setCellValueFactory(new PropertyValueFactory<>("vehicle"));
+
+        //driver table view
+        driverIdCol.setCellValueFactory(new PropertyValueFactory<>("id"));
+        driverNameCol.setCellValueFactory(new PropertyValueFactory<>("name"));
+
+        //package selection table view
+        packageIdCol.setCellValueFactory(new PropertyValueFactory<>("id"));
+        packageWeightCol.setCellValueFactory(new PropertyValueFactory<>("weight"));
+        packageDestCol.setCellValueFactory(new PropertyValueFactory<>("destination"));
+        packageContentCol.setCellValueFactory(new PropertyValueFactory<>("content"));
+        packageSelectorCol.setCellValueFactory(new PropertyValueFactory<>("selected"));
+        packageSelectionTable.setEditable(true);
+        packageSelectorCol.setEditable(true);
+
         updateView();
     }
 
@@ -53,7 +74,7 @@ public class MainController {
         viewModel.getInputFieldValues().put(InputFieldKeys.DRIVER_NAME_INPUT_FIELD_KEY, driverNameInput.getText());
 
         // get database action
-        var action = ((Node)actionEvent.getSource()).getId();
+        var action = Arrays.stream(((Node)actionEvent.getSource()).getId().split("_")).toList().get(0);
 
         // sending data to handler
         var dto = new MainViewDto(viewModel, action);
@@ -65,10 +86,31 @@ public class MainController {
         updateView();
     }
 
+    public void handleDeliveryTabAction(ActionEvent actionEvent) {
+        //preparing the view model to forward in dto
+        viewModel.setSelectedDriver(driverSelector.getSelectionModel().getSelectedItem());
+        viewModel.setSelectedVehicle(vehicleSelector.getSelectionModel().getSelectedItem());
+
+        // get database action
+        var action =  Arrays.stream(((Node)actionEvent.getSource()).getId().split("_")).toList().get(0);
+
+        //sending data to handler
+        var dto = new MainViewDto(viewModel, action);
+        _log.log(Level.INFO, "MainViewDto created: " + dto);
+//        var response = _mainActionHandler.getDeliveryActionHandler().handleAction(dto);
+
+        // fetching changes
+//        responseLabel.setText(response);
+        updateView();
+    }
+
     private void updateView() {
-        driverIdCol.setCellValueFactory(new PropertyValueFactory<>("id"));
-        driverNameCol.setCellValueFactory(new PropertyValueFactory<>("name"));
+        driverSelector.setItems(FXCollections.observableList(_logic.getAllDrivers()));
+        vehicleSelector.setItems(FXCollections.observableList(_logic.getAllVehicles()));
+
         driverTableView.setItems(FXCollections.observableArrayList(_logic.getAllDrivers()));
+        deliveryTable.setItems(FXCollections.observableList(_logic.getAllDeliveries()));
+        packageSelectionTable.setItems(FXCollections.observableList(_logic.getAllPackages()));
     }
 
     // FXML fields
@@ -81,8 +123,29 @@ public class MainController {
     @FXML
     private TextField driverNameInput;
     @FXML
-    private AnchorPane driverTabArea;
-    @FXML
     private Label responseLabel;
-
+    @FXML
+    private ChoiceBox<Driver> driverSelector;
+    @FXML
+    private TableView<Delivery> deliveryTable;
+    @FXML
+    private TableColumn<Delivery, Integer> deliveryIdCol;
+    @FXML
+    private TableColumn<Delivery, Driver> deliveryDriverNameCol;
+    @FXML
+    private TableColumn<Delivery, Vehicle> deliveryVehicleNumberCol;
+    @FXML
+    private TableView<Package> packageSelectionTable;
+    @FXML
+    private TableColumn<Package, Boolean> packageSelectorCol;
+    @FXML
+    private TableColumn<Package,Integer> packageIdCol;
+    @FXML
+    private TableColumn<Package, String> packageContentCol;
+    @FXML
+    private TableColumn<Package, Double> packageWeightCol;
+    @FXML
+    private TableColumn<Package, String> packageDestCol;
+    @FXML
+    private ChoiceBox<Vehicle> vehicleSelector;
 }

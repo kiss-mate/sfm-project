@@ -8,6 +8,7 @@ import data.Driver;
 import data.Vehicle;
 import data.Package;
 import models.enums.ErrorCodes;
+import repository.IDeliveryRepository;
 import repository.IDriverRepository;
 import repository.IPackageRepository;
 import repository.IVehicleRepository;
@@ -21,6 +22,7 @@ public class Logic implements ILogic {
     private final IDriverRepository _driverRepo;
     private final IVehicleRepository _vehicleRepo;
     private final IPackageRepository _packageRepo;
+    private final IDeliveryRepository _deliveryRepo;
 
     /**
      * Creates Logic object for the project
@@ -30,11 +32,12 @@ public class Logic implements ILogic {
      * @exception NullPointerException vehicleRepo cannot be null
      */
     @Inject
-    public Logic(Logger log, IDriverRepository driverRepo, IVehicleRepository vehicleRepo, IPackageRepository packageRepo) {
+    public Logic(Logger log, IDriverRepository driverRepo, IVehicleRepository vehicleRepo, IPackageRepository packageRepo, IDeliveryRepository deliveryRepo) {
         if ((_log = log) == null) throw new ArgumentNullException("log");
         if ((_driverRepo = driverRepo) == null) throw new ArgumentNullException("driverRepo");
         if ((_vehicleRepo = vehicleRepo) == null) throw new ArgumentNullException("vehicleRepo");
         if ((_packageRepo = packageRepo) == null) throw new ArgumentNullException("packageRepo");
+        if ((_deliveryRepo = deliveryRepo) == null) throw new ArgumentNullException("deliveryRepo");
     }
 
     //region DRIVER RELATED LOGIC
@@ -45,19 +48,21 @@ public class Logic implements ILogic {
 
         var newDriver = new Driver();
         newDriver.setName(name);
+        newDriver.setInDelivery(false);
         _driverRepo.insert(newDriver);
         _log.log(Level.INFO, "New Driver object added to the database: " + newDriver);
         return newDriver;
     }
 
     @Override
-    public void changeOneDriver(int id, String name) {
+    public void changeOneDriver(int id, String name, boolean inDelivery) {
         if (name == null || name.isBlank() || name.isEmpty())
             throw new BusinessException("Driver name was null or whitespace", ErrorCodes.DRIVER_NAME_EMPTY_OR_NULL);
         var driver = _driverRepo.getById(id);
         if (driver == null)
             throw new BusinessException("Driver object not found", ErrorCodes.DRIVER_NOT_FOUND);
-        _driverRepo.update(id, name);
+
+        _driverRepo.update(id, name, inDelivery);
         _log.log(Level.INFO, "Updated Driver object: " + driver);
     }
 
@@ -166,28 +171,95 @@ public class Logic implements ILogic {
     // region DELIVERY RELATED LOGIC
 
     @Override
-    public List<Delivery> getAllDelivery() {
-        return null;
+    public List<Delivery> getAllDeliveries() {
+        return _deliveryRepo.getAll();
     }
 
     @Override
     public Delivery getOneDelivery(int id) {
-        return null;
+        return _deliveryRepo.getById(id);
     }
 
     @Override
-    public void addDelivery(String plateNumber, double maxCapacity) {
+    public void addDelivery(Driver driver, Vehicle vehicle) {
+        if (driver == null)
+            throw new BusinessException("Driver not selected for delivery!");
+        if (vehicle == null)
+            throw  new BusinessException("Vehicle not selected for delivery!");
+        if (driver.isInDelivery())
+            throw new BusinessException("Driver already in other delivery!");
+        if (vehicle.isInDelivery())
+            throw new BusinessException("Vehicle already in other delivery!");
 
+        var newDelivery = new Delivery();
+        newDelivery.setDriver(driver);
+        newDelivery.setVehicle(vehicle);
+
+        _deliveryRepo.insert(newDelivery);
+        _driverRepo.update(driver.getId(), driver.getName(), true);
+        _vehicleRepo.update(vehicle.getId(), vehicle.getPlateNumber(), true, vehicle.getMaxCapacity(), 0);
     }
 
     @Override
-    public void changeOneDelivery(int id, String plateNumber, double maxCapacity, double currentLoad, boolean inDelivery) {
+    public void changeOneDelivery(int id, Driver driver, Vehicle vehicle) {
+        var delivery = _deliveryRepo.getById(id);
+        if (delivery == null)
+            throw new BusinessException("Cannot find delivery in database");
+        if (driver == null)
+            throw new BusinessException("Driver not selected for delivery!");
+        if (vehicle == null)
+            throw  new BusinessException("Vehicle not selected for delivery!");
+        if (driver.isInDelivery() && delivery.getDriver().getId() != driver.getId())
+            throw new BusinessException("Driver already in other delivery!");
+        if (vehicle.isInDelivery() && delivery.getVehicle().getId() != vehicle.getId())
+            throw new BusinessException("Vehicle already in other delivery!");
 
+        double loadToTransfer = delivery.getVehicle().getCurrentLoad();
+        if (loadToTransfer  > vehicle.getMaxCapacity())
+            throw new BusinessException("Cannot transfer load to the new vehicle");
+
+        _driverRepo.update(delivery.getDriver().getId(), delivery.getDriver().getName(), false);
+        _vehicleRepo.update(
+                delivery.getVehicle().getId(),
+                delivery.getVehicle().getPlateNumber(),
+                false,
+                delivery.getVehicle().getMaxCapacity(),
+                -loadToTransfer);
+
+        _deliveryRepo.update(delivery.getId(), driver, vehicle);
+
+        _driverRepo.update(driver.getId(), driver.getName(), true);
+        _vehicleRepo.update(vehicle.getId(), vehicle.getPlateNumber(), true, vehicle.getMaxCapacity(), loadToTransfer);
     }
 
     @Override
     public boolean deleteDelivery(int id) {
-        return false;
+        var delivery = _deliveryRepo.getById(id);
+        if (delivery == null)
+            throw new BusinessException("No such delivery, cannot remove");
+
+        var driver = delivery.getDriver();
+        var vehicle = delivery.getVehicle();
+        var packages = delivery.getPackages();
+
+        if (_deliveryRepo.delete(delivery)) {
+            _driverRepo.update(driver.getId(), driver.getName(), false);
+            _vehicleRepo.update(
+                    vehicle.getId(),
+                    vehicle.getPlateNumber(),
+                    false,
+                    vehicle.getMaxCapacity(),
+                    -vehicle.getCurrentLoad()
+            );
+
+            for (var p : packages) {
+                _packageRepo.update(p.getid(), p.getContent(), p.getDestination(), p.getRegistrationTime(), p.getWeight(), null, false);
+            }
+
+            return true;
+        } else {
+            return false;
+        }
     }
 
     //endregion
@@ -220,30 +292,49 @@ public class Logic implements ILogic {
         newPackage.setContent(content);
         newPackage.setWeight(weight);
         newPackage.setDestination(destination);
-        newPackage.setInDelivery(false);
+        newPackage.setSelected(false);
+        newPackage.setDelivery(null);
         newPackage.setRegistrationTime(new Date());
         _packageRepo.insert(newPackage);
+
         _log.log(Level.INFO, "New Package object added to the database: " + newPackage);
     }
 
     @Override
-    public void changeOnePackage(int id, String content, String destination, double weight, boolean inDelivery){
+    public void changeOnePackage(int id, String content, String destination, double weight, Delivery delivery, boolean inSelection) {
         Package pack = _packageRepo.getById(id);
-        if (pack == null) throw new BusinessException("No such package", ErrorCodes.VEHICLE_NOT_FOUND);
-        if (pack.isInDelivery()) {
-            // Package in delivery, can't change content, weight or destination
-            if (!content.equals(pack.getContent()) ||
-                weight != pack.getWeight() ||
-                !destination.equals(pack.getDestination()))
-            {
-                throw new BusinessException("Cannot change content, weight or destination of package in delivery");
-            }
+        if (pack == null)
+            throw new BusinessException("No such package", ErrorCodes.VEHICLE_NOT_FOUND);
 
-            // Package in delivery but we take it out
-            _packageRepo.update(id, pack.getContent(), pack.getDestination(), pack.getRegistrationTime(), pack.getWeight(), inDelivery);
-        } else {
-            // Package not in delivery, everything can change
-            _packageRepo.update(id, content, destination, pack.getRegistrationTime(), weight, false);
+        var vehicle = pack.getDelivery().getVehicle();
+
+        if (pack.isSelected() && !inSelection) {
+            //take it out from delivery
+            _packageRepo.update(pack.getid(), pack.getContent(), pack.getDestination(), pack.getRegistrationTime(), pack.getWeight(), null, false);
+            _vehicleRepo.update(vehicle.getId(), vehicle.getPlateNumber(), vehicle.isInDelivery(), vehicle.getMaxCapacity(), -pack.getWeight());
+        }
+
+        if (!pack.isSelected() && inSelection) {
+            //put it in given delivery
+            double totalWeight = delivery.getVehicle().getCurrentLoad() + pack.getWeight();
+            if (totalWeight > delivery.getVehicle().getMaxCapacity()) {
+                throw new BusinessException("Cannot put package #" + pack.getid() +
+                        " on this vehicle, total weight would exceed capacity by " +
+                        (totalWeight - delivery.getVehicle().getMaxCapacity()) + "kg");
+            }
+            else {
+                _packageRepo.update(pack.getid(), pack.getContent(), pack.getDestination(), pack.getRegistrationTime(), pack.getWeight(), delivery, true);
+
+                var v = delivery.getVehicle();
+                _vehicleRepo.update(v.getId(), v.getPlateNumber(), v.isInDelivery(), v.getMaxCapacity(), pack.getWeight());
+            }
+        }
+
+        if (pack.isSelected() == inSelection) {
+            if (pack.getDelivery() != null)
+                throw new BusinessException("Cannot edit package in delivery");
+
+            _packageRepo.update(pack.getid(), content, destination, pack.getRegistrationTime(), weight, null, false);
         }
     }
 
@@ -253,7 +344,7 @@ public class Logic implements ILogic {
         Package packages = _packageRepo.getById(id);
         if (packages == null)
             throw new BusinessException("Cannot find packages, unable to remove it", ErrorCodes.PACKAGE_NOT_FOUND);
-        if(packages.isInDelivery())
+        if(packages.isSelected())
             throw new BusinessException("Cannot delete packages in delivery!");
 
         if (_packageRepo.delete(packages))

@@ -11,5 +11,5 @@ public interface IDriverRepository extends IRepositoryBase<Driver> {
      * @param id id of the updated driver object
      * @param name name param for driver object
      */
-    void update(int id, String name);
+    void update(int id, String name, boolean inDelivery);
 }
