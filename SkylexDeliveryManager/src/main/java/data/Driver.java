@@ -5,7 +5,7 @@ import javax.persistence.*;
 
 @Entity
 @Table(name = "DriverData")
-public class Driver {
+public class Driver  {
     /**
      * Key for a Driver entity
      */
