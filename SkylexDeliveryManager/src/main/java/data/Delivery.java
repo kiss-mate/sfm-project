@@ -16,7 +16,6 @@ package data;
         @GeneratedValue(strategy = GenerationType.IDENTITY)
         @Column(name = "id")
         private int id;
-
         /**
          * Name for a Delivery entity
          */
@@ -29,12 +28,12 @@ package data;
         @column(name = "vehicle")
         private Vehicle vehicle;
 
+        @OneToMany(cascade = CascadeType.ALL)
+        @JoinColumn(name = "packages")
         private List<Package> packages;
 
 
-
-
-    public int getId() {
+         public int getId() {
             return id;
         }
 
@@ -52,11 +51,7 @@ package data;
             this.name = name;
         }
 
-
-        public void setDriver(Driver driver){
-            this.driver =  driver;
-
-        }
+        public void setDriver(Driver driver){this.driver =  driver;}
 
         public Driver getDriver(){
             return this.driver;
@@ -65,26 +60,33 @@ package data;
         public void setVehicle(Vehicle vehicle){
             this.vehicle = vehicle;
         }
+
         public Vehicle getVehicle(){
-           retrun this.vehicle;
+           return this.vehicle;
+        }
+        public void setPackages(List<Package> packages) {
+        this.packages = packages;
+        }
+        public List<Package> getPackages(){
+            return this.packages;
         }
 
 
-
-
-        /**
-         * Converts the Delivery object to a readable string
-         * @return string representation of a Driver object
-         */
+    /**
+     * Converts the Delivery object to a readable string
+     * @return string representation of a Driver object
+     */
         @Override
         public String toString() {
             return "Delivery{" +
                     "id=" + id +
                     ", name='" + name + '\'' +
-                    ", Driver: " + driver.getName() + '\'' +
-                    ", Vehicle: " + vehicle.getName() + '\'' +
-                    ", "
+                    ", Driver= " + driver + '\'' +
+                    ", Vehicle= " + vehicle + '\'' +
+                    ", Packages=" + packages +
                     '}';
         }
-    }
+
+
+}
 
