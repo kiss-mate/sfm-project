@@ -84,6 +84,7 @@ public class Logic implements ILogic {
     //endregion
 
     //region VEHICLE RELATED LOGIC
+
     @Override
     public List<Vehicle> getAllVehicles()
     {

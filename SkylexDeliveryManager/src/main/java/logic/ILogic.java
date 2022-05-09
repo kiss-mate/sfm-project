@@ -84,4 +84,39 @@ public interface ILogic {
     boolean deleteVehicle(int id);
 
     //endregion
+    //region DELIVERY RELATED LOGIC
+    /**
+     * Gets all the Delivery objects in a list
+     * @return list of Delivery objects
+     */
+    List<Delivery> getAllDelivery();
+
+    /**
+     * Fetches one Delivery object
+     * @param id id of the delivery
+     * @return delivery object with given id
+     */
+    Delivery getOneDelivery(int id);
+
+    /**
+     * Creates and saves one Delivery object
+     * @param plateNumber plateNumber of the delivery
+     * @param maxCapacity maxCapacity of the delivery
+     */
+    void addDelivery(String plateNumber, double maxCapacity);
+
+    /**
+     * Updates one Delivery object
+     * @param id id of the delivery
+     * @param plateNumber plateNumber of the delivery
+     * @param maxCapacity maxCapacity of the delivery
+     * @param inDelivery inDelivery of the delivery
+     */
+    void changeOneDelivery(int id, String plateNumber, double maxCapacity, double currentLoad, boolean inDelivery);
+
+    /**
+     * Deletes one Delivery object by id
+     * @param id id of the delivery
+     */
+    boolean deleteDelivery(int id);
 }
