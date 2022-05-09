@@ -163,6 +163,7 @@ public class Logic implements ILogic {
     //endregion
 
     //region PACKAGE RELATED LOGIC
+  
     @Override
     public List<Package> getAllPackages()
     {
@@ -234,8 +235,6 @@ public class Logic implements ILogic {
             return false;
         }
     }
-
-
 
     //endregion
 }
