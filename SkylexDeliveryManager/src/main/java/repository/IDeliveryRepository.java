@@ -1,20 +1,9 @@
 package repository;
 
-public interface IDeliveryRepository {
+import data.Delivery;
+import data.Driver;
+import data.Vehicle;
 
-
-    /**
-     * Updates one entry by id in the Delivery table
-     * @param id id of the updated Delivery object
-     * @param name name param for Delivery object
-     */
-
-    public void UpdateDelivery();
-
-    public void SaveDelivery();
-
-    public void DeleteDelivery();
-
-    public List<Delivery> getDelivery();
-
+public interface IDeliveryRepository extends IRepositoryBase<Delivery> {
+    boolean update(int id, Driver driver, Vehicle vehicle);
 }

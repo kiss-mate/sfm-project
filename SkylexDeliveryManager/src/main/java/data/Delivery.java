@@ -1,11 +1,7 @@
 package data;
 
 import javax.persistence.*;
-import java.sql.*;
-import java.sql.Driver;
 import java.util.List;
-import java.util.Properties;
-import java.util.logging.Logger;
 
 @Entity
 @Table(name = "DeliveryData")

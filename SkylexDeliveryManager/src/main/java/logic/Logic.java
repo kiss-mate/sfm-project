@@ -3,6 +3,7 @@ package logic;
 import com.google.inject.Inject;
 import common.exceptions.ArgumentNullException;
 import common.exceptions.BusinessException;
+import data.Delivery;
 import data.Driver;
 import data.Vehicle;
 import data.Package;
@@ -159,7 +160,36 @@ public class Logic implements ILogic {
             return false;
         }
     }
-    
+
+    // endregion
+
+    // region DELIVERY RELATED LOGIC
+
+    @Override
+    public List<Delivery> getAllDelivery() {
+        return null;
+    }
+
+    @Override
+    public Delivery getOneDelivery(int id) {
+        return null;
+    }
+
+    @Override
+    public void addDelivery(String plateNumber, double maxCapacity) {
+
+    }
+
+    @Override
+    public void changeOneDelivery(int id, String plateNumber, double maxCapacity, double currentLoad, boolean inDelivery) {
+
+    }
+
+    @Override
+    public boolean deleteDelivery(int id) {
+        return false;
+    }
+
     //endregion
 
     //region PACKAGE RELATED LOGIC

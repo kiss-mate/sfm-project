@@ -1,5 +1,6 @@
 package logic;
 
+import data.Delivery;
 import data.Driver;
 import data.Vehicle;
 import data.Package;
@@ -47,8 +48,7 @@ public interface ILogic {
     boolean deleteDriver(int id);
 
     //endregion
-  
-  
+
 
     //region VEHICLE RELATED LOGIC
 
@@ -89,8 +89,7 @@ public interface ILogic {
 
     //endregion
   
-  
-  
+
     //region DELIVERY RELATED LOGIC
   
     /**

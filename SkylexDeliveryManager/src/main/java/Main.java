@@ -45,6 +45,7 @@ public class Main extends Application {
             config.bind(IUserRepository.class).to(UserRepository.class);
             config.bind(IVehicleRepository.class).to(VehicleRepository.class);
             config.bind(IPackageRepository.class).to(PackageRepository.class);
+            config.bind(IDeliveryRepository.class).to(DeliveryRepository.class);
         });
 
         // set up the main window

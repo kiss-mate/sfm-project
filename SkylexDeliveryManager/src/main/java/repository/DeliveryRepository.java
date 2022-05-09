@@ -1,53 +1,33 @@
 package repository;
 
+import com.google.inject.Inject;
+import data.Delivery;
+import data.Driver;
+import data.Vehicle;
+import org.hibernate.SessionFactory;
+
 import java.util.logging.Logger;
 
-public class DeliveryRepository extends RepositoryBase<Delivery> implements IDeliveryRepository{
-/**
-    * @param log            Logger object
-     * @param sessionFactory SessionFactory instance
-     * @throws NullPointerException log and sessionFactory cannot be null
- */
-
-    @inject
-    public DeliveryRepository(Logger log, SessionsFactory sessionsFactory)
+public class DeliveryRepository extends RepositoryBase<Delivery> implements IDeliveryRepository {
+    @Inject
+    public DeliveryRepository(Logger log, SessionFactory sessionsFactory) {
+        super(log, sessionsFactory);
+    }
     @Override
-    public void UpdateDelivery(int id,String name) {
+    public boolean update(int id, Driver driver, Vehicle vehicle) {
         var session = _sessionFactory.openSession();
         var delivery = getById(id);
-        delivery.setName(name);
+        if (delivery == null)
+            return false;
+
+        delivery.setDriver(driver);
+        delivery.setVehicle(vehicle);
 
         session.beginTransaction();
-        session.update(oneDriver);
+        session.update(delivery);
         session.getTransaction().commit();
-
         session.close();
-    }
 
-    @Override
-    public void SaveDelivery(int id) {
-        var session = _sessionFactory.openSession();
-        var delivery = getById(id);
-
-        session.beginTransaction();
-        session.save(delivery);
-        session.getTransaction().commit();
-
-        session.close();
-    }
-
-    @Override
-    public void DeleteDelivery(int id) {
-        var session = _sessionFactory.openSession();
-        var delivery = getById(id);
-
-        session.beginTransaction();
-        session.delete(delivery);
-        session.getTransaction().commit();
-
-        session.close();
-    }
-    public List<Delivery> getDelivery(){
-
+        return true;
     }
 }
