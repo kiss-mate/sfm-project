@@ -96,7 +96,7 @@ public interface ILogic {
 
     Delivery getOneDelivery(int id);
 
-    void addDelivery(Driver driver, Vehicle vehicle);
+    Delivery addDelivery(Driver driver, Vehicle vehicle);
 
     void changeOneDelivery(int id, Driver driver, Vehicle vehicle);
 

@@ -1,13 +1,17 @@
 package data;
 
+import javafx.beans.property.BooleanProperty;
+import javafx.beans.property.SimpleBooleanProperty;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
+import org.hibernate.engine.internal.Cascade;
+
 import javax.persistence.*;
 import java.util.Date;
 
 @Entity
 @Table(name = "PackageData")
 public class Package {
-
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
@@ -22,10 +26,15 @@ public class Package {
     private double weight;
     @Column(name = "isSelected")
     private boolean selected;
-    @Column(name = "delivery")
+    @Transient
+    private BooleanProperty selectedProp = new SimpleBooleanProperty();
+
+    // https://stackoverflow.com/questions/7869450/hibernate-and-h2-referential-integrity-constraint-violation-for-onetomany-bidi
+    @ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "delivery_id")
     private Delivery delivery;
 
-    public int getid() {
+    public int getId() {
         return id;
     }
 
@@ -53,6 +62,10 @@ public class Package {
         return selected;
     }
 
+    public BooleanProperty getSelectedProp() {
+        return selectedProp;
+    }
+
     public void setContent(String content) {
         this.content = content;
     }
@@ -71,6 +84,10 @@ public class Package {
 
     public void setSelected(boolean selected) {
         this.selected = selected;
+    }
+
+    public void setSelectedProp(boolean selected) {
+        selectedProp.setValue(selected);
     }
 
     public void setDelivery(Delivery delivery) {

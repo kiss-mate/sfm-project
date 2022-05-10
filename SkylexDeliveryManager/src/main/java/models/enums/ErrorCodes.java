@@ -3,10 +3,9 @@ package models.enums;
 public enum ErrorCodes {
     // region Generic error codes
 
-    /**
-     * Error code when a requested object is not found in the database
-     */
-    NOT_FOUND_IN_DB (),
+    NOT_FOUND_IN_DB,
+
+    UI_COMPLIANT,
 
     // endregion
 
@@ -81,4 +80,13 @@ public enum ErrorCodes {
     NO_PACKAGE_SELECTED,
 
     //endregion
+
+
+    // region DELIVERY error codes
+
+    NO_DELIVERY_SELECTED,
+
+    DELIVERY_NOT_FOUND,
+
+    // endregion
 }

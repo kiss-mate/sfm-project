@@ -33,7 +33,7 @@ public class VehicleActionHandler implements IVehicleActionHandler {
             return dto.getActionSource() + " action was successful.";
         } catch (BusinessException bex) {
             _log.log(Level.WARNING, "Business exception occurred: " + bex.getMessage());
-            return toResponseString(bex.getErrorCode(), dto.getActionSource());
+            return toResponseString(bex, dto.getActionSource());
         }
     }
 
@@ -46,14 +46,14 @@ public class VehicleActionHandler implements IVehicleActionHandler {
 
     private void handleRemoveAction(MainViewDto dto) {
         if (dto.getMainViewModel().getSelectedVehicle() == null)
-            throw new BusinessException("No vehicle was selected to remove", ErrorCodes.NO_DIVER_SELECTED);
+            throw new BusinessException("No vehicle was selected to remove", ErrorCodes.NO_VEHICLE_SELECTED);
 
-        _logic.deleteDriver(dto.getMainViewModel().getSelectedVehicle().getId());
+        _logic.deleteVehicle(dto.getMainViewModel().getSelectedVehicle().getId());
     }
 
     private void handleUpdateAction(MainViewDto dto) {
         if (dto.getMainViewModel().getSelectedVehicle() == null)
-            throw new BusinessException("No driver was selected to update", ErrorCodes.NO_DIVER_SELECTED);
+            throw new BusinessException("No driver was selected to update", ErrorCodes.NO_VEHICLE_SELECTED);
 
         _logic.changeOneVehicle(
                 dto.getMainViewModel().getSelectedVehicle().getId(),
@@ -63,14 +63,15 @@ public class VehicleActionHandler implements IVehicleActionHandler {
                 dto.getMainViewModel().getSelectedVehicle().isInDelivery());
     }
 
-    private String toResponseString(ErrorCodes errorCode, String action) {
-        String response = "Something went wrong";
-        switch (errorCode) {
+    private String toResponseString(BusinessException exception, String action) {
+        String response;
+        switch (exception.getErrorCode()) {
             case VEHICLE_NOT_FOUND -> response = "Sorry, cannot find this vehicle!";
             case VEHICLE_MAX_CAPACITY_INVALID -> response = "Sorry, you cannot save this as a max capacity for your vehicle!";
             case VEHICLE_PLATE_NUMBER_INVALID -> response = "Sorry, you cannot save this as a plate number for your vehicle!";
             case NO_VEHICLE_SELECTED -> response = "Please select a vehicle to perform the " + action + " action!";
-            default -> {}
+            case UI_COMPLIANT -> response = exception.getMessage();
+            default -> response = "Something went wrong";
         }
 
         return  response;

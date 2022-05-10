@@ -1,6 +1,14 @@
 package data;
 
+import javafx.beans.property.SimpleStringProperty;
+import javafx.beans.property.StringProperty;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
+import org.hibernate.annotations.Type;
+import org.hibernate.mapping.Set;
+
 import javax.persistence.*;
+import java.lang.annotation.ElementType;
 import java.util.List;
 
 @Entity
@@ -11,7 +19,7 @@ public class Delivery {
      */
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id")
+    @Column(name = "delivery_id")
     private int id;
     /**
      * Name for a Delivery entity
@@ -19,15 +27,30 @@ public class Delivery {
     @Column(name = "name")
     private String name;
 
-    @Column(name = "driver")
+    @OneToOne
     private Driver driver;
 
-    @Column(name = "vehicle")
+    @OneToOne
     private Vehicle vehicle;
 
-    @OneToMany(cascade = CascadeType.ALL)
-    @JoinColumn(name = "packages")
+    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, mappedBy = "delivery")
     private List<Package> packages;
+
+    @Column(name = "driverName")
+    private String driverName;
+
+    @Column(name = "vehiclePlateNumber")
+    private String vehiclePlateNumber;
+
+    public String getDriverName() {
+        return driverName;
+    }
+
+    public String getVehiclePlateNumber() {
+        return vehiclePlateNumber;
+    }
+
+
 
     public int getId() {
         return id;
@@ -49,6 +72,7 @@ public class Delivery {
 
     public void setDriver(Driver driver) {
         this.driver =  driver;
+        this.driverName = driver.getName();
     }
 
     public Driver getDriver(){
@@ -57,6 +81,7 @@ public class Delivery {
 
     public void setVehicle(Vehicle vehicle){
         this.vehicle = vehicle;
+        this.vehiclePlateNumber = vehicle.getPlateNumber();
     }
 
     public Vehicle getVehicle(){

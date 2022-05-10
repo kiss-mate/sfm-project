@@ -3,6 +3,7 @@
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.ChoiceBox?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Spinner?>
 <?import javafx.scene.control.Tab?>
 <?import javafx.scene.control.TabPane?>
 <?import javafx.scene.control.TableColumn?>
@@ -16,14 +17,14 @@
         <tabs>
           <Tab text="Driver">
             <content>
-              <AnchorPane fx:id="driverTabArea" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
 
                   <Button fx:id="ADD_driver" layoutX="81.0" layoutY="90.0" onAction="#handleDriverTabAction" prefHeight="26.0" prefWidth="80.0" style="-fx-background-color: dodgerblue;" text="Save" textFill="WHITE" />
 
                   <Button fx:id="REMOVE_driver" layoutX="81.0" layoutY="170.0" onAction="#handleDriverTabAction" prefHeight="26.0" prefWidth="80.0" style="-fx-background-color: black;" text="Delete" textFill="WHITE" />
                      <TextField fx:id="driverNameInput" layoutX="46.0" layoutY="50.0" />
                      <Button fx:id="UPDATE_driver" layoutX="81.0" layoutY="130.0" mnemonicParsing="false" onAction="#handleDriverTabAction" prefHeight="26.0" prefWidth="80.0" text="Update" />
-                     <TableView fx:id="driverTableView" layoutX="261.0" layoutY="50.0" prefHeight="333.0" prefWidth="376.0">
+                     <TableView fx:id="driverTableView" layoutX="246.0" layoutY="46.0" prefHeight="396.0" prefWidth="557.0">
                        <columns>
                          <TableColumn fx:id="driverIdCol" prefWidth="128.0" text="ID" />
                          <TableColumn fx:id="driverNameCol" prefWidth="127.0" text="Name" />
@@ -32,7 +33,7 @@
                            <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
                         </columnResizePolicy>
                      </TableView>
-                     <Label fx:id="responseLabel" layoutX="189.0" layoutY="14.0" prefHeight="17.0" prefWidth="375.0" />
+                     <Label fx:id="driverTabResponeLabel" layoutX="246.0" layoutY="7.0" prefHeight="37.0" prefWidth="558.0" />
               </AnchorPane>
             </content>
           </Tab>
@@ -40,20 +41,21 @@
             <content>
               <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                      <children>
-                        <TextField layoutX="46.0" layoutY="50.0" />
-                        <TextField layoutX="46.0" layoutY="90.0" />
-                        <Button layoutX="81.0" layoutY="170.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="80.0" text="Update" />
-                        <Button layoutX="81.0" layoutY="210.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="80.0" style="-fx-background-color: black;" text="Delete" textFill="WHITE" />
-                        <Button layoutX="81.0" layoutY="130.0" mnemonicParsing="false" prefWidth="80.0" style="-fx-background-color: dodgerblue;" text="Save" textFill="WHITE" />
-                        <TableView fx:id="driverTableView1" layoutX="261.0" layoutY="50.0" prefHeight="333.0" prefWidth="376.0">
+                        <TextField fx:id="vehicleNumberInput" layoutX="46.0" layoutY="50.0" />
+                        <Button fx:id="UPDATE_vehicle" layoutX="81.0" layoutY="170.0" mnemonicParsing="false" onAction="#handleVehicleTabAction" prefHeight="26.0" prefWidth="80.0" text="Update" />
+                        <Button fx:id="REMOVE_vehicle" layoutX="81.0" layoutY="210.0" mnemonicParsing="false" onAction="#handleVehicleTabAction" prefHeight="26.0" prefWidth="80.0" style="-fx-background-color: black;" text="Delete" textFill="WHITE" />
+                        <Button fx:id="ADD_vehicle" layoutX="81.0" layoutY="130.0" mnemonicParsing="false" onAction="#handleVehicleTabAction" prefWidth="80.0" style="-fx-background-color: dodgerblue;" text="Save" textFill="WHITE" />
+                        <TableView fx:id="vehicleTable" layoutX="257.0" layoutY="46.0" prefHeight="392.0" prefWidth="545.0">
                            <columns>
-                              <TableColumn fx:id="driverIdCol1" prefWidth="128.0" text="Plate Number" />
-                              <TableColumn fx:id="driverNameCol1" prefWidth="127.0" text="Max Capacity" />
+                              <TableColumn fx:id="vehiclePlateCol" prefWidth="128.0" text="Plate Number" />
+                              <TableColumn fx:id="vehicleCapCol" prefWidth="127.0" text="Max Capacity" />
                            </columns>
                            <columnResizePolicy>
                               <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
                            </columnResizePolicy>
                         </TableView>
+                        <Spinner fx:id="vehicleMaxCapInput" layoutX="46.0" layoutY="93.0" />
+                        <Label fx:id="vehicleTabResponeLabel" layoutX="258.0" layoutY="7.0" prefHeight="39.0" prefWidth="543.0" text=" " />
                      </children></AnchorPane>
             </content>
           </Tab>
@@ -61,22 +63,23 @@
                <content>
                   <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                      <children>
-                        <TextField layoutX="46.0" layoutY="50.0" />
-                        <TextField layoutX="46.0" layoutY="90.0" />
-                        <TextField layoutX="46.0" layoutY="130.0" />
-                        <Button layoutX="81.0" layoutY="170.0" mnemonicParsing="false" prefWidth="80.0" style="-fx-background-color: dodgerblue;" text="Save" textFill="WHITE" />
-                        <Button layoutX="81.0" layoutY="210.0" mnemonicParsing="false" prefWidth="80.0" text="Update" />
-                        <Button layoutX="81.0" layoutY="250.0" mnemonicParsing="false" prefWidth="80.0" style="-fx-background-color: black;" text="Delete" textFill="WHITE" />
-                        <TableView fx:id="driverTableView2" layoutX="261.0" layoutY="50.0" prefHeight="333.0" prefWidth="376.0">
+                        <TextField fx:id="packageContentInput" layoutX="46.0" layoutY="50.0" />
+                        <TextField fx:id="packageDestinationInput" layoutX="46.0" layoutY="90.0" />
+                        <Button fx:id="ADD_package" layoutX="81.0" layoutY="170.0" mnemonicParsing="false" onAction="#handlePackageTabAction" prefWidth="80.0" style="-fx-background-color: dodgerblue;" text="Save" textFill="WHITE" />
+                        <Button fx:id="UPDATE_package" layoutX="81.0" layoutY="210.0" mnemonicParsing="false" onAction="#handlePackageTabAction" prefWidth="80.0" text="Update" />
+                        <Button fx:id="REMOVE_package" layoutX="81.0" layoutY="250.0" mnemonicParsing="false" onAction="#handlePackageTabAction" prefWidth="80.0" style="-fx-background-color: black;" text="Delete" textFill="WHITE" />
+                        <TableView fx:id="packageTable" layoutX="236.0" layoutY="53.0" prefHeight="387.0" prefWidth="567.0">
                            <columns>
-                              <TableColumn fx:id="driverIdCol2" prefWidth="125.3333" text="Destination" />
-                              <TableColumn fx:id="driverNameCol2" prefWidth="125.333333" text="Registration Time" />
-                              <TableColumn prefWidth="125.33333333" text="Weight" />
+                              <TableColumn fx:id="packageContentCol" prefWidth="157.0" text="Content" />
+                              <TableColumn fx:id="packageDestCol" prefWidth="265.0" text="Destination" />
+                              <TableColumn fx:id="packageWeightCol" prefWidth="112.0" text="Weight" />
                            </columns>
                            <columnResizePolicy>
                               <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
                            </columnResizePolicy>
                         </TableView>
+                        <Spinner fx:id="packageWeightInput" layoutX="46.0" layoutY="133.0" />
+                        <Label fx:id="packageTabResponeLabel" layoutX="239.0" layoutY="14.0" prefHeight="40.0" prefWidth="562.0" text=" " />
                      </children></AnchorPane>
                </content>
             </Tab>
@@ -85,7 +88,7 @@
                   <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="425.0" prefWidth="479.0">
                      <children>
                         <ChoiceBox fx:id="driverSelector" layoutX="46.0" layoutY="27.0" prefWidth="150.0" />
-                        <TableView fx:id="deliveryTable" layoutX="518.0" layoutY="27.0" prefHeight="391.0" prefWidth="271.0">
+                        <TableView fx:id="deliveryTable" layoutX="518.0" layoutY="84.0" onMouseClicked="#handleDeliverySelection" prefHeight="334.0" prefWidth="271.0">
                           <columns>
                             <TableColumn fx:id="deliveryIdCol" prefWidth="44.0" text="ID" />
                               <TableColumn fx:id="deliveryDriverNameCol" prefWidth="114.0" text="Driver" />
@@ -95,16 +98,17 @@
                         <TableView fx:id="packageSelectionTable" layoutX="11.0" layoutY="154.0" prefHeight="265.0" prefWidth="477.0">
                           <columns>
                             <TableColumn fx:id="packageSelectorCol" prefWidth="48.0" text="  " />
-                            <TableColumn fx:id="packageIdCol" prefWidth="67.0" text="ID" />
-                              <TableColumn fx:id="packageContentCol" prefWidth="116.0" text="Content" />
-                              <TableColumn fx:id="packageWeightCol" prefWidth="83.0" text="Weight" />
-                              <TableColumn fx:id="packageDestCol" prefWidth="162.0" text="Destination" />
+                            <TableColumn fx:id="deliveryPackageIdCol" prefWidth="67.0" text="ID" />
+                              <TableColumn fx:id="deliveryPackageContentCol" prefWidth="116.0" text="Content" />
+                              <TableColumn fx:id="deliveryPackageWeightCol" prefWidth="83.0" text="Weight" />
+                              <TableColumn fx:id="deliveryPackageDestCol" prefWidth="162.0" text="Destination" />
                           </columns>
                         </TableView>
-                        <Button fx:id="ADD_delivery" layoutX="46.0" layoutY="85.0" mnemonicParsing="false" prefWidth="80.0" style="-fx-background-color: dodgerblue;" text="Save" textFill="WHITE" onAction="#handleDeliveryTabAction"/>
-                        <Button fx:id="UPDATE_delivery" layoutX="178.0" layoutY="86.0" mnemonicParsing="false" prefWidth="80.0" text="Update" onAction="#handleDeliveryTabAction"/>
-                        <Button fx:id="REMOVE_delivery" layoutX="306.0" layoutY="85.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="80.0" style="-fx-background-color: black;" text="Delete" textFill="WHITE" onAction="#handleDeliveryTabAction"/>
+                        <Button fx:id="ADD_delivery" layoutX="46.0" layoutY="85.0" mnemonicParsing="false" onAction="#handleDeliveryTabAction" prefWidth="80.0" style="-fx-background-color: dodgerblue;" text="Save" textFill="WHITE" />
+                        <Button fx:id="UPDATE_delivery" layoutX="178.0" layoutY="86.0" mnemonicParsing="false" onAction="#handleDeliveryTabAction" prefWidth="80.0" text="Update" />
+                        <Button fx:id="REMOVE_delivery" layoutX="306.0" layoutY="85.0" mnemonicParsing="false" onAction="#handleDeliveryTabAction" prefHeight="26.0" prefWidth="80.0" style="-fx-background-color: black;" text="Delete" textFill="WHITE" />
                         <ChoiceBox fx:id="vehicleSelector" layoutX="236.0" layoutY="27.0" prefWidth="150.0" />
+                        <Label fx:id="deliveryTabResponeLabel" layoutX="424.0" layoutY="19.0" prefHeight="48.0" prefWidth="365.0" text=" " />
                      </children></AnchorPane>
                </content>
             </Tab>

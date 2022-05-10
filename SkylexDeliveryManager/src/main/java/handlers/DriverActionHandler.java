@@ -36,7 +36,7 @@ public class DriverActionHandler implements IDriverActionHandler {
             return dto.getActionSource() + " action was successful.";
         } catch (BusinessException bex) {
             _log.log(Level.WARNING, "Business exception occurred!", bex);
-            return toResponseString(bex.getErrorCode(), dto.getActionSource());
+            return toResponseString(bex, dto.getActionSource());
         }
     }
 
@@ -61,13 +61,14 @@ public class DriverActionHandler implements IDriverActionHandler {
                 dto.getMainViewModel().getSelectedDriver().isInDelivery());
     }
 
-    private String toResponseString(ErrorCodes errorCode, String action) {
-        String response = "Something went wrong";
-        switch (errorCode) {
+    private String toResponseString(BusinessException exception, String action) {
+        String response;
+        switch (exception.getErrorCode()) {
             case DRIVER_NOT_FOUND -> response = "Sorry, cannot find this driver!";
             case DRIVER_NAME_EMPTY_OR_NULL -> response = "Sorry, you cannot save this as a name for your driver!";
             case NO_DIVER_SELECTED -> response = "Please select a driver to perform the " + action + " action!";
-            default -> {}
+            case UI_COMPLIANT -> response = exception.getMessage();
+            default -> response = "Something went wrong";
         }
 
         return  response;

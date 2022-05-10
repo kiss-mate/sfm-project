@@ -1,6 +1,8 @@
 package data;
 
 
+import javafx.beans.property.StringProperty;
+
 import javax.persistence.*;
 
 @Entity
@@ -58,6 +60,7 @@ public class Driver  {
         return "Driver{" +
                 "id=" + id +
                 ", name='" + name + '\'' +
+                ", inDelivery=" + inDelivery +
                 '}';
     }
 }
