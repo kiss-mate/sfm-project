@@ -78,6 +78,7 @@ public class MainController {
         deliveryPackageWeightCol.setCellValueFactory(new PropertyValueFactory<>("weight"));
         deliveryPackageDestCol.setCellValueFactory(new PropertyValueFactory<>("destination"));
         deliveryPackageContentCol.setCellValueFactory(new PropertyValueFactory<>("content"));
+//        packageSelectorCol.setCellValueFactory(new PropertyValueFactory<>("selected"));
         packageSelectorCol.setCellValueFactory(param -> param.getValue().getSelectedProp());
         packageSelectionTable.setEditable(true);
         packageSelectorCol.setEditable(true);
@@ -196,6 +197,11 @@ public class MainController {
                         .filter(p -> p.getDelivery() != null )
                         .filter(p -> p.getDelivery().getId() == deliverySelected.getId())
                 .toList());
+        _log.log(Level.INFO, "packages available: " + packagesToDisplay);
+
+        for (var item : packagesToDisplay) {
+            item.setSelectedProp(item.isSelected());
+        }
 
         packageSelectionTable.setItems(FXCollections.observableList(packagesToDisplay));
         driverSelector.setValue(deliverySelected != null ? deliverySelected.getDriver() : null);

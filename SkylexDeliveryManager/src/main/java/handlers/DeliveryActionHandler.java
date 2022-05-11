@@ -85,6 +85,7 @@ public class DeliveryActionHandler implements IDeliveryActionHandler {
 
     private void updatePackages(List<Package> packages, Delivery delivery) {
         for ( var p : packages) {
+            _log.log(Level.INFO, ""+p.getSelectedProp().get());
             _logic.changeOnePackage(p.getId(),p.getContent(),p.getDestination(), p.getWeight(), delivery, p.getSelectedProp().get());
         }
     }

@@ -4,6 +4,7 @@ import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleBooleanProperty;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
+import org.hibernate.annotations.Type;
 import org.hibernate.engine.internal.Cascade;
 
 import javax.persistence.*;
@@ -102,7 +103,7 @@ public class Package {
                 ", destination='" + destination + '\'' +
                 ", registrationTime=" + registrationTime +
                 ", weight=" + weight +
-                ", inDelivery=" + selected +
+                ", inDelivery=" + selectedProp +
                 '}';
     }
 }

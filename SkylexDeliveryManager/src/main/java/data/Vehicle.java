@@ -1,5 +1,8 @@
 package data;
 
+import javafx.beans.property.BooleanProperty;
+import javafx.beans.property.SimpleBooleanProperty;
+
 import javax.persistence.*;
 
 @Entity
@@ -22,6 +25,14 @@ public class Vehicle {
     @Column(name = "currentLoad")
     private double currentLoad;
 
+    @Transient
+    private BooleanProperty InDelivery = new SimpleBooleanProperty();
+    public BooleanProperty getInDeliveryProp() {
+        return InDelivery;
+    }
+    public void setInDeliveryProp(boolean value) {
+        InDelivery.setValue(value);
+    }
 
     public int getId() {
         return id;

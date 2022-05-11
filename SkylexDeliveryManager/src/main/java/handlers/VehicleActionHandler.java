@@ -47,7 +47,7 @@ public class VehicleActionHandler implements IVehicleActionHandler {
     private void handleRemoveAction(MainViewDto dto) {
         if (dto.getMainViewModel().getSelectedVehicle() == null)
             throw new BusinessException("No vehicle was selected to remove", ErrorCodes.NO_VEHICLE_SELECTED);
-
+        _log.log(Level.INFO, "Vehicle to remove: " + dto.getMainViewModel().getSelectedVehicle().getInDeliveryProp());
         _logic.deleteVehicle(dto.getMainViewModel().getSelectedVehicle().getId());
     }
 

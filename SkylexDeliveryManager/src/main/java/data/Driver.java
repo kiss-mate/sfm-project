@@ -1,6 +1,8 @@
 package data;
 
 
+import javafx.beans.property.BooleanProperty;
+import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.property.StringProperty;
 
 import javax.persistence.*;
@@ -24,6 +26,15 @@ public class Driver  {
 
     @Column(name = "inDelivery")
     private boolean inDelivery;
+
+    @Transient
+    private BooleanProperty InDelivery = new SimpleBooleanProperty();
+    public BooleanProperty getInDeliveryProp() {
+        return InDelivery;
+    }
+    public void setInDeliveryProp(boolean value) {
+        InDelivery.setValue(value);
+    }
 
     public int getId() {
         return id;

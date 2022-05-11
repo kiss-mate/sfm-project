@@ -26,6 +26,7 @@ public class VehicleRepository extends RepositoryBase<Vehicle> implements IVehic
 
         oneVehicle.setPlateNumber(plateNumber);
         oneVehicle.setInDelivery(inDelivery);
+        oneVehicle.setInDeliveryProp(inDelivery);
         oneVehicle.setMaxCapacity(maxCapacity);
         oneVehicle.setCurrentLoad(oneVehicle.getCurrentLoad() + loadChange);
 

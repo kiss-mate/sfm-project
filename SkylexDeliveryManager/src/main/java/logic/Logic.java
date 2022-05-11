@@ -49,6 +49,7 @@ public class Logic implements ILogic {
         var newDriver = new Driver();
         newDriver.setName(name);
         newDriver.setInDelivery(false);
+        newDriver.setInDeliveryProp(false);
         _driverRepo.insert(newDriver);
         _log.log(Level.INFO, "New Driver object added to the database: " + newDriver);
         return newDriver;
@@ -84,7 +85,9 @@ public class Logic implements ILogic {
         var driver = _driverRepo.getById(id);
         if (driver == null)
             throw new BusinessException("Driver object not found", ErrorCodes.DRIVER_NOT_FOUND);
-      
+        if (driver.isInDelivery())
+            throw new BusinessException("Cannot remove, driver is selected in delivery", ErrorCodes.UI_COMPLIANT);
+
         if (_driverRepo.delete(driver)) {
             _log.log(Level.INFO, "Removed Driver object from the database: " + driver);
             return true;
@@ -280,7 +283,9 @@ public class Logic implements ILogic {
     @Override
     public List<Package> getAllPackages()
     {
-        return _packageRepo.getAll();
+        var packages = _packageRepo.getAll();
+        _log.log(Level.INFO, "" + packages);
+        return packages;
     }
 
     @Override
@@ -342,15 +347,19 @@ public class Logic implements ILogic {
                 _packageRepo.update(pack.getId(), pack.getContent(), pack.getDestination(), pack.getRegistrationTime(), pack.getWeight(), delivery, true);
 
                 var v = delivery.getVehicle();
-                _vehicleRepo.update(v.getId(), v.getPlateNumber(), v.isInDelivery(), v.getMaxCapacity(), pack.getWeight());
+                _vehicleRepo.update(v.getId(), v.getPlateNumber(), true, v.getMaxCapacity(), pack.getWeight());
             }
         }
 
         if (pack.isSelected() == inSelection) {
-            if (pack.getDelivery() != null)
-                throw new BusinessException("Cannot edit while package is still in delivery", ErrorCodes.UI_COMPLIANT);
-
-            _packageRepo.update(pack.getId(), content, destination, pack.getRegistrationTime(), weight, null, false);
+            if (pack.getDelivery() != null) {
+                //in delivery, change not allowed on these
+                if (!pack.getContent().equals(content) || !pack.getDestination().equals(destination) || pack.getWeight() != weight)
+                    throw new BusinessException("Cannot edit while package is still in delivery", ErrorCodes.UI_COMPLIANT);
+            } else {
+                // out of delivery, can change these
+                _packageRepo.update(pack.getId(), content, destination, pack.getRegistrationTime(), weight, null, false);
+            }
         }
     }
 

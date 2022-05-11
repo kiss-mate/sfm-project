@@ -47,14 +47,14 @@ public class DriverActionHandler implements IDriverActionHandler {
     private void handleRemoveAction(MainViewDto dto) {
         if (dto.getMainViewModel().getSelectedDriver() == null)
             throw new BusinessException("No driver was selected to remove", ErrorCodes.NO_DIVER_SELECTED);
-
+        _log.log(Level.INFO, "Driver to delete: " + dto.getMainViewModel().getSelectedDriver());
         _logic.deleteDriver(dto.getMainViewModel().getSelectedDriver().getId());
     }
 
     private void handleUpdateAction(MainViewDto dto) {
         if (dto.getMainViewModel().getSelectedDriver() == null)
             throw new BusinessException("No driver was selected to update", ErrorCodes.NO_DIVER_SELECTED);
-
+        _log.log(Level.INFO, "Driver update: " + dto.getMainViewModel().getSelectedDriver());
         _logic.changeOneDriver(
                 dto.getMainViewModel().getSelectedDriver().getId(),
                 dto.getMainViewModel().getInputFieldValues().get(InputFieldKeys.DRIVER_NAME_INPUT_FIELD_KEY),

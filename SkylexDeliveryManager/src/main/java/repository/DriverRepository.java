@@ -24,6 +24,7 @@ public class DriverRepository extends RepositoryBase<Driver> implements IDriverR
         var oneDriver = getById(id);
         oneDriver.setName(name);
         oneDriver.setInDelivery(inDelivery);
+        oneDriver.setInDeliveryProp(inDelivery);
 
         session.beginTransaction();
         session.update(oneDriver);

@@ -6,6 +6,7 @@ import data.Package;
 import org.hibernate.SessionFactory;
 
 import java.util.Date;
+import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public class PackageRepository extends RepositoryBase<Package> implements IPackageRepository {
@@ -26,12 +27,13 @@ public class PackageRepository extends RepositoryBase<Package> implements IPacka
         var onePackage = getById(id);
         if (onePackage == null)
             return false;
-
+        _log.log(Level.INFO, "" + delivery + " ... " + selected);
         onePackage.setContent(Content);
         onePackage.setDestination(Destination);
         onePackage.setRegistrationTime(RegistrationTime);
         onePackage.setWeight(weight);
         onePackage.setSelected(selected);
+        onePackage.setSelectedProp(selected);
         onePackage.setDelivery(delivery);
 
         session.beginTransaction();
