@@ -1,9 +1,10 @@
-package repository;
+package repository.classes;
 
 import com.google.inject.Inject;
 import data.Delivery;
 import data.Package;
 import org.hibernate.SessionFactory;
+import repository.interfaces.IPackageRepository;
 
 import java.util.Date;
 import java.util.logging.Level;

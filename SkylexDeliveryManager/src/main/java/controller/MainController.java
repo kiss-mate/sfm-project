@@ -33,7 +33,6 @@ public class MainController {
     private final IMainActionHandler _mainActionHandler;
     private final MainViewModel viewModel;
 
-
     /**
      * Creates new MainController instance
      * @param log logger
@@ -78,7 +77,6 @@ public class MainController {
         deliveryPackageWeightCol.setCellValueFactory(new PropertyValueFactory<>("weight"));
         deliveryPackageDestCol.setCellValueFactory(new PropertyValueFactory<>("destination"));
         deliveryPackageContentCol.setCellValueFactory(new PropertyValueFactory<>("content"));
-//        packageSelectorCol.setCellValueFactory(new PropertyValueFactory<>("selected"));
         packageSelectorCol.setCellValueFactory(param -> param.getValue().getSelectedProp());
         packageSelectionTable.setEditable(true);
         packageSelectorCol.setEditable(true);
@@ -189,7 +187,7 @@ public class MainController {
     public void handleDeliverySelection(MouseEvent actionEvent) {
         var deliverySelected = deliveryTable.getSelectionModel().getSelectedItem();
 
-        var packagesToDisplay = new ArrayList<Package>(_logic.getAllPackages().stream().filter(p -> p.getDelivery() == null).toList());
+        var packagesToDisplay = new ArrayList<>(_logic.getAllPackages().stream().filter(p -> p.getDelivery() == null).toList());
         packagesToDisplay.addAll(
                 _logic
                         .getAllPackages()

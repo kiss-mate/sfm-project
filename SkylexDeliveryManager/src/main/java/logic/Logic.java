@@ -8,10 +8,10 @@ import data.Driver;
 import data.Vehicle;
 import data.Package;
 import models.enums.ErrorCodes;
-import repository.IDeliveryRepository;
-import repository.IDriverRepository;
-import repository.IPackageRepository;
-import repository.IVehicleRepository;
+import repository.interfaces.IDeliveryRepository;
+import repository.interfaces.IDriverRepository;
+import repository.interfaces.IPackageRepository;
+import repository.interfaces.IVehicleRepository;
 import java.util.Date;
 import java.util.List;
 import java.util.logging.Level;
@@ -120,6 +120,7 @@ public class Logic implements ILogic {
             throw new BusinessException("Vehicle plate number was null or whitespace", ErrorCodes.VEHICLE_PLATE_NUMBER_INVALID);
         if (!plateNumber.matches("^[A-Z]{3}-[1-9]{3}$"))
             throw new BusinessException("Vehicle plate number has invalid format", ErrorCodes.VEHICLE_PLATE_NUMBER_INVALID);
+        checkIfPlateNumberExists(plateNumber, "");
         if (maxCapacity <= 0)
             throw new BusinessException("Capacity is zero or negative", ErrorCodes.VEHICLE_MAX_CAPACITY_INVALID);
 
@@ -135,6 +136,13 @@ public class Logic implements ILogic {
     @Override
     public void changeOneVehicle(int id, String plateNumber, double maxCapacity, double currentLoad, boolean inDelivery)
     {
+        if (plateNumber == null || plateNumber.isBlank() || plateNumber.isEmpty())
+            throw new BusinessException("Vehicle plate number was null or whitespace", ErrorCodes.VEHICLE_PLATE_NUMBER_INVALID);
+        if (!plateNumber.matches("^[A-Z]{3}-[1-9]{3}$"))
+            throw new BusinessException("Vehicle plate number has invalid format", ErrorCodes.VEHICLE_PLATE_NUMBER_INVALID);
+        if (maxCapacity <= 0)
+            throw new BusinessException("Capacity is zero or negative", ErrorCodes.VEHICLE_MAX_CAPACITY_INVALID);
+
         Vehicle vehicle = _vehicleRepo.getById(id);
         if (vehicle == null) throw new BusinessException("No such vehicle", ErrorCodes.VEHICLE_NOT_FOUND);
         if (vehicle.isInDelivery())
@@ -151,6 +159,7 @@ public class Logic implements ILogic {
         else
         {
             // Vehicle not in delivery, everything can change but its current load has to stay 0
+            checkIfPlateNumberExists(plateNumber, vehicle.getPlateNumber());
             _vehicleRepo.update(id, plateNumber, inDelivery, maxCapacity, 0);
         }
     }
@@ -322,12 +331,9 @@ public class Logic implements ILogic {
         if (pack == null)
             throw new BusinessException("No such package", ErrorCodes.PACKAGE_NOT_FOUND);
 
-        Vehicle vehicle;
-        if (delivery != null) {
-            vehicle = delivery.getVehicle();
-        } else {
-            vehicle = pack.getDelivery().getVehicle();
-        }
+
+        var vehicle = delivery == null ? null : delivery.getVehicle();
+
 
         if (pack.isSelected() && !inSelection) {
             //take it out from delivery
@@ -383,4 +389,18 @@ public class Logic implements ILogic {
     }
 
     //endregion
+
+    private void checkIfPlateNumberExists(String input, String current) {
+        var plateNumbers = _vehicleRepo
+                .getAll()
+                .stream()
+                .map(Vehicle::getPlateNumber)
+                .filter(pn -> !pn.equals(current))
+                .toList();
+
+        if (plateNumbers.contains(input))
+            throw new BusinessException(
+                    "Plate number already taken: " + input,
+                    ErrorCodes.UI_COMPLIANT);
+    }
 }

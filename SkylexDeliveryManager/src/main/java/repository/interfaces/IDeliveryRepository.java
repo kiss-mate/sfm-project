@@ -1,4 +1,4 @@
-package repository;
+package repository.interfaces;
 
 import data.Delivery;
 import data.Driver;

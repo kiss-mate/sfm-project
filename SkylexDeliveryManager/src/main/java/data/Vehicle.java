@@ -72,12 +72,6 @@ public class Vehicle {
 
     @Override
     public String toString() {
-        return "Vehicle{" +
-                "id=" + id +
-                ", plateNumber='" + plateNumber + '\'' +
-                ", inDelivery=" + inDelivery +
-                ", maxCapacity=" + maxCapacity +
-                ", currentLoad=" + currentLoad +
-                '}';
+        return plateNumber + "(" + (inDelivery ? "In delivery" : "Free") + ")";
     }
 }

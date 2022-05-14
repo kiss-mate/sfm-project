@@ -13,10 +13,10 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.MethodSource;
 import org.mockito.ArgumentCaptor;
 import org.mockito.junit.jupiter.MockitoExtension;
-import repository.IDeliveryRepository;
-import repository.IDriverRepository;
-import repository.IPackageRepository;
-import repository.IVehicleRepository;
+import repository.interfaces.IDeliveryRepository;
+import repository.interfaces.IDriverRepository;
+import repository.interfaces.IPackageRepository;
+import repository.interfaces.IVehicleRepository;
 
 import java.util.Arrays;
 import java.util.logging.Level;

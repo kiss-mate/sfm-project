@@ -68,10 +68,6 @@ public class Driver  {
      */
     @Override
     public String toString() {
-        return "Driver{" +
-                "id=" + id +
-                ", name='" + name + '\'' +
-                ", inDelivery=" + inDelivery +
-                '}';
+        return name + "(" + (inDelivery ? "In delivery" : "Free") + ")";
     }
 }

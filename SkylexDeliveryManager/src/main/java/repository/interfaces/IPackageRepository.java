@@ -1,9 +1,7 @@
-package repository;
+package repository.interfaces;
 
 import data.Delivery;
 import data.Package;
-
-import repository.IRepositoryBase;
 
 import java.util.Date;
 

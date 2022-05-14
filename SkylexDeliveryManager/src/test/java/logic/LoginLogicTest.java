@@ -10,7 +10,7 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.MethodSource;
 import org.mockito.ArgumentCaptor;
 import org.mockito.junit.jupiter.MockitoExtension;
-import repository.IUserRepository;
+import repository.interfaces.IUserRepository;
 
 import java.util.Arrays;
 import java.util.logging.Level;

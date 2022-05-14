@@ -2,7 +2,10 @@ import com.google.inject.Guice;
 import common.DbContextSettings;
 import common.logging.LoggingContext;
 import data.DbContext;
-import handlers.*;
+import handlers.IMainActionHandler;
+import handlers.MainActionHandler;
+import handlers.classes.*;
+import handlers.interfaces.*;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -15,7 +18,8 @@ import logic.ILoginLogic;
 import logic.Logic;
 import logic.LoginLogic;
 import org.hibernate.SessionFactory;
-import repository.*;
+import repository.classes.*;
+import repository.interfaces.*;
 
 public class Main extends Application {
     @Override

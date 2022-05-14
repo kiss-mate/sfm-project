@@ -1,12 +1,13 @@
-package repository;
+package repository.classes;
 
 import com.google.inject.Inject;
 import data.User;
 import org.hibernate.SessionFactory;
+import repository.interfaces.IUserRepository;
 
 import java.util.logging.Logger;
 
-public class UserRepository extends RepositoryBase<User> implements IUserRepository{
+public class UserRepository extends RepositoryBase<User> implements IUserRepository {
     /**
      * Creates the UserRepository object
      *

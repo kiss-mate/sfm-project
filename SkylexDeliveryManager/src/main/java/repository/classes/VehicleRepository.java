@@ -1,8 +1,9 @@
-package repository;
+package repository.classes;
 
 import com.google.inject.Inject;
 import data.Vehicle;
 import org.hibernate.SessionFactory;
+import repository.interfaces.IVehicleRepository;
 
 import java.util.logging.Logger;
 

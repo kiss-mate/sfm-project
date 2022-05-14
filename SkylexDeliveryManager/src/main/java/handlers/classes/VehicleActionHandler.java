@@ -1,9 +1,10 @@
-package handlers;
+package handlers.classes;
 
 import com.google.inject.Inject;
 import common.constants.ActionSource;
 import common.constants.InputFieldKeys;
 import common.exceptions.BusinessException;
+import handlers.interfaces.IVehicleActionHandler;
 import logic.ILogic;
 import models.MainViewDto;
 import models.enums.ErrorCodes;

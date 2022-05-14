@@ -5,7 +5,7 @@ import common.exceptions.ArgumentNullException;
 import common.exceptions.BusinessException;
 import data.User;
 import models.enums.ErrorCodes;
-import repository.IUserRepository;
+import repository.interfaces.IUserRepository;
 
 import java.util.List;
 import java.util.logging.Level;

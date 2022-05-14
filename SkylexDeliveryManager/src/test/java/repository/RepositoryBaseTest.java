@@ -7,6 +7,8 @@ import org.hibernate.SessionFactory;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.junit.jupiter.MockitoExtension;
+import repository.classes.DriverRepository;
+
 import java.util.logging.Logger;
 
 import static org.junit.jupiter.api.Assertions.*;

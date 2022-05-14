@@ -1,9 +1,11 @@
-package repository;
+package repository.classes;
 
 import com.google.inject.Inject;
 import common.exceptions.ArgumentNullException;
 import common.constants.SqlConstants;
 import org.hibernate.SessionFactory;
+import repository.interfaces.IRepositoryBase;
+
 import java.lang.reflect.ParameterizedType;
 import java.util.List;
 import java.util.logging.Logger;

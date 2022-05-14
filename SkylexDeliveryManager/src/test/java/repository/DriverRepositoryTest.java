@@ -6,6 +6,7 @@ import data.DbContext;
 import data.Driver;
 import org.hibernate.SessionFactory;
 import org.junit.jupiter.api.Test;
+import repository.classes.DriverRepository;
 
 import java.util.logging.Logger;
 
