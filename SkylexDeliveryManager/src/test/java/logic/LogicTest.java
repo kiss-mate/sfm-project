@@ -2,6 +2,7 @@ package logic;
 
 import common.exceptions.ArgumentNullException;
 import common.exceptions.BusinessException;
+import data.Delivery;
 import data.Driver;
 import data.Package;
 import data.Vehicle;
@@ -12,6 +13,7 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.MethodSource;
 import org.mockito.ArgumentCaptor;
 import org.mockito.junit.jupiter.MockitoExtension;
+import repository.IDeliveryRepository;
 import repository.IDriverRepository;
 import repository.IPackageRepository;
 import repository.IVehicleRepository;
@@ -33,7 +35,10 @@ public class LogicTest {
                 mock(Logger.class),
                 mock(IDriverRepository.class),
                 mock(IVehicleRepository.class),
-                mock(IPackageRepository.class)));
+                mock(IPackageRepository.class),
+                mock(IDeliveryRepository.class)
+                )
+        );
     }
 
     @Test
@@ -45,7 +50,10 @@ public class LogicTest {
                         null,
                         mock(IDriverRepository.class),
                         mock(IVehicleRepository.class),
-                        mock(IPackageRepository.class)));
+                        mock(IPackageRepository.class),
+                        mock(IDeliveryRepository.class)
+                )
+        );
 
         //assert
         assertEquals("log", exception.getMessage());
@@ -60,7 +68,10 @@ public class LogicTest {
                         mock(Logger.class),
                         null,
                         mock(IVehicleRepository.class),
-                        mock(IPackageRepository.class)));
+                        mock(IPackageRepository.class),
+                        mock(IDeliveryRepository.class)
+                )
+        );
 
         //assert
         assertEquals("driverRepo", exception.getMessage());
@@ -75,7 +86,10 @@ public class LogicTest {
                         mock(Logger.class),
                         mock(IDriverRepository.class),
                         null,
-                        mock(IPackageRepository.class)));
+                        mock(IPackageRepository.class),
+                        mock(IDeliveryRepository.class)
+                )
+        );
 
         //assert
         assertEquals("vehicleRepo", exception.getMessage());
@@ -90,7 +104,27 @@ public class LogicTest {
                         mock(Logger.class),
                         mock(IDriverRepository.class),
                         mock(IVehicleRepository.class),
-                        null));
+                        null,
+                        mock(IDeliveryRepository.class)
+                )
+        );
+
+        //assert
+        assertEquals("packageRepo", exception.getMessage());
+    }
+
+    @Test
+    public void new_DeliveryRepoNull() {
+        //arrange, act
+        var exception = assertThrows(
+                ArgumentNullException.class,
+                () -> new Logic(
+                        mock(Logger.class),
+                        mock(IDriverRepository.class),
+                        mock(IVehicleRepository.class),
+                        mock(IPackageRepository.class),
+                        null)
+        );
 
         //assert
         assertEquals("packageRepo", exception.getMessage());
@@ -107,7 +141,7 @@ public class LogicTest {
         var mockDriverRepo = mock(IDriverRepository.class);
         var mockVehicleRepo = mock(IVehicleRepository.class);
         var mockPackageRepo = mock(IPackageRepository.class);
-        var logic = new Logic(mockLog, mockDriverRepo, mockVehicleRepo, mockPackageRepo);
+        var logic = new Logic(mockLog, mockDriverRepo, mockVehicleRepo, mockPackageRepo, mock(IDeliveryRepository.class));
         //act
         logic.addDriver(driverName);
 
@@ -121,7 +155,7 @@ public class LogicTest {
     @MethodSource("nameTestData")
     public void addDriver_NameNullOrWhiteSpace(String name) {
         //arrange
-        var logic = new Logic(mock(Logger.class), mock(IDriverRepository.class), mock(IVehicleRepository.class), mock(IPackageRepository.class));
+        var logic = new Logic(mock(Logger.class), mock(IDriverRepository.class), mock(IVehicleRepository.class), mock(IPackageRepository.class), mock(IDeliveryRepository.class));
 
         //act
         var exception = assertThrows(BusinessException.class, () -> logic.addDriver(name));
@@ -147,12 +181,12 @@ public class LogicTest {
         var mockPackageRepo = mock(IPackageRepository.class);
         when(mockDriverRepo.getById(driverId)).thenReturn(driver);
 
-        var logic = new Logic(mockLog, mockDriverRepo, mockVehicleRepo, mockPackageRepo);
+        var logic = new Logic(mockLog, mockDriverRepo, mockVehicleRepo, mockPackageRepo, mock(IDeliveryRepository.class));
         //act
-        logic.changeOneDriver(driverId, "new_driver_name");
+        logic.changeOneDriver(driverId, "new_driver_name", false);
 
         //assert
-        verify(mockDriverRepo, times(1)).update(anyInt(), argument.capture());
+        verify(mockDriverRepo, times(1)).update(anyInt(), argument.capture(), false);
         assertEquals("new_driver_name", argument.getValue());
         verify(mockLog, times(1)).log(eq(Level.INFO), contains(driverName));
     }
@@ -161,10 +195,10 @@ public class LogicTest {
     @MethodSource("nameTestData")
     public void changeOneDriver_NameNullOrWhitespace(String name) {
         //arrange
-        var logic = new Logic(mock(Logger.class), mock(IDriverRepository.class), mock(IVehicleRepository.class), mock(IPackageRepository.class));
+        var logic = new Logic(mock(Logger.class), mock(IDriverRepository.class), mock(IVehicleRepository.class), mock(IPackageRepository.class), mock(IDeliveryRepository.class));
 
         //act
-        var exception = assertThrows(BusinessException.class, () -> logic.changeOneDriver(123, name));
+        var exception = assertThrows(BusinessException.class, () -> logic.changeOneDriver(123, name, false));
 
         //assert
         assertNotNull(exception);
@@ -178,9 +212,9 @@ public class LogicTest {
 
         when(mockDriverRepo.getById(anyInt())).thenReturn(null);
 
-        var logic = new Logic(mock(Logger.class), mockDriverRepo, mock(IVehicleRepository.class), mock(IPackageRepository.class));
+        var logic = new Logic(mock(Logger.class), mockDriverRepo, mock(IVehicleRepository.class), mock(IPackageRepository.class), mock(IDeliveryRepository.class));
         //act
-        var exception = assertThrows(BusinessException.class, () -> logic.changeOneDriver(123, "new_driver_name"));
+        var exception = assertThrows(BusinessException.class, () -> logic.changeOneDriver(123, "new_driver_name", false));
 
         //assert
         assertNotNull(exception);
@@ -197,7 +231,7 @@ public class LogicTest {
         var mockDriverRepo = mock(IDriverRepository.class);
 
         when(mockDriverRepo.getById(anyInt())).thenReturn(driver);
-        var logic = new Logic(mock(Logger.class), mockDriverRepo, mock(IVehicleRepository.class), mock(IPackageRepository.class));
+        var logic = new Logic(mock(Logger.class), mockDriverRepo, mock(IVehicleRepository.class), mock(IPackageRepository.class), mock(IDeliveryRepository.class));
 
         //act
         var result = logic.getOneDriver(1);
@@ -211,7 +245,7 @@ public class LogicTest {
     public void getOneDriver_NotFound() {
         var mockDriverRepo = mock(IDriverRepository.class);
         when(mockDriverRepo.getById(anyInt())).thenReturn(null);
-        var logic = new Logic(mock(Logger.class), mockDriverRepo, mock(IVehicleRepository.class), mock(IPackageRepository.class));
+        var logic = new Logic(mock(Logger.class), mockDriverRepo, mock(IVehicleRepository.class), mock(IPackageRepository.class), mock(IDeliveryRepository.class));
 
         //act
         var result = logic.getOneDriver(1);
@@ -226,7 +260,7 @@ public class LogicTest {
         //arrange
         var mockDriverRepo = mock(IDriverRepository.class);
         var mockVehicleRepo = mock(IVehicleRepository.class);
-        var logic = new Logic(mock(Logger.class), mockDriverRepo, mockVehicleRepo, mock(IPackageRepository.class));
+        var logic = new Logic(mock(Logger.class), mockDriverRepo, mockVehicleRepo, mock(IPackageRepository.class), mock(IDeliveryRepository.class));
 
         //act
         var result = logic.getAllDrivers();
@@ -245,7 +279,7 @@ public class LogicTest {
         when(mockDriverRepo.delete(any(Driver.class))).thenReturn(true);
         var mockLog = mock(Logger.class);
 
-        var logic = new Logic(mockLog, mockDriverRepo, mock(IVehicleRepository.class), mock(IPackageRepository.class));
+        var logic = new Logic(mockLog, mockDriverRepo, mock(IVehicleRepository.class), mock(IPackageRepository.class), mock(IDeliveryRepository.class));
 
         //act
         logic.deleteDriver(123);
@@ -260,7 +294,7 @@ public class LogicTest {
         //arrange
         var mockDriverRepo = mock(IDriverRepository.class);
         when(mockDriverRepo.getById(anyInt())).thenReturn(null);
-        var logic = new Logic(mock(Logger.class), mockDriverRepo, mock(IVehicleRepository.class), mock(IPackageRepository.class));
+        var logic = new Logic(mock(Logger.class), mockDriverRepo, mock(IVehicleRepository.class), mock(IPackageRepository.class), mock(IDeliveryRepository.class));
 
         //act
         var exception =  assertThrows(BusinessException.class, () -> logic.deleteDriver(123));
@@ -288,7 +322,7 @@ public class LogicTest {
         var mockLog = mock(Logger.class);
         var mockDriverRepo = mock(IDriverRepository.class);
         var mockVehicleRepo = mock(IVehicleRepository.class);
-        var logic = new Logic(mockLog, mockDriverRepo, mockVehicleRepo, mock(IPackageRepository.class));
+        var logic = new Logic(mockLog, mockDriverRepo, mockVehicleRepo, mock(IPackageRepository.class), mock(IDeliveryRepository.class));
         //act
         logic.addVehicle(vehiclePlateNumber, 1);
 
@@ -305,7 +339,7 @@ public class LogicTest {
     @MethodSource("vehicleFailureTestData")
     public void addVehicle_PlateNumberNullOrWhiteSpace(String name, double maxCapacity) {
         //arrange
-        var logic = new Logic(mock(Logger.class), mock(IDriverRepository.class), mock(IVehicleRepository.class), mock(IPackageRepository.class));
+        var logic = new Logic(mock(Logger.class), mock(IDriverRepository.class), mock(IVehicleRepository.class), mock(IPackageRepository.class), mock(IDeliveryRepository.class));
 
         //act
         var exception = assertThrows(BusinessException.class, () -> logic.addVehicle(name, maxCapacity));
@@ -335,7 +369,7 @@ public class LogicTest {
         var mockVehicleRepo = mock(IVehicleRepository.class);
         when(mockVehicleRepo.getById(vehicleId)).thenReturn(vehicle);
 
-        var logic = new Logic(mockLog, mock(IDriverRepository.class), mockVehicleRepo, mock(IPackageRepository.class));
+        var logic = new Logic(mockLog, mock(IDriverRepository.class), mockVehicleRepo, mock(IPackageRepository.class), mock(IDeliveryRepository.class));
         //act
         logic.changeOneVehicle(vehicleId, vehicle.getPlateNumber(), vehicle.getMaxCapacity(), 500, vehicle.isInDelivery());
 
@@ -360,10 +394,10 @@ public class LogicTest {
         var mockVehicleRepo = mock(IVehicleRepository.class);
         when(mockVehicleRepo.getById(vehicleId)).thenReturn(vehicle);
 
-        var logic = new Logic(mockLog, mock(IDriverRepository.class), mockVehicleRepo, mock(IPackageRepository.class));
+        var logic = new Logic(mockLog, mock(IDriverRepository.class), mockVehicleRepo, mock(IPackageRepository.class), mock(IDeliveryRepository.class));
         //act
         var exception = assertThrows(BusinessException.class,
-                () ->  logic.changeOneVehicle(vehicleId, "new plate number", vehicle.getMaxCapacity(),100, vehicle.isInDelivery()));     ;
+                () ->  logic.changeOneVehicle(vehicleId, "new plate number", vehicle.getMaxCapacity(),100, vehicle.isInDelivery()));
 
         //assert
         assertNotNull(exception);
@@ -377,7 +411,7 @@ public class LogicTest {
 
         when(mockVehicleRepo.getById(anyInt())).thenReturn(null);
 
-        var logic = new Logic(mock(Logger.class), mock(IDriverRepository.class), mockVehicleRepo, mock(IPackageRepository.class));
+        var logic = new Logic(mock(Logger.class), mock(IDriverRepository.class), mockVehicleRepo, mock(IPackageRepository.class), mock(IDeliveryRepository.class));
 
         //act
         var exception = assertThrows(BusinessException.class, () ->
@@ -397,7 +431,7 @@ public class LogicTest {
         var mockVehicleRepo = mock(IVehicleRepository.class);
 
         when(mockVehicleRepo.getById(anyInt())).thenReturn(vehicle);
-        var logic = new Logic(mock(Logger.class), mock(IDriverRepository.class), mockVehicleRepo, mock(IPackageRepository.class));
+        var logic = new Logic(mock(Logger.class), mock(IDriverRepository.class), mockVehicleRepo, mock(IPackageRepository.class), mock(IDeliveryRepository.class));
 
         //act
         var result = logic.getOneVehicle(1);
@@ -411,7 +445,7 @@ public class LogicTest {
     public void getOneVehicle_NotFound() {
         var mockVehicleRepo = mock(IVehicleRepository.class);
         when(mockVehicleRepo.getById(anyInt())).thenReturn(null);
-        var logic = new Logic(mock(Logger.class), mock(IDriverRepository.class), mockVehicleRepo, mock(IPackageRepository.class));
+        var logic = new Logic(mock(Logger.class), mock(IDriverRepository.class), mockVehicleRepo, mock(IPackageRepository.class), mock(IDeliveryRepository.class));
 
         //act
         var result = logic.getOneVehicle(1);
@@ -425,7 +459,7 @@ public class LogicTest {
     public void getAllVehicles_HappyCase() {
         //arrange
         var mockVehicleRepo = mock(IVehicleRepository.class);
-        var logic = new Logic(mock(Logger.class), mock(IDriverRepository.class), mockVehicleRepo, mock(IPackageRepository.class));
+        var logic = new Logic(mock(Logger.class), mock(IDriverRepository.class), mockVehicleRepo, mock(IPackageRepository.class), mock(IDeliveryRepository.class));
 
         //act
         var result = logic.getAllVehicles();
@@ -443,7 +477,7 @@ public class LogicTest {
         when(mockVehicleRepo.getById(anyInt())).thenReturn(vehicle);
         when(mockVehicleRepo.delete(any(Vehicle.class))).thenReturn(true);
         var mockLog = mock(Logger.class);
-        var logic = new Logic(mockLog, mock(IDriverRepository.class), mockVehicleRepo, mock(IPackageRepository.class));
+        var logic = new Logic(mockLog, mock(IDriverRepository.class), mockVehicleRepo, mock(IPackageRepository.class), mock(IDeliveryRepository.class));
 
         //act
         logic.deleteVehicle(123);
@@ -456,8 +490,8 @@ public class LogicTest {
     @Test
     public void deleteVehicle_NotFound() {
         //arrange
-        var mockDriverRepo = mock(IDriverRepository.class);
-        var logic = new Logic(mock(Logger.class), mockDriverRepo, mock(IVehicleRepository.class), mock(IPackageRepository.class));
+        var mockVehicleRepo = mock(IVehicleRepository.class);
+        var logic = new Logic(mock(Logger.class), mock(IDriverRepository.class), mockVehicleRepo, mock(IPackageRepository.class), mock(IDeliveryRepository.class));
 
         //act
         var exception =  assertThrows(BusinessException.class, () -> logic.deleteVehicle(123));
@@ -480,18 +514,18 @@ public class LogicTest {
     //endregion
 
     //region VEHICLE RELATED LOGIC TESTS
-//void addPackage(String Content, String Destination, double weight)
+    //void addPackage(String Content, String Destination, double weight)
     @Test
     public void addPackage_HappyCase() {
         //arrange
         ArgumentCaptor<Package> argument = ArgumentCaptor.forClass(Package.class);
         var packageContent = "Poison";
-        var packageDestination = "Debrecen, Ótemető 2";
+        var packageDestination = "Precedence, Telemeter 2";
         var mockLog = mock(Logger.class);
         var mockDriverRepo = mock(IDriverRepository.class);
         var mockVehicleRepo = mock(IVehicleRepository.class);
         var mockPackageRepo = mock(IPackageRepository.class);
-        var logic = new Logic(mockLog, mockDriverRepo, mockVehicleRepo, mock(IPackageRepository.class));
+        var logic = new Logic(mockLog, mockDriverRepo, mockVehicleRepo, mock(IPackageRepository.class), mock(IDeliveryRepository.class));
         //act
         logic.addPackage(packageContent, packageDestination, 10);
 
@@ -511,7 +545,7 @@ public class LogicTest {
         var packageId = 123;
         var packages = new Package();
         packages.setContent(packageContent);
-        packages.setDestination("Debrecen 12");
+        packages.setDestination("Precedence 12");
         packages.setWeight(100);
         packages.setSelected(true);
 
@@ -520,23 +554,23 @@ public class LogicTest {
         var mockPackageRepo = mock(IPackageRepository.class);
         when(mockPackageRepo.getById(packageId)).thenReturn(packages);
 
-        var logic = new Logic(mockLog, mock(IDriverRepository.class), mock(IVehicleRepository.class), mockPackageRepo);
+        var logic = new Logic(mockLog, mock(IDriverRepository.class), mock(IVehicleRepository.class), mockPackageRepo, mock(IDeliveryRepository.class));
         //act
-        logic.changeOnePackage(packageId, packages.getContent(), packages.getDestination(), 500, packages.isSelected());
+        logic.changeOnePackage(packageId, packages.getContent(), packages.getDestination(), 500, packages.getDelivery(), packages.isSelected());
 
         //assert
-        verify(mockPackageRepo, times(1)).update(eq(packageId), eq(packages.getContent()), eq(packages.getDestination()), eq(packages.getRegistrationTime()),eq(packages.getWeight()), eq(packages.isSelected()));
+        verify(mockPackageRepo, times(1)).update(eq(packageId), eq(packages.getContent()), eq(packages.getDestination()), eq(packages.getRegistrationTime()),eq(packages.getWeight()),eq(packages.getDelivery()), eq(packages.isSelected()));
         assertEquals(500, argument.getValue());
     }
 
     @Test
     public void changeOnePackage_InDelivery_FailureCase() {
         //arrange
-        var packageContent = "Almák";
+        var packageContent = "Almke";
         var packageId = 123;
         var packages = new Package();
         packages.setContent(packageContent);
-        packages.setDestination("Debrecen 9");
+        packages.setDestination("Precedence 9");
         packages.setWeight(100);
         packages.setSelected(true);
 
@@ -545,10 +579,10 @@ public class LogicTest {
         var mockPackageRepo = mock(IPackageRepository.class);
         when(mockPackageRepo.getById(packageId)).thenReturn(packages);
 
-        var logic = new Logic(mockLog, mock(IDriverRepository.class), mock(IVehicleRepository.class), mockPackageRepo);
+        var logic = new Logic(mockLog, mock(IDriverRepository.class), mock(IVehicleRepository.class), mockPackageRepo, mock(IDeliveryRepository.class));
         //act
         var exception = assertThrows(BusinessException.class,
-                () ->  logic.changeOnePackage(packageId, "a new plate number", packages.getDestination(),100, packages.isSelected()));     ;
+                () ->  logic.changeOnePackage(packageId, "a new plate number", packages.getDestination(),100, packages.getDelivery(), packages.isSelected()));
 
         //assert
         assertNotNull(exception);
@@ -559,14 +593,15 @@ public class LogicTest {
     public void changeOnePackage_VehicleNotFound() {
         //arrange
         var mockPackageRepo = mock(IPackageRepository.class);
+        var delivery = new Delivery();
 
         when(mockPackageRepo.getById(anyInt())).thenReturn(null);
 
-        var logic = new Logic(mock(Logger.class), mock(IDriverRepository.class), mock(IVehicleRepository.class), mockPackageRepo);
+        var logic = new Logic(mock(Logger.class), mock(IDriverRepository.class), mock(IVehicleRepository.class), mockPackageRepo, mock(IDeliveryRepository.class));
 
         //act
         var exception = assertThrows(BusinessException.class, () ->
-                logic.changeOnePackage(123, "94 Pizzas and a diet coke", "Pesti tanya", 0,false));
+                logic.changeOnePackage(123, "94 Pizzas and a diet coke", "Pest tanya", 0,delivery,false));
 
         //assert
         assertNotNull(exception);
@@ -582,7 +617,7 @@ public class LogicTest {
         var mockPackageRepo = mock(IPackageRepository.class);
 
         when(mockPackageRepo.getById(anyInt())).thenReturn(packages);
-        var logic = new Logic(mock(Logger.class), mock(IDriverRepository.class), mock(IVehicleRepository.class), mockPackageRepo);
+        var logic = new Logic(mock(Logger.class), mock(IDriverRepository.class), mock(IVehicleRepository.class), mockPackageRepo, mock(IDeliveryRepository.class));
 
         //act
         var result = logic.getOnePackage(1);
@@ -596,7 +631,7 @@ public class LogicTest {
     public void getOnePackage_NotFound() {
         var mockPackageRepo = mock(IPackageRepository.class);
         when(mockPackageRepo.getById(anyInt())).thenReturn(null);
-        var logic = new Logic(mock(Logger.class), mock(IDriverRepository.class), mock(IVehicleRepository.class), mockPackageRepo);
+        var logic = new Logic(mock(Logger.class), mock(IDriverRepository.class), mock(IVehicleRepository.class), mockPackageRepo, mock(IDeliveryRepository.class));
 
         //act
         var result = logic.getOnePackage(1);
@@ -610,7 +645,7 @@ public class LogicTest {
     public void getAllPackages_HappyCase() {
         //arrange
         var mockPackageRepo = mock(IPackageRepository.class);
-        var logic = new Logic(mock(Logger.class), mock(IDriverRepository.class), mock(IVehicleRepository.class), mockPackageRepo);
+        var logic = new Logic(mock(Logger.class), mock(IDriverRepository.class), mock(IVehicleRepository.class), mockPackageRepo, mock(IDeliveryRepository.class));
 
         //act
         var result = logic.getAllPackages();
@@ -628,7 +663,7 @@ public class LogicTest {
         when(mockPackageRepo.getById(anyInt())).thenReturn(packages);
         when(mockPackageRepo.delete(any(Package.class))).thenReturn(true);
         var mockLog = mock(Logger.class);
-        var logic = new Logic(mock(Logger.class), mock(IDriverRepository.class), mock(IVehicleRepository.class), mockPackageRepo);
+        var logic = new Logic(mock(Logger.class), mock(IDriverRepository.class), mock(IVehicleRepository.class), mockPackageRepo, mock(IDeliveryRepository.class));
 
         //act
         logic.deletePackage(123);
@@ -642,7 +677,7 @@ public class LogicTest {
     public void deletePackage_NotFound() {
         //arrange
         var mockPackageRepo = mock(IPackageRepository.class);
-        var logic = new Logic(mock(Logger.class), mock(IDriverRepository.class), mock(IVehicleRepository.class), mockPackageRepo);
+        var logic = new Logic(mock(Logger.class), mock(IDriverRepository.class), mock(IVehicleRepository.class), mockPackageRepo, mock(IDeliveryRepository.class));
 
         //act
         var exception =  assertThrows(BusinessException.class, () -> logic.deletePackage(123));
