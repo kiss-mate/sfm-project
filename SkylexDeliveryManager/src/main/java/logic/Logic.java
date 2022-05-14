@@ -368,7 +368,7 @@ public class Logic implements ILogic {
     {
         Package packages = _packageRepo.getById(id);
         if (packages == null)
-            throw new BusinessException("Cannot find packages, unable to remove it", ErrorCodes.PACKAGE_NOT_FOUND);
+            throw new BusinessException("Cannot find package, unable to remove it", ErrorCodes.PACKAGE_NOT_FOUND);
         if(packages.isSelected())
             throw new BusinessException("Cannot delete, package is still in delivery!", ErrorCodes.UI_COMPLIANT);
 

@@ -55,7 +55,7 @@ public class DriverActionHandlerTest {
 
         //assert
         assertTrue(result.contains("cannot save this as a name for your driver"));
-        verify(mockLog, times(1)).log(eq(Level.WARNING), contains("Business exception occurred"));
+        verify(mockLog, times(1)).log(eq(Level.WARNING), contains("Business exception occurred"), any(BusinessException.class));
     }
 
     @Test
@@ -90,7 +90,7 @@ public class DriverActionHandlerTest {
 
         //assert
         assertTrue(result.contains("Please select a driver to perform the REMOVE action!"));
-        verify(mockLog, times(1)).log(eq(Level.WARNING), contains("Business exception occurred"));
+        verify(mockLog, times(1)).log(eq(Level.WARNING), contains("Business exception occurred"), any(BusinessException.class));
     }
 
     @Test
@@ -126,7 +126,7 @@ public class DriverActionHandlerTest {
 
         //assert
         assertTrue(result.contains("Please select a driver to perform the UPDATE action!"));
-        verify(mockLog, times(1)).log(eq(Level.WARNING), contains("Business exception occurred"));
+        verify(mockLog, times(1)).log(eq(Level.WARNING), contains("Business exception occurred"), any(BusinessException.class));
     }
 
     @Test

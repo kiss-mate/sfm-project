@@ -34,6 +34,8 @@ public class LoginController {
     private final Logger _log;
     private final ILoginLogic _loginLogic;
 
+    private static final String DEFAULT_USER = "./default_user.json";
+
     @Inject
     public LoginController(Logger log, ILoginLogic loginLogic) {
         if ((_log = log) == null) throw new ArgumentNullException("log");
@@ -42,30 +44,35 @@ public class LoginController {
 
     @FXML
     public void initialize() {
-        var om = new ObjectMapper();
-        try {
-            var user = om.readValue(new File("./default_user.json"), User.class);
-            if (user != null && user.rememberUserName()) {
-                usernameField.setText(user.getUsername());
-            }
-        } catch (IOException e) {
-            throw new RuntimeException(e);
+        var user = getUserFromFile(DEFAULT_USER);
+        if (user != null && user.rememberUserName()) {
+            usernameField.setText(user.getUsername());
         }
     }
 
     public void LoginAction(ActionEvent e){
-        if (usernameField.getText().equals("admin") && passwordField.getText().equals("pwd")) {
-            ((Stage)loginButton
-                    .getScene()
-                    .getWindow())
-                    .close();
+        var registeredUser = getUserFromFile(DEFAULT_USER);
+        if (registeredUser != null) {
+            if (usernameField.getText().equals(registeredUser.getUsername())
+                    && passwordField.getText().equals(registeredUser.getPassword())) {
+                ((Stage)loginButton
+                        .getScene()
+                        .getWindow())
+                        .close();
+            }
         }
-
-        usernameField.setBorder(Border.EMPTY);
-
     }
   
     public void CancelAction(ActionEvent e){
         System.exit(0);
+    }
+
+    private User getUserFromFile(String file) {
+        var om = new ObjectMapper();
+        try {
+            return om.readValue(new File(file), User.class);
+        } catch (IOException e) {
+            return null;
+        }
     }
 }

@@ -12,7 +12,7 @@ public class MainActionHandlerTest {
     @Test
     public void getters_HappyCase() {
         //arrange, act
-        var sut = new MainActionHandler(mock(IDriverActionHandler.class), mock(IVehicleActionHandler.class));
+        var sut = new MainActionHandler(mock(IDriverActionHandler.class), mock(IVehicleActionHandler.class), mock(IDeliveryActionHandler.class), mock(IPackageActionHandler.class));
 
         //assert
         assertNotNull(sut);

@@ -14,15 +14,6 @@ import static org.mockito.Mockito.mock;
 
 public class DriverRepositoryTest {
     @Test
-    public void New_HappyCase() {
-        //arrange, act, assert
-        assertNotNull(new DriverRepository(
-                mock(Logger.class),
-                mock(SessionFactory.class)
-        ));
-    }
-
-    @Test
     public void New_LogNull() {
         //arrange, act
         var exception = assertThrows(ArgumentNullException.class, () -> new DriverRepository(
@@ -64,7 +55,7 @@ public class DriverRepositoryTest {
         int id = sut.insert(oneEntity);
 
         //act
-        sut.update(id,"new_name");
+        sut.update(id,"new_name",false);
 
         //assert
         assertEquals("new_name", sut.getById(id).getName());
