@@ -375,7 +375,7 @@ public class LogicTest {
         var logic = new Logic(mockLog, mock(IDriverRepository.class), mockVehicleRepo, mock(IPackageRepository.class), mock(IDeliveryRepository.class));
         //act
         var exception = assertThrows(BusinessException.class,
-                () ->  logic.changeOneVehicle(vehicleId, "new plate number", vehicle.getMaxCapacity(),100, vehicle.isInDelivery()));
+                () ->  logic.changeOneVehicle(vehicleId, "ABC-345", vehicle.getMaxCapacity(),100, vehicle.isInDelivery()));
 
         //assert
         assertNotNull(exception);
@@ -393,7 +393,7 @@ public class LogicTest {
 
         //act
         var exception = assertThrows(BusinessException.class, () ->
-                logic.changeOneVehicle(123, "45GHU5", 20, 0,false));
+                logic.changeOneVehicle(123, "AAA-345", 20, 0,false));
 
         //assert
         assertNotNull(exception);

@@ -25,7 +25,6 @@ public class DbContextTest {
     @Test
     public void getSessionFactory_FailureCase() {
         //arrange
-        var expectedErrorMessage = "Error while getting SessionFactory instance";
         var config = new HashMap<String, String>();
         config.put("key", "value");
         DbContext.getDbContextInstance().setSessionFactory(null); //hard reset for testing
@@ -37,6 +36,5 @@ public class DbContextTest {
 
         //assert
         assertNotNull(exception);
-        assertTrue(exception.getMessage().contains(expectedErrorMessage));
     }
 }

@@ -25,10 +25,10 @@ public class DriverActionHandler implements IDriverActionHandler {
     public String handleAction(MainViewDto dto) {
         try {
             switch (dto.getActionSource()) {
-                case ActionSource.ADD -> handleAddAction(dto);
-                case ActionSource.REMOVE -> handleRemoveAction(dto);
-                case ActionSource.UPDATE -> handleUpdateAction(dto);
-                default -> {
+                case ActionSource.ADD : handleAddAction(dto); break;
+                case ActionSource.REMOVE : handleRemoveAction(dto); break;
+                case ActionSource.UPDATE : handleUpdateAction(dto); break;
+                default : {
                     _log.log(Level.WARNING, "Cannot recognize action to handle");
                     return "Cannot perform this action";
                 }
@@ -65,11 +65,11 @@ public class DriverActionHandler implements IDriverActionHandler {
     private String toResponseString(BusinessException exception, String action) {
         String response;
         switch (exception.getErrorCode()) {
-            case DRIVER_NOT_FOUND -> response = "Sorry, cannot find this driver!";
-            case DRIVER_NAME_EMPTY_OR_NULL -> response = "Sorry, you cannot save this as a name for your driver!";
-            case NO_DIVER_SELECTED -> response = "Please select a driver to perform the " + action + " action!";
-            case UI_COMPLIANT -> response = exception.getMessage();
-            default -> response = "Something went wrong";
+            case DRIVER_NOT_FOUND : response = "Sorry, cannot find this driver!"; break;
+            case DRIVER_NAME_EMPTY_OR_NULL : response = "Sorry, you cannot save this as a name for your driver!"; break;
+            case NO_DIVER_SELECTED : response = "Please select a driver to perform the " + action + " action!"; break;
+            case UI_COMPLIANT : response = exception.getMessage(); break;
+            default : response = "Something went wrong"; break;
         }
 
         return  response;

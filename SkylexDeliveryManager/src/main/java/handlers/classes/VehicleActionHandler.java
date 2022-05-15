@@ -25,10 +25,10 @@ public class VehicleActionHandler implements IVehicleActionHandler {
     public String handleAction(MainViewDto dto) {
         try {
             switch (dto.getActionSource()) {
-                case ActionSource.ADD -> handleAddAction(dto);
-                case ActionSource.REMOVE -> handleRemoveAction(dto);
-                case ActionSource.UPDATE -> handleUpdateAction(dto);
-                default -> _log.log(Level.WARNING, "Cannot recognize action to handle");
+                case ActionSource.ADD : handleAddAction(dto); break;
+                case ActionSource.REMOVE : handleRemoveAction(dto); break;
+                case ActionSource.UPDATE : handleUpdateAction(dto); break;
+                default : _log.log(Level.WARNING, "Cannot recognize action to handle"); break;
             }
 
             return dto.getActionSource() + " action was successful.";
@@ -67,12 +67,12 @@ public class VehicleActionHandler implements IVehicleActionHandler {
     private String toResponseString(BusinessException exception, String action) {
         String response;
         switch (exception.getErrorCode()) {
-            case VEHICLE_NOT_FOUND -> response = "Sorry, cannot find this vehicle!";
-            case VEHICLE_MAX_CAPACITY_INVALID -> response = "Sorry, you cannot save this as a max capacity for your vehicle!";
-            case VEHICLE_PLATE_NUMBER_INVALID -> response = "Sorry, you cannot save this as a plate number for your vehicle!";
-            case NO_VEHICLE_SELECTED -> response = "Please select a vehicle to perform the " + action + " action!";
-            case UI_COMPLIANT -> response = exception.getMessage();
-            default -> response = "Something went wrong";
+            case VEHICLE_NOT_FOUND : response = "Sorry, cannot find this vehicle!"; break;
+            case VEHICLE_MAX_CAPACITY_INVALID : response = "Sorry, you cannot save this as a max capacity for your vehicle!"; break;
+            case VEHICLE_PLATE_NUMBER_INVALID : response = "Sorry, you cannot save this as a plate number for your vehicle!"; break;
+            case NO_VEHICLE_SELECTED : response = "Please select a vehicle to perform the " + action + " action!"; break;
+            case UI_COMPLIANT : response = exception.getMessage(); break;
+            default : response = "Something went wrong"; break;
         }
 
         return  response;

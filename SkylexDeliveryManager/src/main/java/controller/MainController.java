@@ -26,6 +26,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import java.util.stream.Collectors;
 
 public class MainController {
     private final Logger _log;
@@ -99,7 +100,7 @@ public class MainController {
         viewModel.getInputFieldValues().put(InputFieldKeys.DRIVER_NAME_INPUT_FIELD_KEY, driverNameInput.getText());
 
         // get database action
-        var action = Arrays.stream(((Node)actionEvent.getSource()).getId().split("_")).toList().get(0);
+        var action = Arrays.stream(((Node)actionEvent.getSource()).getId().split("_")).collect(Collectors.toList()).get(0);
 
         // sending data to handler
         var dto = new MainViewDto(viewModel, action);
@@ -120,7 +121,7 @@ public class MainController {
         viewModel.getInputFieldValues().put(InputFieldKeys.VEHICLE_MAX_CAPACITY_INPUT_FIELD_KEY, vehicleMaxCapInput.getValue().toString());
 
         // get database action
-        var action =  Arrays.stream(((Node)actionEvent.getSource()).getId().split("_")).toList().get(0);
+        var action =  Arrays.stream(((Node)actionEvent.getSource()).getId().split("_")).collect(Collectors.toList()).get(0);
 
         //sending data to handler
         var dto = new MainViewDto(viewModel, action);
@@ -142,7 +143,7 @@ public class MainController {
         viewModel.getInputFieldValues().put(InputFieldKeys.PACKAGE_DESTINATION_INPUT_FIELD_KEY, packageDestinationInput.getText());
 
         // get database action
-        var action =  Arrays.stream(((Node)actionEvent.getSource()).getId().split("_")).toList().get(0);
+        var action =  Arrays.stream(((Node)actionEvent.getSource()).getId().split("_")).collect(Collectors.toList()).get(0);
 
         //sending data to handler
         var dto = new MainViewDto(viewModel, action);
@@ -156,7 +157,7 @@ public class MainController {
     }
 
     public void handleDeliveryTabAction(ActionEvent actionEvent) {
-        _log.log(Level.INFO, "SelectedPackages: " + packageSelectionTable.getItems().stream().filter(p -> p.getSelectedProp().get()).toList());
+        _log.log(Level.INFO, "SelectedPackages: " + packageSelectionTable.getItems().stream().filter(p -> p.getSelectedProp().get()).collect(Collectors.toList()));
 
         //preparing the view model to forward in dto
         var deliverySelected = deliveryTable.getSelectionModel().getSelectedItem();
@@ -167,7 +168,7 @@ public class MainController {
         viewModel.setPackageList(packageSelectionTable.getItems());
 
         // get database action
-        var action =  Arrays.stream(((Node)actionEvent.getSource()).getId().split("_")).toList().get(0);
+        var action =  Arrays.stream(((Node)actionEvent.getSource()).getId().split("_")).collect(Collectors.toList()).get(0);
 
         //sending data to handler
         var dto = new MainViewDto(viewModel, action);
@@ -187,14 +188,14 @@ public class MainController {
     public void handleDeliverySelection(MouseEvent actionEvent) {
         var deliverySelected = deliveryTable.getSelectionModel().getSelectedItem();
 
-        var packagesToDisplay = new ArrayList<>(_logic.getAllPackages().stream().filter(p -> p.getDelivery() == null).toList());
+        var packagesToDisplay = _logic.getAllPackages().stream().filter(p -> p.getDelivery() == null).collect(Collectors.toCollection(ArrayList::new));
         packagesToDisplay.addAll(
                 _logic
                         .getAllPackages()
                         .stream()
                         .filter(p -> p.getDelivery() != null )
                         .filter(p -> p.getDelivery().getId() == deliverySelected.getId())
-                .toList());
+                .collect(Collectors.toList()));
         _log.log(Level.INFO, "packages available: " + packagesToDisplay);
 
         for (var item : packagesToDisplay) {
@@ -209,7 +210,7 @@ public class MainController {
     private void updateView() {
         driverSelector.setItems(FXCollections.observableList(_logic.getAllDrivers()));
         vehicleSelector.setItems(FXCollections.observableList(_logic.getAllVehicles()));
-        packageSelectionTable.setItems(FXCollections.observableList(_logic.getAllPackages().stream().filter(p -> p.getDelivery() == null).toList()));
+        packageSelectionTable.setItems(FXCollections.observableList(_logic.getAllPackages().stream().filter(p -> p.getDelivery() == null).collect(Collectors.toList())));
 
         driverTableView.setItems(FXCollections.observableArrayList(_logic.getAllDrivers()));
         vehicleTable.setItems(FXCollections.observableList(_logic.getAllVehicles()));

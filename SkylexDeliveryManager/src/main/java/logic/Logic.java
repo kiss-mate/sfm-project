@@ -16,6 +16,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import java.util.stream.Collectors;
 
 public class Logic implements ILogic {
     private final Logger _log;
@@ -396,7 +397,7 @@ public class Logic implements ILogic {
                 .stream()
                 .map(Vehicle::getPlateNumber)
                 .filter(pn -> !pn.equals(current))
-                .toList();
+                .collect(Collectors.toList());
 
         if (plateNumbers.contains(input))
             throw new BusinessException(

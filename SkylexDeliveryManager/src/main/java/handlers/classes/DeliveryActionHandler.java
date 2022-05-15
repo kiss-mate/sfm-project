@@ -27,10 +27,10 @@ public class DeliveryActionHandler implements IDeliveryActionHandler {
     public String handleAction(MainViewDto dto) {
         try {
             switch (dto.getActionSource()) {
-                case ActionSource.ADD -> handleAddAction(dto);
-                case ActionSource.REMOVE -> handleRemoveAction(dto);
-                case ActionSource.UPDATE -> handleUpdateAction(dto);
-                default -> _log.log(Level.WARNING, "Cannot recognize action to handle");
+                case ActionSource.ADD : handleAddAction(dto); break;
+                case ActionSource.REMOVE : handleRemoveAction(dto); break;
+                case ActionSource.UPDATE : handleUpdateAction(dto); break;
+                default : _log.log(Level.WARNING, "Cannot recognize action to handle"); break;
             }
 
             return dto.getActionSource() + " action was successful.";
@@ -72,12 +72,12 @@ public class DeliveryActionHandler implements IDeliveryActionHandler {
     private String toResponseString(BusinessException exception, String action) {
         String response;
         switch (exception.getErrorCode()) {
-            case NO_DELIVERY_SELECTED -> response = "Please select a delivery to perform the " + action + " action!";
-            case DELIVERY_NOT_FOUND -> response = "Cannot find requested delivery";
-            case NO_DIVER_SELECTED -> response = "Please select driver for the delivery!";
-            case NO_VEHICLE_SELECTED -> response = "Please select vehicle for the delivery!";
-            case UI_COMPLIANT -> response = exception.getMessage();
-            default -> response = "Something went wrong";
+            case NO_DELIVERY_SELECTED : response = "Please select a delivery to perform the " + action + " action!"; break;
+            case DELIVERY_NOT_FOUND : response = "Cannot find requested delivery"; break;
+            case NO_DIVER_SELECTED : response = "Please select driver for the delivery!"; break;
+            case NO_VEHICLE_SELECTED : response = "Please select vehicle for the delivery!"; break;
+            case UI_COMPLIANT : response = exception.getMessage(); break;
+            default : response = "Something went wrong"; break;
         }
 
         return  response;

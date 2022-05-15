@@ -59,7 +59,7 @@ public class DbContext {
                         .build();
 
             } catch (Exception ex) {
-                _log.log(Level.SEVERE, "Error while getting SessionFactory instance" + ex.getMessage());
+                throw ex;
             }
         }
         return sessionFactoryInstance;

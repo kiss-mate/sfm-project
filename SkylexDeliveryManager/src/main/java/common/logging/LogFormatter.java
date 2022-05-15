@@ -9,7 +9,6 @@ public class LogFormatter extends Formatter {
         return record.getLevel() + "|" +
                 record.getLoggerName() + "|" +
                 record.getMessage() + "|" +
-                (record.getThrown() == null ? "<NoException>" : record.getThrown()) + "|" +
-                record.getLongThreadID() + "\n";
+                (record.getThrown() == null ? "<NoException>" : record.getThrown()) + "|\n";
     }
 }

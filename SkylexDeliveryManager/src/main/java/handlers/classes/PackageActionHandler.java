@@ -25,10 +25,10 @@ public class PackageActionHandler implements IPackageActionHandler {
     public String handleAction(MainViewDto dto) {
         try {
             switch (dto.getActionSource()) {
-                case ActionSource.ADD -> handleAddAction(dto);
-                case ActionSource.REMOVE -> handleRemoveAction(dto);
-                case ActionSource.UPDATE -> handleUpdateAction(dto);
-                default -> {
+                case ActionSource.ADD : handleAddAction(dto); break;
+                case ActionSource.REMOVE : handleRemoveAction(dto); break;
+                case ActionSource.UPDATE : handleUpdateAction(dto); break;
+                default : {
                     _log.log(Level.WARNING, "Cannot recognize action to handle");
                     return "Cannot perform this action";
                 }
@@ -74,13 +74,13 @@ public class PackageActionHandler implements IPackageActionHandler {
     private String toResponseString(BusinessException exception, String action) {
         String response;
         switch (exception.getErrorCode()) {
-            case PACKAGE_NOT_FOUND -> response = "Sorry, cannot find this package!";
-            case PACKAGE_CONTENT_EMPTY_OR_NULL -> response = "Sorry, you cannot save this as a package content!";
-            case PACKAGE_INVALID_WEIGHT -> response = "Weight must be between 0.1 - 1000.0";
-            case PACKAGE_DESTINATION_EMPTY_OR_NULL -> response = "Please set a properly formatted destination!";
-            case NO_PACKAGE_SELECTED -> response = "Please select a package to perform the " + action + " action!";
-            case UI_COMPLIANT -> response = exception.getMessage();
-            default -> response = "Something went wrong";
+            case PACKAGE_NOT_FOUND : response = "Sorry, cannot find this package!"; break;
+            case PACKAGE_CONTENT_EMPTY_OR_NULL : response = "Sorry, you cannot save this as a package content!"; break;
+            case PACKAGE_INVALID_WEIGHT : response = "Weight must be between 0.1 - 1000.0"; break;
+            case PACKAGE_DESTINATION_EMPTY_OR_NULL : response = "Please set a properly formatted destination!"; break;
+            case NO_PACKAGE_SELECTED : response = "Please select a package to perform the " + action + " action!"; break;
+            case UI_COMPLIANT : response = exception.getMessage(); break;
+            default : response = "Something went wrong"; break;
         }
 
         return  response;
