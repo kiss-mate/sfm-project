@@ -22,6 +22,9 @@ import repository.classes.*;
 import repository.interfaces.*;
 
 public class Main extends Application {
+    private final ILoginLogic _loginLogic = null;
+
+
     @Override
     public void start(Stage primaryStage) throws Exception {
         LoggingContext.getProperties(getClass().getResource("log-dev.properties").getFile());
@@ -30,8 +33,8 @@ public class Main extends Application {
         var injector = Guice.createInjector(config -> {
             // Add common services (java.util.logging.Logger binding is automatic)
             config.bind(SessionFactory.class).toProvider(() -> DbContext
-                            .getDbContextInstance()
-                            .getSessionFactory(DbContextSettings.contextSettings()));
+                    .getDbContextInstance()
+                    .getSessionFactory(DbContextSettings.contextSettings()));
 
             // Add the logic
             config.bind(ILogic.class).to(Logic.class);
@@ -53,12 +56,6 @@ public class Main extends Application {
             config.bind(IDeliveryRepository.class).to(DeliveryRepository.class);
         });
 
-        // set up the main window
-        var mainLoader = new FXMLLoader();
-        mainLoader.setLocation((getClass().getResource("UI/main.fxml")));
-        mainLoader.setControllerFactory(injector::getInstance);
-        Parent mainRoot = mainLoader.load();
-        Scene mainScene = new Scene(mainRoot);
 
         // set up the login window
         var loginLoader = new FXMLLoader();
@@ -67,10 +64,14 @@ public class Main extends Application {
         Parent loginRoot = loginLoader.load();
         Scene loginScene = new Scene(loginRoot);
 
-        // show window
-        primaryStage.setTitle("Skylex Delivery Manager");
-        primaryStage.setScene(mainScene);
-        primaryStage.show();
+
+        // set up the main window
+        var mainLoader = new FXMLLoader();
+        mainLoader.setLocation((getClass().getResource("UI/main.fxml")));
+        mainLoader.setControllerFactory(injector::getInstance);
+        Parent mainRoot = mainLoader.load();
+        Scene mainScene = new Scene(mainRoot);
+
 
         // block main with login
         Stage loginStage = new Stage();
@@ -79,5 +80,11 @@ public class Main extends Application {
         loginStage.initOwner(primaryStage);
         loginStage.setScene(loginScene);
         loginStage.showAndWait();
+
+
+        // show window
+        primaryStage.setTitle("Skylex Delivery Manager");
+        primaryStage.setScene(mainScene);
+        primaryStage.show();
     }
 }
